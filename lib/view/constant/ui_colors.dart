@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class UIColors {
   UIColors._();
-  static final Color background = HexColor.fromHex("#ffffff");
-  // static final Color circleBg1 = HexColor.fromHex("#ECF2FF");
-  // static final Color circleBg2 = HexColor.fromHex("#E3DFFD");
-  // static final Color circleBg3 = HexColor.fromHex("#E5D1FA");
-  // static final Color circleBg4 = HexColor.fromHex("#FFF4D2");
-  // static final Color circleBg5 = HexColor.fromHex("#AD7BE9");
+  static final Color background = HexColor.fromHex("#E6ecef");
+  static final Color eye = HexColor.fromHex("#3083f2");
+  static final Color border = HexColor.fromHex("#9caccc");
+  static final Color white = HexColor.fromHex("#ffffff");
+  static final Color black = HexColor.fromHex("#000000");
+  static final Color title = HexColor.fromHex("#3c679b");
+  static final Color button = HexColor.fromHex("#0a4181");
+  static final Color blue = HexColor.fromHex("#5b98f2");
 }
 
 extension HexColor on Color {
