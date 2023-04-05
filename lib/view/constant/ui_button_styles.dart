@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:uteer/view/constant/ui_colors.dart';
+import 'package:uteer/res/style/app_colors.dart';
 
 class UIButtonStyles {
   UIButtonStyles._();
   static final ButtonStyle buttonStyle = ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(vertical: 16)),
-    backgroundColor: MaterialStateProperty.all(UIColors.button),
+    backgroundColor: MaterialStateProperty.all(AppColors.button),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(50), side: BorderSide.none)),
   );
