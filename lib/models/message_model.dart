@@ -20,25 +20,25 @@ final List<Message> messages = [
   Message(
     me: false,
     avatar: SvgPicture.asset(AppAssets.avatar),
-    text: "Hôm nay bạn thế nào?",
+    text: "Cho mình hỏi 1 số chuyện được không?",
     isRead: true,
   ),
   Message(
     me: true,
     avatar: SvgPicture.asset(AppAssets.avatar),
-    text: "Tôi khoẻ, còn bạn thì sao?",
+    text: "Bạn hỏi đi nè",
     isRead: true,
   ),
   Message(
     me: false,
     avatar: SvgPicture.asset(AppAssets.avatar),
-    text: "Tôi khoẻ, tôi muốn đi hiến máu",
+    text: "Sao bạn lại cộng sai điểm rèn luyện cho tôi thế?",
     isRead: true,
   ),
-  Message(
-    me: true,
-    avatar: SvgPicture.asset(AppAssets.avatar),
-    text: "Ok thoai",
-    isRead: true,
-  ),
+  // Message(
+  //   me: true,
+  //   avatar: SvgPicture.asset(AppAssets.avatar),
+  //   text: "Ok thoai",
+  //   isRead: true,
+  // ),
 ];

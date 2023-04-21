@@ -17,9 +17,12 @@ class UiItemChat extends StatelessWidget {
     required this.activeRead,
     required this.colorTextChat,
     required this.onTap,
+    required this.avatar,
   });
+
   final bool activeAvatar;
   final String textName;
+  final String avatar;
   final FontWeight fontWeightName;
   final String textChat;
   final Color colorTextChat;
@@ -39,7 +42,26 @@ class UiItemChat extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Expanded(flex: 3, child: StatusAvatar(sizeMax: true, activeStatus: activeAvatar)),
+            Expanded(
+                flex: 3,
+                child: StatusAvatar(
+                  sizeMax: true,
+                  activeStatus: activeAvatar,
+                  // avatar: avatar,
+                )
+                // child: CachedNetworkImage(
+                //   imageUrl: "http://103.154.176.108:3005/$avatar",
+                //   imageBuilder: (context, imageProvider) => Container(
+                //     width: 50.0,
+                //     height: 50.0,
+                //     decoration: BoxDecoration(
+                //       shape: BoxShape.circle,
+                //       image: DecorationImage(
+                //           image: imageProvider, fit: BoxFit.cover),
+                //     ),
+                //   ),
+                // ),
+                ),
             Expanded(
               flex: 9,
               child: Column(
@@ -55,13 +77,16 @@ class UiItemChat extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      UIText(
-                        textChat,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: DimensManager.dimens.setSp(14),
-                            color: colorTextChat,
-                            fontWeight: fontWeightChat),
+                      Flexible(
+                        child: UIText(
+                          textChat,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: DimensManager.dimens.setSp(14),
+                              color: colorTextChat,
+                              fontWeight: fontWeightChat),
+                        ),
                       ),
                       UIText(
                         timeChat,

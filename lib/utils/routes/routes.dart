@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:uteer/utils/routes/routes_name.dart';
 import 'package:uteer/view/auth/forgot_password_screen.dart';
 import 'package:uteer/view/auth/sign_in_screen.dart';
+import 'package:uteer/view/chat/chat_detail_screen.dart';
+import 'package:uteer/view/chat/chat_screen.dart';
 import 'package:uteer/view/home/home_screen.dart';
 import 'package:uteer/view/navigator/navigator_screen.dart';
+import 'package:uteer/view/profile/change_password_creen.dart';
+import 'package:uteer/view/profile/contact_screen.dart';
+import 'package:uteer/view/profile/my_qr_screen.dart';
+import 'package:uteer/view/profile/profile_detail_screen.dart';
 import 'package:uteer/view/profile/profile_screen.dart';
+import 'package:uteer/view/scholarship/UTE_scholarship_screen.dart';
+import 'package:uteer/view/scholarship/encouraging_study_screen.dart';
+import 'package:uteer/view/scholarship/outside_scholarship_screen.dart';
 import 'package:uteer/view/splash_screen.dart';
+import 'package:uteer/view/training_points/training_points_history_screen.dart';
+import 'package:uteer/view/training_points/training_points_screen.dart';
 
 class Routes {
   static Route<dynamic> routeBuilder(RouteSettings settings) {
@@ -22,6 +33,30 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const ProfileScreen());
       case RoutesName.navigator:
         return MaterialPageRoute(builder: (BuildContext context) => const NavigatorScreen());
+      case RoutesName.profileDetail:
+        return MaterialPageRoute(builder: (BuildContext context) => const ProfileDetailScreen());
+      case RoutesName.myQr:
+        return MaterialPageRoute(builder: (BuildContext context) => const MyQrScreen());
+      case RoutesName.changePassword:
+        return MaterialPageRoute(builder: (BuildContext context) => const ChangePasswordScreen());
+      case RoutesName.contact:
+        return MaterialPageRoute(builder: (BuildContext context) => const ContactScreen());
+      case RoutesName.chatDetail:
+        return MaterialPageRoute(builder: (BuildContext context) => const ChatDetailScreen());
+      case RoutesName.chat:
+        return MaterialPageRoute(builder: (BuildContext context) => const ChatScreen());
+      case RoutesName.trainingPoint:
+        return MaterialPageRoute(builder: (BuildContext context) => const TrainingPointsScreen());
+      case RoutesName.trainingPointHistory:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const TrainingPointsHistoryScreen());
+      case RoutesName.encouragingStudy:
+        return MaterialPageRoute(builder: (BuildContext context) => const EncouragingStudyScreen());
+      case RoutesName.uteScholarship:
+        return MaterialPageRoute(builder: (BuildContext context) => const UteScholarshipScreen());
+      case RoutesName.outsideScholarship:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const OutsideScholarshipScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

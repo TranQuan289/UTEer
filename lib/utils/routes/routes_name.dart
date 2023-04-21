@@ -17,6 +17,7 @@ class RoutesName {
   static const String myQr = 'my_qr_screen';
   static const String verifyMail = 'verify_mail_screen';
   static const String verifyMailSuccess = 'verify_mail_success_screen';
+  static const String contact = 'contact_screen';
 
   static const String verifyOTP = 'verify_otp_screen';
   static const String createPassword = 'create_password_screen';
@@ -28,4 +29,8 @@ class RoutesName {
   static const String chat = 'chat_screen';
   static const String chatDetail = 'chat_detail_screen';
   static const String trainingPoint = 'training_points_screen';
+  static const String trainingPointHistory = 'training_points_history_screen';
+  static const String encouragingStudy = 'encouraging_study_screen';
+  static const String outsideScholarship = 'outside_scholarship_screen';
+  static const String uteScholarship = 'ute_scholarship_screen';
 }

@@ -112,19 +112,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
             children: [
               _profileItem(AppAssets.icUser, 'Thông tin tài khoản', onTap: () {
-                //_viewModel.goToProfileDetailScreen();
+                Navigator.pushNamed(context, RoutesName.profileDetail);
               }),
               _profileItem(AppAssets.icQr, 'Mã QR cá nhân', onTap: () {
-                //_viewModel.goToMyQrScreen();
+                Navigator.pushNamed(context, RoutesName.myQr);
               }),
-              _profileItem(AppAssets.icHistory, 'Lịch sử', onTap: () {
-                Navigator.pushNamed(context, RoutesName.history);
-              }),
-              _profileItem(AppAssets.icPassword, 'Bảo mật', onTap: () {
-                Navigator.pushNamed(context, RoutesName.security);
+              _profileItem(AppAssets.icPassword, 'Đổi mật khẩu', onTap: () {
+                Navigator.pushNamed(context, RoutesName.changePassword);
               }),
               _profileItem(AppAssets.icSupport, 'Liên hệ', onTap: () {
-                Navigator.pushNamed(context, RoutesName.changePassword);
+                Navigator.pushNamed(context, RoutesName.contact);
               }),
               _profileItem(AppAssets.icSignOut, 'Đăng xuất', onTap: () {
                 _confirmSignout(context);

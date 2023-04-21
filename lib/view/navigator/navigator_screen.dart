@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/res/style/app_colors.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
+import 'package:uteer/view/chat/chat_screen.dart';
 import 'package:uteer/view/home/home_screen.dart';
 import 'package:uteer/view/notification/notification_screen.dart';
 import 'package:uteer/view/widgets/ui_text.dart';
@@ -29,7 +30,7 @@ class NavigatorScreenState extends State<NavigatorScreen> {
   int currentTab = 0;
   final List<Widget> screens = [
     const HomeScreen(),
-    const Text(''),
+    const ChatScreen(),
     const NotificationScreen(),
     const ProfileScreen(),
   ];

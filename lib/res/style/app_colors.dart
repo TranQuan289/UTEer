@@ -28,7 +28,7 @@ class AppColors {
   static const Color noActiveChatColor = Color(0xffD8D8D8);
   static const Color activeChatColor = Color(0xff5AD439);
   static const Color inFieldTextColor = Color(0xFF5A5A5A);
-  static const Color background = Color(0xffE6ecef);
+  //static const Color background = Color(0xffE6ecef);
   static const Color eye = Color(0xff3083f2);
   static const Color border = Color(0xff9caccc);
 
@@ -37,6 +37,7 @@ class AppColors {
   static const Color button = Color(0xff0a4181);
   static const Color blue = Color(0xff5b98f2);
   static const Color lightBlue = Color(0xff49ace8);
+  static const Color enableBlue = Color.fromARGB(255, 199, 232, 253);
   static const Color hintSearchChat = Color(0xffB8B8BF);
   static const Color hintChat = Color(0xffB8B8BF);
   static const Color activeChat = Color(0xff5AD439);

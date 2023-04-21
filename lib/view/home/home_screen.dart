@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:uteer/view/training_points/training_points_history_screen.dart';
-import 'package:uteer/view/training_points/training_points_screen.dart';
+import 'package:uteer/utils/routes/routes_name.dart';
 
 import '../../res/constant/app_assets.dart';
 import '../../res/constant/app_fonts.dart';
@@ -116,28 +115,35 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         UIText(
-          'Các bài báo',
+          'Quảng cáo',
           style: TextStyle(
               fontSize: DimensManager.dimens.setSp(16),
               color: Colors.black,
-              fontFamily: AppFonts.nunito,
               fontWeight: FontWeight.w700),
         ),
         SizedBox(height: DimensManager.dimens.setHeight(12)),
-        Wrap(
-          spacing: DimensManager.dimens.setWidth(16),
-          runSpacing: DimensManager.dimens.setHeight(16),
-          children: const [
-            ActiveCard(
-              image: AppAssets.donateBlood,
-              text: 'Ngày hội hiến máu diễn ra tại sảnh A Đại học Sư Phạm Kỹ Thuật',
-            ),
-            ActiveCard(
-              image: AppAssets.healthCare,
-              text: 'Ngày hội hiến máu diễn ra trên địa bàn toàn quốc',
-            ),
-          ],
-        )
+        LayoutBuilder(builder: (context, constraints) {
+          final itemWidth = (constraints.maxWidth - DimensManager.dimens.setWidth(16)) / 2;
+          return Wrap(
+            spacing: DimensManager.dimens.setWidth(16),
+            runSpacing: DimensManager.dimens.setHeight(16),
+            children: const [
+              ActiveCard(
+                image: AppAssets.donateBlood,
+                text: 'Ngày hội hiến máu diễn ra trên địa bàn Thành phố Đà Nẵng',
+              ),
+              ActiveCard(
+                image: AppAssets.healthCare,
+                text: 'Ngày hội hiến máu diễn ra tại sảnh A Đại học Sư Phạm Kỹ Thuật',
+              )
+            ]
+                .map((item) => SizedBox(
+                      width: itemWidth,
+                      child: item,
+                    ))
+                .toList(),
+          );
+        })
       ],
     );
   }
@@ -175,17 +181,17 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ItemScholarshipUI(
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(context, RoutesName.encouragingStudy),
                 icon: AppAssets.icScholarShip1,
                 text: 'Học tập',
               ),
               ItemScholarshipUI(
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(context, RoutesName.uteScholarship),
                 icon: AppAssets.icScholarShip2,
                 text: 'UTE',
               ),
               ItemScholarshipUI(
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(context, RoutesName.outsideScholarship),
                 icon: AppAssets.icScholarShip3,
                 text: 'Từ các đơn vị',
               ),
@@ -210,12 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Row(
         children: [
           CardHome(
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const TrainingPointsScreen()),
-              )
-            },
+            onTap: () => Navigator.pushNamed(context, RoutesName.trainingPoint),
             color: AppColors.blue,
             icon: AppAssets.icTrainingPoint,
             text: 'Tự đánh giá\n điểm rèn luyện',
@@ -223,10 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(width: DimensManager.dimens.setSp(18)),
           CardHome(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const TrainingPointsHistoryScreen()));
-            },
+            onTap: () => Navigator.pushNamed(context, RoutesName.trainingPointHistory),
             color: AppColors.lightBlue,
             icon: AppAssets.icHistoryMini,
             text: 'Xem lịch sử\n điểm rèn luyện',

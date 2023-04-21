@@ -52,7 +52,7 @@ class AppAssets {
   static const String noAvatar = "assets/images/no-avatar.png";
   static const String banner = "assets/images/banner.png";
   static const String circleSchedule = "assets/images/circle-schedule.png";
-  static const String backgroundAppBarHome = "assets/images/background-appBar-home.png";
+  // static const String backgroundAppBarHome = "assets/images/background-appBar-home.png";
 
   static const String icSearch = "assets/icons/ic-search.svg";
   static const String icSearchsGrey = "assets/icons/ic-search-grey.svg";
