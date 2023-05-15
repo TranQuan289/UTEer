@@ -33,4 +33,5 @@ class RoutesName {
   static const String encouragingStudy = 'encouraging_study_screen';
   static const String outsideScholarship = 'outside_scholarship_screen';
   static const String uteScholarship = 'ute_scholarship_screen';
+  static const String qrScanner = 'qr_scanner_screen';
 }

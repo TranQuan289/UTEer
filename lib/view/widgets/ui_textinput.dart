@@ -105,6 +105,9 @@ class UITextInput extends StatelessWidget {
               autocorrect: false,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(DimensManager.dimens.setHeight(15)),
+                disabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.inputBorder, width: 1.0),
+                ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: AppColors.inputBorder, width: 1.0),
                   borderRadius: BorderRadius.circular(12.0),

@@ -11,6 +11,7 @@ import 'package:uteer/view/profile/contact_screen.dart';
 import 'package:uteer/view/profile/my_qr_screen.dart';
 import 'package:uteer/view/profile/profile_detail_screen.dart';
 import 'package:uteer/view/profile/profile_screen.dart';
+import 'package:uteer/view/qr/qr_scanner_screen.dart';
 import 'package:uteer/view/scholarship/UTE_scholarship_screen.dart';
 import 'package:uteer/view/scholarship/encouraging_study_screen.dart';
 import 'package:uteer/view/scholarship/outside_scholarship_screen.dart';
@@ -57,6 +58,8 @@ class Routes {
       case RoutesName.outsideScholarship:
         return MaterialPageRoute(
             builder: (BuildContext context) => const OutsideScholarshipScreen());
+      case RoutesName.qrScanner:
+        return MaterialPageRoute(builder: (BuildContext context) => const QRScannerScreen());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(

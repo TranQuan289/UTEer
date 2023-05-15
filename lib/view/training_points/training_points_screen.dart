@@ -13,6 +13,13 @@ class TrainingPointsScreen extends StatefulWidget {
 }
 
 class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
+  int trainingPoint1 = 0;
+  int trainingPoint2 = 0;
+  int trainingPoint3 = 0;
+  int trainingPoint4 = 0;
+  int trainingPoint5 = 0;
+  int trainingPoint = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,76 +31,159 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
-              _TitleTrainingPoint(
+            children: [
+              const _TitleTrainingPoint(
                 title: "I. ĐÁNH GIÁ VỀ Ý THỨC THAM GIA HỌC TẬP (20 điểm)",
               ),
               _DescriptionTrainingPoint(
                 'Có đi học chuyên cần, đúng giờ, nghiêm túc trong giờ học; đủ điều kiện dự thi tất cả các học phần. (4 điểm)',
+                score: 4,
+                sumTrainingPoint: trainingPoint1,
               ),
               _DescriptionTrainingPoint(
-                  'Có ý thức tham gia các câu lạc bộ học thuật, các hoạt động học thuật, hoạt động ngoại khóa.	(2 điểm)'),
+                'Có ý thức tham gia các câu lạc bộ học thuật, các hoạt động học thuật, hoạt động ngoại khóa.	(2 điểm)',
+                score: 2,
+                sumTrainingPoint: trainingPoint1,
+              ),
               _DescriptionTrainingPoint(
-                  "Có đăng ký, thực hiện, báo cáo đề tài NCKH đúng tiến độ hoặc đăng ký, tham dự kỳ thi sinh viên giỏi các cấp. (2 điểm)"),
-              _DescriptionTrainingPoint("Không vi phạm quy chế thi và kiểm tra.\n(6 điểm)"),
+                "Có đăng ký, thực hiện, báo cáo đề tài NCKH đúng tiến độ hoặc đăng ký, tham dự kỳ thi sinh viên giỏi các cấp. (2 điểm)",
+                score: 2,
+                sumTrainingPoint: trainingPoint1,
+              ),
               _DescriptionTrainingPoint(
-                  "Được tập thể lớp công nhận có tinh thần vượt khó, phấn đấu vươn lên trong học tập.(2 điểm)"),
+                "Không vi phạm quy chế thi và kiểm tra.\n(6 điểm)",
+                score: 6,
+                sumTrainingPoint: trainingPoint1,
+              ),
               _DescriptionTrainingPoint(
-                  isRadio: true,
-                  "ĐTBCHK từ 3,2 đến 4,0: (4 điểm)\nĐTBCHK từ 2,0 đến 3,19: (2 điểm)\nĐTBCHK dưới 2,0: (0 điểm)"),
-              _SumGrade(description: "Cộng mục I:"),
-              _TitleTrainingPoint(
+                "Được tập thể lớp công nhận có tinh thần vượt khó, phấn đấu vươn lên trong học tập.(2 điểm)",
+                score: 2,
+                sumTrainingPoint: trainingPoint1,
+              ),
+              _DescriptionTrainingPoint(
+                isRadio: true,
+                "ĐTBCHK từ 3,2 đến 4,0: (4 điểm)\nĐTBCHK từ 2,0 đến 3,19: (2 điểm)\nĐTBCHK dưới 2,0: (0 điểm)",
+                score: 0,
+                sumTrainingPoint: trainingPoint1,
+              ),
+              _SumGrade(description: "Cộng mục I:", sumTraningPoint: trainingPoint1),
+              const _TitleTrainingPoint(
                   title:
                       "II. ĐÁNH GIÁ VỀ Ý THỨC CHẤP HÀNH NỘI QUY, QUY CHẾ TRONG NHÀ TRƯỜNG (25 điểm)"),
               _DescriptionTrainingPoint(
-                  'Có ý thức chấp hành các văn bản chỉ đạo của ngành, cấp trên và ĐHĐN được thực hiện trong nhà trường. (6 điểm)'),
+                'Có ý thức chấp hành các văn bản chỉ đạo của ngành, cấp trên và ĐHĐN được thực hiện trong nhà trường. (6 điểm)',
+                score: 6,
+                sumTrainingPoint: trainingPoint2,
+              ),
               _DescriptionTrainingPoint(
-                  'Có ý thức tham gia đầy đủ, đạt yêu cầu các cuộc vận động, sinh hoạt chính trị theo chủ trương, của cấp trên, ĐHĐN và nhà trường. \n(4 điểm)'),
+                'Có ý thức tham gia đầy đủ, đạt yêu cầu các cuộc vận động, sinh hoạt chính trị theo chủ trương, của cấp trên, ĐHĐN và nhà trường. \n(4 điểm)',
+                score: 4,
+                sumTrainingPoint: trainingPoint2,
+              ),
               _DescriptionTrainingPoint(
-                  "Có ý thức chấp hành nội quy, quy chế và các quy định của nhà trường. (10 điểm)"),
+                "Có ý thức chấp hành nội quy, quy chế và các quy định của nhà trường. (10 điểm)",
+                score: 10,
+                sumTrainingPoint: trainingPoint2,
+              ),
               _DescriptionTrainingPoint(
-                  "Đóng học phí và các khoản thu khác đầy đủ, đúng hạn. (5 điểm)"),
-              _SumGrade(description: "Cộng mục II:"),
-              _TitleTrainingPoint(
+                "Đóng học phí và các khoản thu khác đầy đủ, đúng hạn. (5 điểm)",
+                score: 5,
+                sumTrainingPoint: trainingPoint2,
+              ),
+              _SumGrade(
+                description: "Cộng mục II:",
+                sumTraningPoint: trainingPoint2,
+              ),
+              const _TitleTrainingPoint(
                   title:
                       "III. ĐÁNH GIÁ VỀ Ý THỨC THAM GIA CÁC HOẠT ĐỘNG CHÍNH TRỊ- XÃ HỘI, VHVN, TDTT, PHÒNG CHỐNG TỘI PHẠM VÀ CÁC TỆ NẠN XÃ HỘI (20 điểm)"),
               _DescriptionTrainingPoint(
-                  "Tham gia đầy đủ, đạt yêu cầu “ Tuần sinh hoạt công dân sinh viên” đầu khóa năm học và cuối khóa.(10 điểm)"),
+                "Tham gia đầy đủ, đạt yêu cầu “ Tuần sinh hoạt công dân sinh viên” đầu khóa năm học và cuối khóa.(10 điểm)",
+                score: 10,
+                sumTrainingPoint: trainingPoint3,
+              ),
               _DescriptionTrainingPoint(
-                  "Có ý thức tham gia đầy đủ, nghiêm túc hoạt động rèn luyện về chính trị, xã hội, văn hóa, văn nghệ, thể thao do nhà trường và ĐHĐN tổ chức, điều động.(6 điểm)"),
+                "Có ý thức tham gia đầy đủ, nghiêm túc hoạt động rèn luyện về chính trị, xã hội, văn hóa, văn nghệ, thể thao do nhà trường và ĐHĐN tổ chức, điều động.(6 điểm)",
+                score: 6,
+                sumTrainingPoint: trainingPoint3,
+              ),
               _DescriptionTrainingPoint(
-                  "Có ý thức tham gia các hoạt động công ích, tình nguyện, công tác xã hội trong nhà trường.	(2 điểm)"),
+                "Có ý thức tham gia các hoạt động công ích, tình nguyện, công tác xã hội trong nhà trường.	(2 điểm)",
+                score: 2,
+                sumTrainingPoint: trainingPoint3,
+              ),
               _DescriptionTrainingPoint(
-                  "Có ý thức tuyên truyền, phòng chống tội phạm và các tệ nạn xã hội.(2 điểm)"),
-              _SumGrade(description: "Cộng mục III:"),
-              _TitleTrainingPoint(
+                "Có ý thức tuyên truyền, phòng chống tội phạm và các tệ nạn xã hội.(2 điểm)",
+                score: 2,
+                sumTrainingPoint: trainingPoint3,
+              ),
+              _SumGrade(
+                description: "Cộng mục III:",
+                sumTraningPoint: trainingPoint3,
+              ),
+              const _TitleTrainingPoint(
                   title: "IV. ĐÁNH GIÁ VỀ Ý THỨC CÔNG DÂN TRONG QUAN HỆ VỚI CỘNG ĐỒNG (25 điểm)"),
               _DescriptionTrainingPoint(
-                  "Có ý thức chấp hành, tham gia tuyên truyền các chủ trương của Đảng, chính sách, pháp luật của Nhà nước:(4 điểm)"),
+                "Có ý thức chấp hành, tham gia tuyên truyền các chủ trương của Đảng, chính sách, pháp luật của Nhà nước:(4 điểm)",
+                score: 4,
+                sumTrainingPoint: trainingPoint4,
+              ),
               _DescriptionTrainingPoint(
-                  "Có tham gia bảo hiểm y tế ( bắt buộc) theo Luật bảo hiểm y tế.(10 điểm)"),
+                "Có tham gia bảo hiểm y tế ( bắt buộc) theo Luật bảo hiểm y tế.(10 điểm)",
+                score: 10,
+                sumTrainingPoint: trainingPoint4,
+              ),
               _DescriptionTrainingPoint(
-                  "Có ý thức chấp hành, tham gia tuyên truyền các quy định về đảm bảo an toàn giao thông và “văn hóa giao thông”.\n(5 điểm)"),
+                "Có ý thức chấp hành, tham gia tuyên truyền các quy định về đảm bảo an toàn giao thông và “văn hóa giao thông”.\n(5 điểm)",
+                score: 5,
+                sumTrainingPoint: trainingPoint4,
+              ),
               _DescriptionTrainingPoint(
-                  "Có ý thức tham gia các hoạt động xã hội có thành tích được ghi nhận, biểu dương khen thưởng.(4 điểm)"),
+                "Có ý thức tham gia các hoạt động xã hội có thành tích được ghi nhận, biểu dương khen thưởng.(4 điểm)",
+                score: 4,
+                sumTrainingPoint: trainingPoint4,
+              ),
               _DescriptionTrainingPoint(
-                  "Có tinh thần chia sẻ, giúp đỡ người gặp khó khăn, hoạn nạn.(2 điểm)"),
-              _SumGrade(description: "Cộng mục IV:"),
-              _TitleTrainingPoint(
+                "Có tinh thần chia sẻ, giúp đỡ người gặp khó khăn, hoạn nạn.(2 điểm)",
+                score: 2,
+                sumTrainingPoint: trainingPoint4,
+              ),
+              _SumGrade(
+                description: "Cộng mục IV:",
+                sumTraningPoint: trainingPoint4,
+              ),
+              const _TitleTrainingPoint(
                   title:
                       "V. ĐÁNH GIÁ VỀ Ý THỨC VÀ KẾT QUẢ KHI THAM GIA CÔNG TÁC CÁN BỘ LỚP, CÁC ĐOÀN THỂ, TỔ CHỨC TRONG NHÀ TRƯỜNG HOẶC SINH VIÊN ĐẠT ĐƯỢC THÀNH TÍCH TRONG HỌC TẬP, RÈN LUYỆN (10 điểm)"),
               _DescriptionTrainingPoint(
-                  "Có ý thức, uy tín và hoàn thành tốt nhiệm vụ quản lý lớp, các tổ chức Đảng, Đoàn Thanh niên, Hội Sinh viên, tổ chức khác trong nhà trường.(3 điểm)"),
+                "Có ý thức, uy tín và hoàn thành tốt nhiệm vụ quản lý lớp, các tổ chức Đảng, Đoàn Thanh niên, Hội Sinh viên, tổ chức khác trong nhà trường.(3 điểm)",
+                score: 3,
+                sumTrainingPoint: trainingPoint5,
+              ),
               _DescriptionTrainingPoint(
-                  "Có kỹ năng tổ chức, quản lý lớp, các tổ chức Đảng, Đoàn Thanh niên, Hội Sinh viên và các tổ chức khác trong nhà trường.(2 điểm)"),
+                "Có kỹ năng tổ chức, quản lý lớp, các tổ chức Đảng, Đoàn Thanh niên, Hội Sinh viên và các tổ chức khác trong nhà trường.(2 điểm)",
+                score: 2,
+                sumTrainingPoint: trainingPoint5,
+              ),
               _DescriptionTrainingPoint(
-                  "Hỗ trợ tham gia tích cực vào các hoạt động chung của lớp, tập thể khoa, trường và Đại học Đà Nẵng.(3 điểm)"),
+                "Hỗ trợ tham gia tích cực vào các hoạt động chung của lớp, tập thể khoa, trường và Đại học Đà Nẵng.(3 điểm)",
+                score: 3,
+                sumTrainingPoint: trainingPoint5,
+              ),
               _DescriptionTrainingPoint(
                 "Đạt thành tích trong học tập, rèn luyện (được tặng bằng khen, giấy khen, chứng nhận, thư khen của các cấp).(2 điểm)",
+                score: 2,
+                sumTrainingPoint: trainingPoint5,
               ),
-              _SumGrade(description: "Cộng mục V:"),
-              _SumGrade(description: "Tổng điểm:"),
-              Padding(
+              _SumGrade(
+                description: "Cộng mục V:",
+                sumTraningPoint: trainingPoint5,
+              ),
+              _SumGrade(
+                description: "Tổng điểm:",
+                sumTraningPoint: trainingPoint,
+              ),
+              const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: UIOutlineButton(title: 'Nộp điểm'),
               )
@@ -106,9 +196,12 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
 }
 
 class _DescriptionTrainingPoint extends StatefulWidget {
-  const _DescriptionTrainingPoint(this.description, {this.isRadio = false});
+  _DescriptionTrainingPoint(this.description,
+      {this.isRadio = false, required this.sumTrainingPoint, required this.score});
   final String description;
   final bool isRadio;
+  int sumTrainingPoint;
+  final int score;
   @override
   _DescriptionTrainingPointState createState() => _DescriptionTrainingPointState();
 }
@@ -175,6 +268,7 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
                                         onChanged: (newValue) {
                                           setState(() {
                                             radioValue1 = newValue;
+                                            widget.sumTrainingPoint += 4;
                                           });
                                         },
                                       ),
@@ -185,6 +279,7 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
                                         onChanged: (newValue) {
                                           setState(() {
                                             radioValue2 = newValue;
+                                            widget.sumTrainingPoint += 4;
                                           });
                                         },
                                       ),
@@ -201,6 +296,7 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
                                         onChanged: (newValue) {
                                           setState(() {
                                             radioValue1 = newValue;
+                                            widget.sumTrainingPoint += 2;
                                           });
                                         },
                                       ),
@@ -210,7 +306,7 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
                                         groupValue: radioValue2,
                                         onChanged: (newValue) {
                                           setState(() {
-                                            radioValue2 = newValue;
+                                            widget.sumTrainingPoint += 2;
                                           });
                                         },
                                       ),
@@ -227,6 +323,7 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
                                         onChanged: (newValue) {
                                           setState(() {
                                             radioValue1 = newValue;
+                                            widget.sumTrainingPoint += 0;
                                           });
                                         },
                                       ),
@@ -237,6 +334,7 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
                                         onChanged: (newValue) {
                                           setState(() {
                                             radioValue2 = newValue;
+                                            widget.sumTrainingPoint += 0;
                                           });
                                         },
                                       ),
@@ -255,6 +353,7 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
                                 onChanged: (newValue) {
                                   setState(() {
                                     checkboxValue1 = newValue!;
+                                    widget.sumTrainingPoint += widget.score;
                                   });
                                 },
                               ),
@@ -267,6 +366,7 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
                                 onChanged: (newValue) {
                                   setState(() {
                                     checkboxValue2 = newValue!;
+                                    widget.sumTrainingPoint += widget.score;
                                   });
                                 },
                               ),
@@ -313,95 +413,95 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
                               ],
                             ),
                             Column(
-                              children: const [
-                                UIText('Sinh viên'),
-                                SizedBox(
+                              children: [
+                                const UIText('Sinh viên'),
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 UIText(
+                                  "${widget.sumTrainingPoint}",
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                UIText(
+                                  "${widget.sumTrainingPoint}",
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                UIText(
+                                  "${widget.sumTrainingPoint}",
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const UIText(
                                   'Chưa chấm',
                                   fontWeight: FontWeight.w400,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 UIText(
-                                  'Chưa chấm',
+                                  "${widget.sumTrainingPoint}",
                                   fontWeight: FontWeight.w400,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 UIText(
-                                  'Chưa chấm',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                UIText(
-                                  'Chưa chấm',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                UIText(
-                                  'Chưa chấm',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                UIText(
-                                  'Chưa chấm',
+                                  "${widget.sumTrainingPoint}",
                                   fontWeight: FontWeight.w400,
                                 ),
                               ],
                             ),
                             Column(
-                              children: const [
-                                UIText('Giáo viên'),
-                                SizedBox(
+                              children: [
+                                const UIText('Giáo viên'),
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 UIText(
-                                  'Chưa chấm',
+                                  "${widget.sumTrainingPoint}",
                                   fontWeight: FontWeight.w400,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 UIText(
-                                  'Chưa chấm',
+                                  "${widget.sumTrainingPoint}",
                                   fontWeight: FontWeight.w400,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 UIText(
-                                  'Chưa chấm',
+                                  "${widget.sumTrainingPoint}",
                                   fontWeight: FontWeight.w400,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 UIText(
-                                  'Chưa chấm',
+                                  "${widget.sumTrainingPoint}",
                                   fontWeight: FontWeight.w400,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 UIText(
-                                  'Chưa chấm',
+                                  "${widget.sumTrainingPoint}",
                                   fontWeight: FontWeight.w400,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 UIText(
-                                  'Chưa chấm',
+                                  "${widget.sumTrainingPoint}",
                                   fontWeight: FontWeight.w400,
                                 ),
                               ],
@@ -482,8 +582,10 @@ class _TitleTrainingPoint extends StatelessWidget {
 class _SumGrade extends StatelessWidget {
   const _SumGrade({
     required this.description,
+    required this.sumTraningPoint,
   });
   final String description;
+  final int sumTraningPoint;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -498,8 +600,8 @@ class _SumGrade extends StatelessWidget {
                   TextStyle(fontSize: DimensManager.dimens.setSp(16), fontWeight: FontWeight.w800),
             ),
           ),
-          const UIText(
-            'Chưa chấm',
+          UIText(
+            "$sumTraningPoint",
             fontWeight: FontWeight.w800,
           ),
         ],

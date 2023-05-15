@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         UIText(
-          'Quảng cáo',
+          'Các bài báo',
           style: TextStyle(
               fontSize: DimensManager.dimens.setSp(16),
               color: Colors.black,

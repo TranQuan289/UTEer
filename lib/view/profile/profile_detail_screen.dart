@@ -143,6 +143,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                           isRequired: true,
                           hint: "Nhập mã sinh viên của bạn",
                           isObscure: false,
+                          enabled: false,
                           //   onChanged: _viewModel.onCitizenIdChanged,
                           //   errorMessage: StringUtils.toInvalidCitizenIdString(state, context),
                           // ),
@@ -151,7 +152,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                           height: DimensManager.dimens.setHeight(kPaddingVertical),
                         ),
                         UITextInput(
-                          controller: TextEditingController(text: '0901929194'),
+                          controller: TextEditingController(text: '0901929194'), enabled: false,
                           numberType: true,
                           title: "Số điện thoại",
                           isRequired: true,
@@ -167,6 +168,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                         ),
                         UITextInput(
                           controller: TextEditingController(text: '1911505310144@sv.ute.udn.vn'),
+                          enabled: false,
                           title: "Email",
                           isRequired: true,
                           hint: "Nhập email của bạn",
