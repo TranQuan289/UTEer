@@ -59,7 +59,11 @@ class Routes {
       case RoutesName.chat:
         return MaterialPageRoute(builder: (BuildContext context) => const ChatScreen());
       case RoutesName.trainingPoint:
-        return MaterialPageRoute(builder: (BuildContext context) => const TrainingPointsScreen());
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (BuildContext context) => TrainingPointsScreen(
+                  email: args,
+                ));
       case RoutesName.trainingPointHistory:
         return MaterialPageRoute(
             builder: (BuildContext context) => const TrainingPointsHistoryScreen());
@@ -139,8 +143,8 @@ class Routes {
     Navigator.of(context).pushNamed(RoutesName.history);
   }
 
-  static void goToTrainingPointScreen(BuildContext context) {
-    Navigator.of(context).pushNamed(RoutesName.trainingPoint);
+  static void goToTrainingPointScreen(BuildContext context, {String? arguments}) {
+    Navigator.of(context).pushNamed(RoutesName.trainingPoint, arguments: arguments);
   }
 
   static void goToNavigatorScreen(BuildContext context, {String? arguments}) {

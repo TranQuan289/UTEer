@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uteer/models/user_model.dart';
+import 'package:uteer/utils/routes/routes.dart';
 import 'package:uteer/utils/routes/routes_name.dart';
 
 import '../../res/constant/app_assets.dart';
@@ -242,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Row(
         children: [
           CardHome(
-            onTap: () => Navigator.pushNamed(context, RoutesName.trainingPoint),
+            onTap: () => Routes.goToTrainingPointScreen(context, arguments: user?.email ?? ""),
             color: AppColors.blue,
             icon: AppAssets.icTrainingPoint,
             text: 'Tự đánh giá\n điểm rèn luyện',

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/res/style/app_colors.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
@@ -9,7 +8,6 @@ import 'package:uteer/view/chat/chat_screen.dart';
 import 'package:uteer/view/home/home_screen.dart';
 import 'package:uteer/view/notification/notification_screen.dart';
 import 'package:uteer/view/widgets/ui_text.dart';
-import 'package:uteer/viewmodels/main_screen_view_model.dart';
 
 import '../profile/profile_screen.dart';
 
@@ -32,7 +30,6 @@ class NavigatorScreenState extends State<NavigatorScreen> {
   int currentTab = 0;
   late List<Widget> screens;
   final PageStorageBucket bucket = PageStorageBucket();
-  late MainScreenViewModel _viewModel;
   @override
   void initState() {
     screens = [
@@ -41,8 +38,6 @@ class NavigatorScreenState extends State<NavigatorScreen> {
       const NotificationScreen(),
       ProfileScreen(email: widget.email),
     ];
-    _viewModel = MainScreenViewModel()..onInitView(context);
-    _viewModel.changeCurrentTab = changeCurrentTab;
     super.initState();
   }
 
@@ -54,135 +49,131 @@ class NavigatorScreenState extends State<NavigatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-        value: _viewModel,
-        builder: (context, _) {
-          return Scaffold(
-            backgroundColor: AppColors.backgroundColor,
-            resizeToAvoidBottomInset: false,
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: AppColors.requiredColor,
-              child: SvgPicture.asset(
-                AppAssets.icQrMini,
-                height: 32,
-                width: 32,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, RoutesName.qrScanner);
-              },
-            ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            body: PageStorage(
-              bucket: bucket,
-              child: screens[currentTab],
-            ),
-            bottomNavigationBar: BottomAppBar(
-              shape: const CircularNotchedRectangle(),
-              notchMargin: 10,
-              child: SizedBox(
-                height: DimensManager.dimens.setHeight(70),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MaterialButton(
-                          minWidth: 45,
-                          onPressed: () {
-                            setState(() {
-                              currentTab = 0;
-                            });
-                          },
-                          child: ButtonItemNavigator(
-                            currentTab: currentTab,
-                            tab: 0,
-                            icon: AppAssets.icHome,
-                            textButton: 'Trang chủ',
-                            enableColorButton: kEnableColorButton,
-                            disenableColorButton: kDisenableColorButton,
-                            enableColorIcon: kEnableColorIcon,
-                            disenableColorIcon: kDisenableColorIcon,
-                            enableColorText: kEnableColorText,
-                            disenableColorText: kDisenableColorText,
-                          ),
-                        ),
-                        MaterialButton(
-                          minWidth: 45,
-                          onPressed: () {
-                            setState(() {
-                              currentTab = 1;
-                            });
-                          },
-                          child: ButtonItemNavigator(
-                            currentTab: currentTab,
-                            tab: 1,
-                            icon: AppAssets.icMessage,
-                            textButton: 'Tin nhắn',
-                            enableColorButton: kEnableColorButton,
-                            disenableColorButton: kDisenableColorButton,
-                            enableColorIcon: kEnableColorIcon,
-                            disenableColorIcon: kDisenableColorIcon,
-                            enableColorText: kEnableColorText,
-                            disenableColorText: kDisenableColorText,
-                          ),
-                        ),
-                        //Right
-                      ],
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      resizeToAvoidBottomInset: false,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.requiredColor,
+        child: SvgPicture.asset(
+          AppAssets.icQrMini,
+          height: 32,
+          width: 32,
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, RoutesName.qrScanner);
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: PageStorage(
+        bucket: bucket,
+        child: screens[currentTab],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 10,
+        child: SizedBox(
+          height: DimensManager.dimens.setHeight(70),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MaterialButton(
+                    minWidth: 45,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 0;
+                      });
+                    },
+                    child: ButtonItemNavigator(
+                      currentTab: currentTab,
+                      tab: 0,
+                      icon: AppAssets.icHome,
+                      textButton: 'Trang chủ',
+                      enableColorButton: kEnableColorButton,
+                      disenableColorButton: kDisenableColorButton,
+                      enableColorIcon: kEnableColorIcon,
+                      disenableColorIcon: kDisenableColorIcon,
+                      enableColorText: kEnableColorText,
+                      disenableColorText: kDisenableColorText,
                     ),
-                    //right
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MaterialButton(
-                          minWidth: 45,
-                          onPressed: () {
-                            setState(() {
-                              currentTab = 2;
-                            });
-                          },
-                          child: ButtonItemNavigator(
-                            currentTab: currentTab,
-                            tab: 2,
-                            icon: AppAssets.icNotification,
-                            textButton: 'Thông báo',
-                            enableColorButton: kEnableColorButton,
-                            disenableColorButton: kDisenableColorButton,
-                            enableColorIcon: kEnableColorIcon,
-                            disenableColorIcon: kDisenableColorIcon,
-                            enableColorText: kEnableColorText,
-                            disenableColorText: kDisenableColorText,
-                          ),
-                        ),
-                        MaterialButton(
-                          minWidth: 45,
-                          onPressed: () {
-                            setState(() {
-                              currentTab = 3;
-                            });
-                          },
-                          child: ButtonItemNavigator(
-                            currentTab: currentTab,
-                            tab: 3,
-                            icon: AppAssets.icProfile,
-                            textButton: 'Tài khoản',
-                            enableColorButton: kEnableColorButton,
-                            disenableColorButton: kDisenableColorButton,
-                            enableColorIcon: kEnableColorIcon,
-                            disenableColorIcon: kDisenableColorIcon,
-                            enableColorText: kEnableColorText,
-                            disenableColorText: kDisenableColorText,
-                          ),
-                        ),
-                        //Right
-                      ],
-                    )
-                  ],
-                ),
+                  ),
+                  MaterialButton(
+                    minWidth: 45,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 1;
+                      });
+                    },
+                    child: ButtonItemNavigator(
+                      currentTab: currentTab,
+                      tab: 1,
+                      icon: AppAssets.icMessage,
+                      textButton: 'Tin nhắn',
+                      enableColorButton: kEnableColorButton,
+                      disenableColorButton: kDisenableColorButton,
+                      enableColorIcon: kEnableColorIcon,
+                      disenableColorIcon: kDisenableColorIcon,
+                      enableColorText: kEnableColorText,
+                      disenableColorText: kDisenableColorText,
+                    ),
+                  ),
+                  //Right
+                ],
               ),
-            ),
-          );
-        });
+              //right
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MaterialButton(
+                    minWidth: 45,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 2;
+                      });
+                    },
+                    child: ButtonItemNavigator(
+                      currentTab: currentTab,
+                      tab: 2,
+                      icon: AppAssets.icNotification,
+                      textButton: 'Thông báo',
+                      enableColorButton: kEnableColorButton,
+                      disenableColorButton: kDisenableColorButton,
+                      enableColorIcon: kEnableColorIcon,
+                      disenableColorIcon: kDisenableColorIcon,
+                      enableColorText: kEnableColorText,
+                      disenableColorText: kDisenableColorText,
+                    ),
+                  ),
+                  MaterialButton(
+                    minWidth: 45,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 3;
+                      });
+                    },
+                    child: ButtonItemNavigator(
+                      currentTab: currentTab,
+                      tab: 3,
+                      icon: AppAssets.icProfile,
+                      textButton: 'Tài khoản',
+                      enableColorButton: kEnableColorButton,
+                      disenableColorButton: kDisenableColorButton,
+                      enableColorIcon: kEnableColorIcon,
+                      disenableColorIcon: kDisenableColorIcon,
+                      enableColorText: kEnableColorText,
+                      disenableColorText: kDisenableColorText,
+                    ),
+                  ),
+                  //Right
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

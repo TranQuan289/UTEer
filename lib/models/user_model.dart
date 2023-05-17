@@ -5,7 +5,6 @@ class Users {
   final String? email;
   final String? role;
   final String? msv;
-
   final String? major;
   final String? department;
 
