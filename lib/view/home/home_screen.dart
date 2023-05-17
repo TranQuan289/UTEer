@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uteer/models/user_model.dart';
 import 'package:uteer/utils/routes/routes_name.dart';
 
 import '../../res/constant/app_assets.dart';
@@ -10,21 +12,45 @@ import '../widgets/ui_card.dart';
 import '../widgets/ui_text.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String email;
+  const HomeScreen({super.key, required this.email});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-List imageList = [
-  {"id": 1, "image_path": AppAssets.banner1},
-  {"id": 2, "image_path": AppAssets.banner2},
-  {"id": 3, "image_path": AppAssets.banner3}
-];
-final CarouselController carouselController = CarouselController();
-int currentIndex = 0;
-
 class _HomeScreenState extends State<HomeScreen> {
+  Users? user;
+
+  @override
+  void initState() {
+    super.initState();
+    getUser(widget.email);
+  }
+
+  Future<void> getUser(String email) async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await db.collection('users').where('email', isEqualTo: email).get();
+    final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
+    if (documents.isNotEmpty) {
+      final Users user = Users.fromFirestore(documents.first, null);
+      setState(() {
+        this.user = user;
+      });
+    } else {
+      print('No user found with email: $email');
+    }
+  }
+
+  List imageList = [
+    {"id": 1, "image_path": AppAssets.banner1},
+    {"id": 2, "image_path": AppAssets.banner2},
+    {"id": 3, "image_path": AppAssets.banner3}
+  ];
+  final CarouselController carouselController = CarouselController();
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 UIText(
-                  'Trần Anh Quân',
+                  user?.name ?? "",
                   style: TextStyle(
                       fontSize: DimensManager.dimens.setSp(20),
                       color: Colors.white,
@@ -63,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.w800),
                 ),
                 UIText(
-                  '1911505310144',
+                  user?.msv ?? "",
                   style: TextStyle(
                       fontSize: DimensManager.dimens.setSp(14),
                       color: Colors.white,

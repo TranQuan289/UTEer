@@ -50,7 +50,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 UIText(
-                  'Bảo Ly',
+                  'Trần Quân',
                   style: TextStyle(
                       fontSize: DimensManager.dimens.setSp(16),
                       color: Colors.white,

@@ -29,11 +29,23 @@ class Routes {
       case RoutesName.forgotPassword:
         return MaterialPageRoute(builder: (BuildContext context) => const ForgotPasswordScreen());
       case RoutesName.home:
-        return MaterialPageRoute(builder: (BuildContext context) => const HomeScreen());
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (BuildContext context) => HomeScreen(
+                  email: args,
+                ));
       case RoutesName.profile:
-        return MaterialPageRoute(builder: (BuildContext context) => const ProfileScreen());
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (BuildContext context) => ProfileScreen(
+                  email: args,
+                ));
       case RoutesName.navigator:
-        return MaterialPageRoute(builder: (BuildContext context) => const NavigatorScreen());
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (BuildContext context) => NavigatorScreen(
+                  email: args,
+                ));
       case RoutesName.profileDetail:
         return MaterialPageRoute(builder: (BuildContext context) => const ProfileDetailScreen());
       case RoutesName.myQr:
@@ -69,8 +81,9 @@ class Routes {
     }
   }
 
-  static void goToHomeScreen(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(RoutesName.main, (Route<dynamic> route) => false);
+  static void goToHomeScreen(BuildContext context, {Object? arguments}) {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        RoutesName.main, arguments: arguments, (Route<dynamic> route) => false);
   }
 
   static void goToLoginScreen(BuildContext context) {
@@ -128,5 +141,9 @@ class Routes {
 
   static void goToTrainingPointScreen(BuildContext context) {
     Navigator.of(context).pushNamed(RoutesName.trainingPoint);
+  }
+
+  static void goToNavigatorScreen(BuildContext context, {String? arguments}) {
+    Navigator.of(context).pushNamed(RoutesName.navigator, arguments: arguments);
   }
 }

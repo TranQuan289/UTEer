@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uteer/res/constant/app_assets.dart';
+import 'package:uteer/utils/general_utils.dart';
+import 'package:uteer/utils/routes/routes.dart';
 import 'package:uteer/utils/routes/routes_name.dart';
 import 'package:uteer/view/constant/ui_text_styles.dart';
 import 'package:uteer/view/widgets/button.dart';
@@ -15,6 +19,7 @@ class SignInScreen extends StatefulWidget {
 
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
+bool isObscure = true;
 
 class _SignInScreenState extends State<SignInScreen> {
   @override
@@ -58,16 +63,33 @@ class _SignInScreenState extends State<SignInScreen> {
                   UITextInput(
                     controller: passwordController,
                     hint: 'example123@',
-                    isObscure: true,
+                    isObscure: isObscure,
                     keyboardType: TextInputType.visiblePassword,
+                    onSuffixIconPressed: () => setState(() {
+                      isObscure = !isObscure;
+                    }),
                   ),
                   const SizedBox(
                     height: 80,
                   ),
                   BasicButton(
                     text: 'Đăng nhập',
-                    onPressed: () {
-                      Navigator.pushNamed(context, RoutesName.navigator);
+                    onPressed: () async {
+                      try {
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                            email: emailController.text.toString().trim(),
+                            password: passwordController.text.toString().trim());
+                        if (!mounted) return;
+                        Routes.goToNavigatorScreen(context,
+                            arguments: emailController.text.toString().trim());
+                        emailController.text = "";
+                        passwordController.text = "";
+                      } catch (e) {
+                        Utils.showPopup(context,
+                            icon: AppAssets.icClose,
+                            title: "Đăng nhập không thành công",
+                            message: "Tài khoản hoặc mật khẩu không chính xác");
+                      }
                     },
                   ),
                   Center(

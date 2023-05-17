@@ -26,13 +26,13 @@ final List<Message> messages = [
   Message(
     me: true,
     avatar: SvgPicture.asset(AppAssets.avatar),
-    text: "Bạn hỏi đi nè",
+    text: "Bạn hỏi đi",
     isRead: true,
   ),
   Message(
     me: false,
     avatar: SvgPicture.asset(AppAssets.avatar),
-    text: "Sao bạn lại cộng sai điểm rèn luyện cho tôi thế?",
+    text: "Khi nào họp lớp nhỉ?",
     isRead: true,
   ),
   // Message(

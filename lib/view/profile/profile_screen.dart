@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:uteer/models/user_model.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/res/style/app_colors.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
@@ -13,21 +16,36 @@ const kIconSize = 24.0;
 const kBorderRadius = 50.0;
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final String email;
+  const ProfileScreen({super.key, required this.email});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  //late ProfileViewModel _viewModel;
-  // @override
-  // void initState() {
-  // _viewModel = ProfileViewModel(
-  //     userRepository: locator<UserRepository>(), authRepository: locator<AuthRepository>())
-  //   ..onInitView(context);
-  // super.initState();
-  // }
+  Users? user;
+
+  @override
+  void initState() {
+    super.initState();
+    getUser(widget.email);
+  }
+
+  Future<void> getUser(String email) async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await db.collection('users').where('email', isEqualTo: email).get();
+    final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
+    if (documents.isNotEmpty) {
+      final Users user = Users.fromFirestore(documents.first, null);
+      setState(() {
+        this.user = user;
+      });
+    } else {
+      print('No user found with email: $email');
+    }
+  }
 
   void _confirmSignout(BuildContext context) {
     Utils.showPopup(
@@ -46,11 +64,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         Flexible(
             child: UIOutlineButton(
-          title: 'Đăng xuất',
-          backgroundColor: AppColors.primaryColor,
-          titleStyle: const TextStyle(color: Colors.white),
-          onPressed: () => Routes.goToLoginScreen(context),
-        ))
+                title: 'Đăng xuất',
+                backgroundColor: AppColors.primaryColor,
+                titleStyle: const TextStyle(color: Colors.white),
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  if (!mounted) return;
+                  Routes.goToLoginScreen(context);
+                }))
       ]),
     );
   }
@@ -82,24 +103,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(
                     height: DimensManager.dimens.setHeight(16),
                   ),
-                  const UIText(
-                    'Trần Anh Quân',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
+                  UIText(
+                    user?.name ?? "",
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
                   ),
-                  const Text(
-                    '1911505310144',
-                    style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.white),
+                  UIText(
+                    user?.msv ?? "",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 12, color: Colors.white),
                   ),
                   SizedBox(
                     height: DimensManager.dimens.setHeight(12),
                   ),
-                  const Text(
-                    'Ngành Công Nghệ Thông Tin\nKhoa Công Nghệ Số',
+                  UIText(
+                    user?.major ?? "",
                     textAlign: TextAlign.center,
-                    style:
-                        TextStyle(fontWeight: FontWeight.w700, fontSize: 12, color: Colors.white),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w700, fontSize: 12, color: Colors.white),
+                  ),
+                  UIText(
+                    user?.department ?? "",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w700, fontSize: 12, color: Colors.white),
                   ),
                   SizedBox(
                     height: DimensManager.dimens.setHeight(12),

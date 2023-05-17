@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uteer/res/constant/app_assets.dart';
+import 'package:uteer/utils/general_utils.dart';
 import 'package:uteer/utils/routes/routes_name.dart';
 import 'package:uteer/view/widgets/ui_textinput.dart';
 
@@ -48,7 +51,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                   BasicButton(
                     text: 'Gửi thông tin',
-                    onPressed: () {},
+                    onPressed: () async {
+                      try {
+                        if (emailController.text.trim() == "") return;
+                        await FirebaseAuth.instance
+                            .sendPasswordResetEmail(email: emailController.text.toString().trim());
+                        if (!mounted) return;
+                        Utils.showPopup(context,
+                            icon: AppAssets.icCheck,
+                            title: "Yêu cầu thành công",
+                            message:
+                                "Email đổi mật khẩu đã được gửi đến\nVui lòng kiểm tra email ");
+                      } catch (e) {}
+                    },
                   ),
                   Center(
                     child: BackTextButton(

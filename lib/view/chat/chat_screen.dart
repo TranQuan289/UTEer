@@ -26,7 +26,7 @@ class _ChatScreenState extends State<ChatScreen> {
     List itemChat = [
       UiItemChat(
         activeAvatar: true,
-        textName: 'Bảo Ly',
+        textName: 'Trần Quân',
         fontWeightName: FontWeight.w700,
         textChat: 'Sao bạn cộng sai điểm rèn luyện cho tôi thế?',
         colorTextChat: AppColors.inFieldTextColor,

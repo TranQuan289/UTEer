@@ -14,7 +14,8 @@ import 'package:uteer/viewmodels/main_screen_view_model.dart';
 import '../profile/profile_screen.dart';
 
 class NavigatorScreen extends StatefulWidget {
-  const NavigatorScreen({Key? key}) : super(key: key);
+  final String email;
+  const NavigatorScreen({Key? key, required this.email}) : super(key: key);
 
   @override
   NavigatorScreenState createState() => NavigatorScreenState();
@@ -29,16 +30,17 @@ class NavigatorScreenState extends State<NavigatorScreen> {
   Color kDisenableColorText = AppColors.disableItemColor;
 
   int currentTab = 0;
-  final List<Widget> screens = [
-    const HomeScreen(),
-    const ChatScreen(),
-    const NotificationScreen(),
-    const ProfileScreen(),
-  ];
+  late List<Widget> screens;
   final PageStorageBucket bucket = PageStorageBucket();
   late MainScreenViewModel _viewModel;
   @override
   void initState() {
+    screens = [
+      HomeScreen(email: widget.email),
+      const ChatScreen(),
+      const NotificationScreen(),
+      ProfileScreen(email: widget.email),
+    ];
     _viewModel = MainScreenViewModel()..onInitView(context);
     _viewModel.changeCurrentTab = changeCurrentTab;
     super.initState();
