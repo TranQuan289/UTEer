@@ -24,7 +24,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  Users? user;
+  UsersModel? user;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         await db.collection('users').where('email', isEqualTo: email).get();
     final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
     if (documents.isNotEmpty) {
-      final Users user = Users.fromFirestore(documents.first, null);
+      final UsersModel user = UsersModel.fromFirestore(documents.first, null);
       setState(() {
         this.user = user;
       });

@@ -1,96 +1,238 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:uteer/models/scholarship_model.dart';
+import 'package:uteer/repository/scholarship_repository.dart';
+import 'package:uteer/res/constant/app_assets.dart';
+import 'package:uteer/res/style/app_colors.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
+import 'package:uteer/utils/general_utils.dart';
+import 'package:uteer/utils/log_utils.dart';
+import 'package:uteer/view/scholarship/add_scholarship_screen.dart';
 import 'package:uteer/view/scholarship/widget/scholarship_item.dart';
 import 'package:uteer/view/widgets/appbar.dart';
 import 'package:uteer/view/widgets/ui_dropdown_input.dart';
+import 'package:uteer/view/widgets/ui_empty_png_screen.dart';
+import 'package:uteer/view/widgets/ui_outlined_button.dart';
 import 'package:uteer/view/widgets/ui_search_input.dart';
 import 'package:uteer/view/widgets/ui_text.dart';
+import 'package:uteer/viewmodels/scholarship/scholarship_viewmodel.dart';
 
 class EncouragingStudyScreen extends StatefulWidget {
-  const EncouragingStudyScreen({Key? key}) : super(key: key);
-
+  const EncouragingStudyScreen({Key? key, required this.rule}) : super(key: key);
+  final String rule;
   @override
   _EncouragingStudyScreenState createState() => _EncouragingStudyScreenState();
 }
 
 class _EncouragingStudyScreenState extends State<EncouragingStudyScreen> {
-  List<ScholarshipModel> scholarships = [];
-  @override
-  void initState() {
-    super.initState();
-    getScholarships();
+  late ScholarshipViewModel viewModel;
+  String? rankDropdownValue = "Tất cả";
+
+  // Phương thức để lấy giá trị của dropdown xếp loại học bổng
+  String? getRankDropdownValue() {
+    return rankDropdownValue;
   }
 
-  Future<void> getScholarships() async {
-    final FirebaseFirestore db = FirebaseFirestore.instance;
-    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await db.collection('scholarship').get();
-    final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
-    if (documents.isNotEmpty) {
-      final List<ScholarshipModel> scholarships = documents.map((doc) {
-        return ScholarshipModel.fromFirestore(doc, null);
-      }).toList();
-      setState(() {
-        this.scholarships = scholarships;
-      });
-    } else {
-      print('No scholarships');
-    }
+  String? classDropdownValue = "Tất cả";
+
+  // Phương thức để lấy giá trị của dropdown xếp loại học bổng
+  String? getClassDropdownValue() {
+    return classDropdownValue;
+  }
+
+  @override
+  void initState() {
+    viewModel = ScholarshipViewModel(repository: ScholarshipRepository())..onInitView(context);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(context, 'Học bổng học tập'),
-      body: Column(
-        children: [
-          Container(
-              color: Colors.white,
-              width: DimensManager.dimens.setWidth(390),
-              height: DimensManager.dimens.setHeight(48),
-              child: const UISearchInput()),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(children: [
-              Flexible(
-                child: UIDropdownInput(
-                  title: "Lớp",
-                  hint: "Chọn",
-                  list: const ["Tất cả", "19T2", "19T1"],
-                  initValue: "Tất cả",
-                  onChanged: (String? val) {
-                    if (val != null) {}
-                  },
+    return ChangeNotifierProvider.value(
+      value: viewModel,
+      child: Scaffold(
+        appBar: appBar(
+          context,
+          'Học bổng học tập',
+          actions: [
+            if (widget.rule == "ctsv") ...[
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AddScholarshipScreen()),
                 ),
               ),
-              SizedBox(
-                width: DimensManager.dimens.setWidth(10),
-              ),
-              Flexible(
-                child: UIDropdownInput(
-                  title: "Xếp loại học bổng",
-                  hint: "Chọn",
-                  list: const ["Tất cả", "Xuất Xắc", "Giỏi", "Khá"],
-                  initValue: "Tất cả",
-                  onChanged: (p0) => null,
+              const SizedBox(
+                width: 20,
+              )
+            ]
+          ],
+        ),
+        body: Column(
+          children: [
+            Container(
+                color: Colors.white,
+                width: DimensManager.dimens.setWidth(390),
+                height: DimensManager.dimens.setHeight(48),
+                child: UISearchInput(
+                  onChangeValue: (String value) => viewModel.getSearch(value.trim()),
+                )),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(children: [
+                Flexible(
+                  child: UIDropdownInput(
+                    title: "Lớp",
+                    hint: "Chọn",
+                    list: const [
+                      "Tất cả",
+                      "19C1",
+                      "19C2",
+                      "19CDT1",
+                      "19CDT2",
+                      "19D1",
+                      "19D2",
+                      "19DL1",
+                      "19DL2",
+                      "19DT1",
+                      "19HTP1",
+                      "19MT1",
+                      "19N1",
+                      "19SK1",
+                      "19SU1",
+                      "19T1",
+                      "19T2",
+                      "19VL1",
+                      "19VL2"
+                    ],
+                    initValue: classDropdownValue,
+                    onChanged: (String? classValue) {
+                      setState(() {
+                        classDropdownValue = classValue;
+                      });
+                      String? rankValue = getRankDropdownValue();
+                      if (classValue == "Tất cả" && rankValue == "Tất cả") {
+                        viewModel.getScholarship();
+                      } else {
+                        if (rankValue == "Tất cả") {
+                          viewModel.getSearchClass(classValue!);
+                          return;
+                        }
+                        viewModel.getCombinedSearch(classValue!, rankValue!);
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ]),
-          ),
-          const UIText("HỌC KỲ I NĂM HỌC 2022-2023"),
-          Expanded(
-            child: ListView.builder(
-              itemCount: scholarships.length,
-              itemBuilder: (context, index) {
-                final scholarship = scholarships[index];
-                return ScheduleItemWidget(scholarship); // your scholarship item widget
-              },
+                SizedBox(
+                  width: DimensManager.dimens.setWidth(10),
+                ),
+                Flexible(
+                  child: UIDropdownInput(
+                    title: "Xếp loại học bổng",
+                    hint: "Chọn",
+                    list: const ["Tất cả", "Xuất Sắc", "Giỏi", "Khá"],
+                    initValue: rankDropdownValue,
+                    onChanged: (String? rankValue) {
+                      setState(() {
+                        rankDropdownValue = rankValue;
+                      });
+                      String? classValue = getClassDropdownValue(); // Lấy giá trị của dropdown lớp
+                      if (classValue == "Tất cả" && rankValue == "Tất cả") {
+                        viewModel.getScholarship();
+                      } else {
+                        if (classValue == "Tất cả") {
+                          viewModel.getSearchRank(rankValue!);
+                          return;
+                        }
+                        viewModel.getCombinedSearch(classValue!, rankValue!);
+                      }
+                    },
+                  ),
+                )
+              ]),
             ),
-          ),
-        ],
+            const UIText("HỌC KỲ I NĂM HỌC 2022-2023"),
+            Expanded(
+              child: Selector<ScholarshipViewModel, List<ScholarshipModel>>(
+                shouldRebuild: (previous, next) => true,
+                selector: (_, viewModel) => viewModel.listScholarship,
+                builder: (context, value, child) => viewModel.listScholarship.isNotEmpty
+                    ? SlidableAutoCloseBehavior(
+                        closeWhenOpened: true,
+                        child: ListView.builder(
+                          itemCount: viewModel.listScholarship.length,
+                          itemBuilder: (context, index) {
+                            final scholarship = viewModel.listScholarship[index];
+                            return Slidable(
+                                endActionPane: widget.rule != "ctsv"
+                                    ? null
+                                    : ActionPane(
+                                        extentRatio: 0.2,
+                                        motion: const BehindMotion(),
+                                        children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: DimensManager.dimens.setWidth(12)),
+                                              child: IconButton(
+                                                  onPressed: () {
+                                                    Utils.showPopup(
+                                                      context,
+                                                      icon: AppAssets.icBin,
+                                                      title: 'Xoá sinh viên nhận học bổng',
+                                                      message:
+                                                          'Bạn có chắc chắn muốn sinh viên này không?',
+                                                      action: Row(children: [
+                                                        Flexible(
+                                                            child: UIOutlineButton(
+                                                          title: 'Huỷ',
+                                                          onPressed: () =>
+                                                              Navigator.of(context).pop(),
+                                                        )),
+                                                        SizedBox(
+                                                          width: DimensManager.dimens.setWidth(16),
+                                                        ),
+                                                        Flexible(
+                                                            child: UIOutlineButton(
+                                                                title: 'Xoá',
+                                                                backgroundColor:
+                                                                    AppColors.primaryColor,
+                                                                titleStyle: const TextStyle(
+                                                                    color: Colors.white),
+                                                                onPressed: () {
+                                                                  viewModel.deleteDocument(
+                                                                      scholarship.documentId);
+                                                                  Navigator.of(context).pop();
+                                                                }))
+                                                      ]),
+                                                    );
+                                                  },
+                                                  icon: SvgPicture.asset(AppAssets.icBin)),
+                                            )
+                                          ]),
+                                child: ScheduleItemWidget(
+                                    scholarship)); // your scholarship item widget
+                          },
+                        ),
+                      )
+                    : const UIEmptyPngScreen(
+                        iconAsset: AppAssets.icScholarShip1,
+                        title: 'Không có danh sách học bổng nào!',
+                        message:
+                            'Không có danh sách sinh viên nhận học bổng nào.\nVui lòng kiểm tra lại!',
+                      ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  void didPopNext() {
+    LogUtils.methodIn();
+    viewModel.shouldOnRefreshHandler();
   }
 }

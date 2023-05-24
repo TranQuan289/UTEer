@@ -1,27 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Users {
+class UsersModel {
   final String? name;
   final String? email;
-  final String? role;
+  final String? rule;
   final String? msv;
   final String? major;
   final String? department;
+  final String? classRoom;
+  final String? phone;
 
-  Users({this.major, this.department, this.name, this.email, this.role, this.msv});
+  UsersModel(
+      {this.classRoom,
+      this.phone,
+      this.major,
+      this.department,
+      this.name,
+      this.email,
+      this.rule,
+      this.msv});
 
-  factory Users.fromFirestore(
+  factory UsersModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    return Users(
+    return UsersModel(
       name: data?['name'],
       email: data?['email'],
-      role: data?['role'],
+      rule: data?['rule'],
       msv: data?['msv'],
       major: data?['major'],
       department: data?['department'],
+      classRoom: data?['classRoom'],
+      phone: data?['phone'],
     );
   }
 
@@ -29,10 +41,12 @@ class Users {
     return {
       if (name != null) "name": name,
       if (email != null) "email": email,
-      if (role != null) "role": role,
+      if (rule != null) "rule": rule,
       if (msv != null) "msv": msv,
       if (major != null) "major": major,
-      if (department != null) "msv": department,
+      if (department != null) "department": department,
+      if (classRoom != null) "classRoom": classRoom,
+      if (phone != null) "phone": phone,
     };
   }
 }

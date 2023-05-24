@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uteer/models/training_point_model.dart';
-import 'package:uteer/models/user_model.dart';
 import 'package:uteer/res/style/app_colors.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
 import 'package:uteer/view/widgets/appbar.dart';
@@ -18,28 +17,12 @@ class TrainingPointsScreen extends StatefulWidget {
 
 class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
   TrainingPoints? trainingPoint;
-  Users? user;
 
   @override
   void initState() {
     super.initState();
-    getUser(widget.email);
-    getTrainingPoint(widget.email);
-  }
 
-  Future<void> getUser(String email) async {
-    final FirebaseFirestore db = FirebaseFirestore.instance;
-    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await db.collection('users').where('email', isEqualTo: email).get();
-    final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
-    if (documents.isNotEmpty) {
-      final Users user = Users.fromFirestore(documents.first, null);
-      setState(() {
-        this.user = user;
-      });
-    } else {
-      print('No user found with email: $email');
-    }
+    getTrainingPoint(widget.email);
   }
 
   Future<void> getTrainingPoint(String email) async {

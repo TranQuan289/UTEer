@@ -26,7 +26,7 @@ class TrainingPoints {
   final int? study5;
   final int? study6;
   final int? trainingPoint;
-  final int? trainingPoint1;
+  late final int? trainingPoint1;
   final int? trainingPoint2;
   final int? trainingPoint3;
   final int? trainingPoint4;

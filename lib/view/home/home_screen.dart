@@ -21,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Users? user;
+  UsersModel? user;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         await db.collection('users').where('email', isEqualTo: email).get();
     final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
     if (documents.isNotEmpty) {
-      final Users user = Users.fromFirestore(documents.first, null);
+      final UsersModel user = UsersModel.fromFirestore(documents.first, null);
       setState(() {
         this.user = user;
       });
@@ -208,12 +208,13 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ItemScholarshipUI(
-                onTap: () => Navigator.pushNamed(context, RoutesName.encouragingStudy),
+                onTap: () => Routes.goToScholarshipScreen(context, arguments: user?.rule),
                 icon: AppAssets.icScholarShip1,
                 text: 'Học tập',
               ),
               ItemScholarshipUI(
-                onTap: () => Navigator.pushNamed(context, RoutesName.uteScholarship),
+                onTap: () => Navigator.pushNamed(context, RoutesName.uteScholarship,
+                    arguments: user?.rule ?? ""),
                 icon: AppAssets.icScholarShip2,
                 text: 'UTE',
               ),

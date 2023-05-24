@@ -12,10 +12,9 @@ class UIEmptyPngScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: DimensManager.dimens.setHeight(190),
-          ),
           Opacity(
             opacity: 0.2,
             child: Image.asset(

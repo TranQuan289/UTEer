@@ -64,10 +64,7 @@ class NavigatorScreenState extends State<NavigatorScreen> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: PageStorage(
-        bucket: bucket,
-        child: screens[currentTab],
-      ),
+      body: screens[currentTab],
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 10,

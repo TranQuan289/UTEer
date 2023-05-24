@@ -68,7 +68,11 @@ class Routes {
         return MaterialPageRoute(
             builder: (BuildContext context) => const TrainingPointsHistoryScreen());
       case RoutesName.encouragingStudy:
-        return MaterialPageRoute(builder: (BuildContext context) => const EncouragingStudyScreen());
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (BuildContext context) => EncouragingStudyScreen(
+                  rule: args,
+                ));
       case RoutesName.uteScholarship:
         return MaterialPageRoute(builder: (BuildContext context) => const UteScholarshipScreen());
       case RoutesName.outsideScholarship:
@@ -149,5 +153,9 @@ class Routes {
 
   static void goToNavigatorScreen(BuildContext context, {String? arguments}) {
     Navigator.of(context).pushNamed(RoutesName.navigator, arguments: arguments);
+  }
+
+  static void goToScholarshipScreen(BuildContext context, {String? arguments}) {
+    Navigator.of(context).pushNamed(RoutesName.encouragingStudy, arguments: arguments);
   }
 }
