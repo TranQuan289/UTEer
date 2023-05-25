@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uteer/models/user_model.dart';
 
-import '../services/network_api_service.dart';
-
 class UsersRepository {
-  final NetworkApiServices _apiServices = NetworkApiServices();
-
   Future<List<UsersModel>> getUsers() async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     final QuerySnapshot<Map<String, dynamic>> querySnapshot = await db.collection('users').get();

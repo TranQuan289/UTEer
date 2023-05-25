@@ -23,6 +23,7 @@ class AppAssets {
   static const String icGoogle = "assets/icons/ic-google-flat.svg";
   static const String icCall = "assets/icons/ic-call.svg";
   static const String icNotification = "assets/icons/ic-notification.svg";
+  static const String icNotificationMini = "assets/icons/ic-notification-mini.png";
   static const String icTrainingPoint = "assets/icons/ic-training-point.png";
   static const String icBloodRequest = "assets/icons/ic-blood-request.svg";
   static const String icCalendar = "assets/icons/ic-calendar.svg";

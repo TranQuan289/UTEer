@@ -19,7 +19,7 @@ class AddScholarshipScreen extends StatefulWidget {
 
 class _AddScholarshipScreenState extends State<AddScholarshipScreen> {
   late UsersViewModel viewModel;
-
+  String? mtoken = "";
   String? classRoom1;
   String? rank1;
   String? msv1;

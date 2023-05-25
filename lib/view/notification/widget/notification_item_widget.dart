@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart' hide Notification;
+import 'package:uteer/models/notification_model.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/res/style/app_colors.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
+import 'package:uteer/view/widgets/ui_text.dart';
 
 const kThumbnailSize = 56.0;
 
 class NotificationItemWidget extends StatelessWidget {
-  const NotificationItemWidget({super.key});
-
+  NotificationItemWidget({required this.notification, super.key});
+  NotificationModel notification;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -30,66 +32,60 @@ class NotificationItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildTitle(),
-                  const Text(
-                    "Thông báo tất cả viên hoàn thành việc tự chấm điểm rèn luyện trước",
-                    maxLines: 1,
+                  UIText(notification.title ?? "",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                          color: AppColors.primaryColor)),
+                  UIText(
+                    notification.describe ?? "",
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style:
-                        TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.gray),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w400, fontSize: 14, color: AppColors.gray),
                   ),
                   SizedBox(
                     height: DimensManager.dimens.setHeight(8),
                   ),
-                  const Text(
-                    "10 phút trước",
-                    style:
-                        TextStyle(fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.blue),
+                  Text(
+                    calculateTimeAgo(notification.time),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.blue),
                   )
                 ],
               ),
             ),
-            // if (!notification.isRead)
-            //   Padding(
-            //     padding: const EdgeInsets.only(top: 8),
-            //     child: SizedBox(
-            //       width: 16,
-            //       child: Container(
-            //         width: 7,
-            //         height: 7,
-            //         decoration: const BoxDecoration(
-            //             color: AppColors.primaryColor, shape: BoxShape.circle),
-            //       ),
-            //     ),
-            //   )
           ],
         ),
       ),
     );
   }
 
+  String calculateTimeAgo(DateTime? time) {
+    if (time == null) {
+      return '';
+    }
+
+    final now = DateTime.now();
+    final difference = now.difference(time);
+
+    if (difference.inSeconds < 60) {
+      return '${difference.inSeconds} giây trước';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} phút trước';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} giờ trước';
+    } else {
+      return '${difference.inDays} ngày trước';
+    }
+  }
+
   Widget _buildThumbnail() {
     return Image.asset(
-      AppAssets.icTrainingPoint,
+      AppAssets.icNotificationMini,
       width: DimensManager.dimens.setWidth(kThumbnailSize),
       height: DimensManager.dimens.setWidth(kThumbnailSize),
       fit: BoxFit.cover,
     );
   }
-}
-
-Widget _buildTitle() {
-  return RichText(
-    text: const TextSpan(
-      text: "Thông báo",
-      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.primaryColor),
-      children: <TextSpan>[
-        TextSpan(
-          text: ' về việc chấm điểm rèn luyện',
-          style: TextStyle(
-              fontWeight: FontWeight.w500, fontSize: 15, color: AppColors.disableItemColor),
-        ),
-      ],
-    ),
-  );
 }

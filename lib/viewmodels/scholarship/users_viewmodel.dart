@@ -7,6 +7,7 @@ import 'package:uteer/utils/general_utils.dart';
 import 'package:uteer/viewmodels/base_view_model.dart';
 
 CollectionReference scholarship = FirebaseFirestore.instance.collection('scholarship');
+CollectionReference notification = FirebaseFirestore.instance.collection('notification');
 
 class UsersViewModel extends BaseViewModel {
   final UsersRepository repository;
@@ -78,6 +79,14 @@ class UsersViewModel extends BaseViewModel {
           'rank': rank,
           'bonus': bonus,
         });
+        await notification.add({
+          'name': name,
+          'msv': msv,
+          'title': "Thông báo về học bổng",
+          'describe': "Chúc mừng bạn đã nhận được học bổng $rank kì vừa rồi",
+          'time': Timestamp.fromDate(DateTime.now()),
+        });
+
         Utils.showPopup(context,
             icon: AppAssets.icCheck,
             title: "Thêm sinh viên thành công",
@@ -91,5 +100,15 @@ class UsersViewModel extends BaseViewModel {
     } catch (error) {
       print('Failed to add scholarship: $error');
     }
+  }
+
+  Future<void> addNotification({
+    required String name,
+    required String msv,
+    required String title,
+    required String describe,
+    required DateTime time,
+  }) async {
+    try {} catch (e) {}
   }
 }

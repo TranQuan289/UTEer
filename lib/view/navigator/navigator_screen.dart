@@ -35,7 +35,7 @@ class NavigatorScreenState extends State<NavigatorScreen> {
     screens = [
       HomeScreen(email: widget.email),
       const ChatScreen(),
-      const NotificationScreen(),
+      NotificationScreen(email: widget.email),
       ProfileScreen(email: widget.email),
     ];
     super.initState();
