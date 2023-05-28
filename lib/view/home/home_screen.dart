@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uteer/models/open_training_point_model.dart';
 import 'package:uteer/models/user_model.dart';
 import 'package:uteer/utils/routes/routes.dart';
 import 'package:uteer/utils/routes/routes_name.dart';
@@ -12,6 +13,8 @@ import '../../utils/dimens/dimens_manager.dart';
 import '../widgets/ui_card.dart';
 import '../widgets/ui_text.dart';
 
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+
 class HomeScreen extends StatefulWidget {
   final String email;
   const HomeScreen({super.key, required this.email});
@@ -22,11 +25,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   UsersModel? user;
+  OpenTrainingPointModel? openTrainingPointModel;
 
   @override
   void initState() {
     super.initState();
     getUser(widget.email);
+    getOpenTrainingPoint();
   }
 
   Future<void> getUser(String email) async {
@@ -42,6 +47,33 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       print('No user found with email: $email');
     }
+  }
+
+  Future<void> getOpenTrainingPoint() async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await db.collection('openTrainingPoints').get();
+    final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
+    if (documents.isNotEmpty) {
+      final OpenTrainingPointModel openTrainingPointModel =
+          OpenTrainingPointModel.fromFirestore(documents.first, null);
+      setState(() {
+        this.openTrainingPointModel = openTrainingPointModel;
+      });
+    } else {
+      print("no open");
+    }
+  }
+
+  Future<void> updateOpenTrainingPoint({required bool open, required DateTime dateTime}) {
+    return firestore
+        .collection('openTrainingPoints')
+        .doc('Abw0VWORrldCQFifKqut')
+        .update(
+          {'open': open, 'dateTime': dateTime},
+        )
+        .then((value) => getOpenTrainingPoint())
+        .catchError((error) => print("Failed to update document: $error"));
   }
 
   List imageList = [
@@ -243,21 +275,56 @@ class _HomeScreenState extends State<HomeScreen> {
       const SizedBox(height: 12),
       Row(
         children: [
-          CardHome(
-            onTap: () => Routes.goToTrainingPointScreen(context, arguments: user?.email ?? ""),
-            color: AppColors.blue,
-            icon: AppAssets.icTrainingPoint,
-            text: 'Tự đánh giá\n điểm rèn luyện',
-            height: 200,
-          ),
+          if (user?.rule == "ctsv") ...[
+            if ((openTrainingPointModel?.open ?? true) ||
+                DateTime.now().difference(openTrainingPointModel?.time ?? DateTime.now()).inDays >=
+                    10) ...[
+              CardHome(
+                onTap: () => {updateOpenTrainingPoint(open: false, dateTime: DateTime.now())},
+                color: AppColors.errorMsg,
+                icon: AppAssets.icTrainingPoint,
+                text: 'Đóng đánh giá\n điểm rèn luyện',
+                height: 200,
+              ),
+            ] else ...[
+              CardHome(
+                onTap: () => {updateOpenTrainingPoint(open: true, dateTime: DateTime.now())},
+                color: AppColors.blue,
+                icon: AppAssets.icTrainingPoint,
+                text: 'Mở đánh giá\n điểm rèn luyện',
+                height: 200,
+              ),
+            ]
+          ] else ...[
+            CardHome(
+              onTap: () => Routes.goToTrainingPointScreen(context, arguments: user?.email ?? ""),
+              color: AppColors.blue,
+              icon: AppAssets.icTrainingPoint,
+              text: 'Tự đánh giá\n điểm rèn luyện',
+              height: 200,
+            ),
+          ],
           SizedBox(width: DimensManager.dimens.setSp(18)),
-          CardHome(
-            onTap: () => Navigator.pushNamed(context, RoutesName.trainingPointHistory),
-            color: AppColors.lightBlue,
-            icon: AppAssets.icHistoryMini,
-            text: 'Xem lịch sử\n điểm rèn luyện',
-            height: 200,
-          ),
+          if (user?.rule != "student") ...[
+            CardHome(
+              onTap: () => Routes.goToTrainingPointCtsvHistoryScreen(
+                context,
+              ),
+              color: AppColors.lightBlue,
+              icon: AppAssets.icHistoryMini,
+              text: 'Xem danh sách\n điểm rèn luyện',
+              height: 200,
+            ),
+          ] else ...[
+            CardHome(
+              onTap: () =>
+                  Routes.goToTrainingPointHistoryScreen(context, arguments: user?.email ?? ""),
+              color: AppColors.lightBlue,
+              icon: AppAssets.icHistoryMini,
+              text: 'Xem lịch sử\n điểm rèn luyện',
+              height: 200,
+            ),
+          ]
         ],
       )
     ]);

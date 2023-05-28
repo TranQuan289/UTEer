@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class TrainingPoints {
+class TrainingPointModel {
+  final String documentId;
   final int? activate1;
   final int? activate2;
   final int? activate3;
@@ -9,7 +10,7 @@ class TrainingPoints {
   final int? monitor2;
   final int? monitor3;
   final int? monitor4;
-  final DocumentReference? msv;
+  final String? msv;
   final int? relation1;
   final int? relation2;
   final int? relation3;
@@ -31,46 +32,52 @@ class TrainingPoints {
   final int? trainingPoint3;
   final int? trainingPoint4;
   final int? trainingPoint5;
+  final String? gvcn;
+  final bool? history;
+  final String? rank;
+  TrainingPointModel(
+      {required this.documentId,
+      this.activate1,
+      this.activate2,
+      this.activate3,
+      this.activate4,
+      this.monitor1,
+      this.monitor2,
+      this.monitor3,
+      this.monitor4,
+      this.msv,
+      this.relation1,
+      this.relation2,
+      this.relation3,
+      this.relation4,
+      this.relation5,
+      this.rules1,
+      this.rules2,
+      this.rules3,
+      this.rules4,
+      this.study1,
+      this.study2,
+      this.study3,
+      this.study4,
+      this.study5,
+      this.study6,
+      this.trainingPoint,
+      this.trainingPoint1,
+      this.trainingPoint2,
+      this.trainingPoint3,
+      this.trainingPoint4,
+      this.trainingPoint5,
+      this.gvcn,
+      this.rank,
+      this.history});
 
-  TrainingPoints({
-    this.activate1,
-    this.activate2,
-    this.activate3,
-    this.activate4,
-    this.monitor1,
-    this.monitor2,
-    this.monitor3,
-    this.monitor4,
-    this.msv,
-    this.relation1,
-    this.relation2,
-    this.relation3,
-    this.relation4,
-    this.relation5,
-    this.rules1,
-    this.rules2,
-    this.rules3,
-    this.rules4,
-    this.study1,
-    this.study2,
-    this.study3,
-    this.study4,
-    this.study5,
-    this.study6,
-    this.trainingPoint,
-    this.trainingPoint1,
-    this.trainingPoint2,
-    this.trainingPoint3,
-    this.trainingPoint4,
-    this.trainingPoint5,
-  });
-
-  factory TrainingPoints.fromFirestore(
+  factory TrainingPointModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    return TrainingPoints(
+    return TrainingPointModel(
+      documentId: snapshot.id,
       activate1: data?["activate1"],
       activate2: data?["activate2"],
       activate3: data?["activate3"],
@@ -101,10 +108,14 @@ class TrainingPoints {
       trainingPoint3: data?["trainingPoint3"],
       trainingPoint4: data?["trainingPoint4"],
       trainingPoint5: data?["trainingPoint5"],
+      gvcn: data?["gvcn"],
+      history: data?["history"],
+      rank: data?["rank"],
     );
   }
   Map<String, dynamic> toFirestore() {
     return {
+      if (documentId != null) "Document ID": documentId,
       if (activate1 != null) 'activate1': activate1,
       if (activate2 != null) 'activate2': activate2,
       if (activate3 != null) 'activate3': activate3,
@@ -135,6 +146,9 @@ class TrainingPoints {
       if (trainingPoint3 != null) 'trainingPoint3': trainingPoint3,
       if (trainingPoint4 != null) 'trainingPoint4': trainingPoint4,
       if (trainingPoint5 != null) 'trainingPoint5': trainingPoint5,
+      if (gvcn != null) 'gvcn': gvcn,
+      if (history != null) 'history': history,
+      if (rank != null) 'rank': rank,
     };
   }
 }

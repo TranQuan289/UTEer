@@ -149,6 +149,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               }),
               _profileItem(AppAssets.icSupport, 'Liên hệ', onTap: () {
                 Navigator.pushNamed(context, RoutesName.contact);
+
+                // CollectionReference users = FirebaseFirestore.instance.collection('users');
+                // users
+                //     .add({
+                //       'name': 'Nguyễn Đông',
+                //       'email': '1911514110105@sv.ute.udn.vn',
+                //       'msv': '1911514110105',
+                //       'classRoom': '19SK1',
+                //       'major': 'Công nghệ Kỹ thuật Ô tô',
+                //       'department': 'Sư Phạm Công Nghiệp',
+                //       'phone': '0901929194',
+                //       'rule': 'student',
+                //     })
+                //     .then((value) => print('User added'))
+                //     .catchError((error) => print('Failed to add user: $error'));
               }),
               _profileItem(AppAssets.icSignOut, 'Đăng xuất', onTap: () {
                 _confirmSignout(context);

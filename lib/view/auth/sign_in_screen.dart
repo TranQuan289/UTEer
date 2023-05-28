@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uteer/models/open_training_point_model.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/utils/general_utils.dart';
 import 'package:uteer/utils/routes/routes.dart';
@@ -17,11 +19,34 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-TextEditingController emailController = TextEditingController();
-TextEditingController passwordController = TextEditingController();
-bool isObscure = true;
-
 class _SignInScreenState extends State<SignInScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool isObscure = true;
+  OpenTrainingPointModel? openTrainingPointModel;
+
+  @override
+  void initState() {
+    super.initState();
+    getOpenTrainingPoint();
+  }
+
+  Future<void> getOpenTrainingPoint() async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await db.collection('openTrainingPoints').get();
+    final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
+    if (documents.isNotEmpty) {
+      final OpenTrainingPointModel openTrainingPointModel =
+          OpenTrainingPointModel.fromFirestore(documents.first, null);
+      setState(() {
+        this.openTrainingPointModel = openTrainingPointModel;
+      });
+    } else {
+      print("no open");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +107,22 @@ class _SignInScreenState extends State<SignInScreen> {
                         if (!mounted) return;
                         Routes.goToNavigatorScreen(context,
                             arguments: emailController.text.toString().trim());
+
+                        if (openTrainingPointModel?.open ??
+                            false ||
+                                (DateTime.now()
+                                        .difference(openTrainingPointModel?.time ?? DateTime.now())
+                                        .inDays <=
+                                    10)) {
+                          Utils.showPopup(
+                            context,
+                            icon: AppAssets.icCheck,
+                            title: "Chấm điểm rèn luyện đã được mở",
+                            message:
+                                "Thời gian chấm điểm rèn luyện cho học kì ${openTrainingPointModel?.semester} còn ${calculateRemainingTime()}",
+                          );
+                        }
+
                         emailController.text = "";
                         passwordController.text = "";
                       } catch (e) {
@@ -110,5 +151,19 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
+  }
+
+  String calculateRemainingTime() {
+    if (openTrainingPointModel?.time != null) {
+      final now = DateTime.now();
+      final remainingDuration = openTrainingPointModel!.time!.difference(now);
+      final remainingDays = remainingDuration.inDays;
+      final remainingHours = remainingDuration.inHours % 24;
+      final remainingMinutes = remainingDuration.inMinutes % 60;
+
+      return "Còn $remainingDays ngày, $remainingHours giờ và $remainingMinutes phút";
+    }
+
+    return "";
   }
 }

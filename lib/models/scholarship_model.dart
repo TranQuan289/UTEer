@@ -17,8 +17,8 @@ class ScholarshipModel {
   ) {
     final data = snapshot.data();
     return ScholarshipModel(
-      documentId: snapshot.id, // Gán Document ID vào trường documentId
-      name: data?['name'] ?? '', // Kiểm tra và gán giá trị mặc định là chuỗi rỗng nếu null
+      documentId: snapshot.id, // Gán Document ID
+      name: data?['name'] ?? '',
       classRoom: data?['classRoom'] ?? '',
       rank: data?['rank'] ?? '',
       msv: data?['msv'] ?? '',

@@ -16,6 +16,7 @@ import 'package:uteer/view/scholarship/UTE_scholarship_screen.dart';
 import 'package:uteer/view/scholarship/encouraging_study_screen.dart';
 import 'package:uteer/view/scholarship/outside_scholarship_screen.dart';
 import 'package:uteer/view/splash_screen.dart';
+import 'package:uteer/view/training_points/training_points_ctsv_history_screen.dart';
 import 'package:uteer/view/training_points/training_points_history_screen.dart';
 import 'package:uteer/view/training_points/training_points_screen.dart';
 
@@ -65,8 +66,14 @@ class Routes {
                   email: args,
                 ));
       case RoutesName.trainingPointHistory:
+        final args = settings.arguments as String;
         return MaterialPageRoute(
-            builder: (BuildContext context) => const TrainingPointsHistoryScreen());
+            builder: (BuildContext context) => TrainingPointsHistoryScreen(
+                  email: args,
+                ));
+      case RoutesName.trainingPointCtsvHistory:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const TrainingPointsCtsvHistoryScreen());
       case RoutesName.encouragingStudy:
         final args = settings.arguments as String;
         return MaterialPageRoute(
@@ -149,6 +156,16 @@ class Routes {
 
   static void goToTrainingPointScreen(BuildContext context, {String? arguments}) {
     Navigator.of(context).pushNamed(RoutesName.trainingPoint, arguments: arguments);
+  }
+
+  static void goToTrainingPointHistoryScreen(BuildContext context, {String? arguments}) {
+    Navigator.of(context).pushNamed(RoutesName.trainingPointHistory, arguments: arguments);
+  }
+
+  static void goToTrainingPointCtsvHistoryScreen(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      RoutesName.trainingPointCtsvHistory,
+    );
   }
 
   static void goToNavigatorScreen(BuildContext context, {String? arguments}) {

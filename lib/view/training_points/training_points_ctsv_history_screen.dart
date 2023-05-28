@@ -9,16 +9,14 @@ import 'package:uteer/view/widgets/appbar.dart';
 import 'package:uteer/view/widgets/ui_empty_png_screen.dart';
 import 'package:uteer/viewmodels/training_point/training_point_viewmodel.dart';
 
-class TrainingPointsHistoryScreen extends StatefulWidget {
-  const TrainingPointsHistoryScreen({Key? key, required this.email}) : super(key: key);
-  final String email;
+class TrainingPointsCtsvHistoryScreen extends StatefulWidget {
+  const TrainingPointsCtsvHistoryScreen({Key? key}) : super(key: key);
 
   @override
-  _TrainingPointsHistoryScreenState createState() => _TrainingPointsHistoryScreenState();
+  _TrainingPointsCtsvHistoryScreenState createState() => _TrainingPointsCtsvHistoryScreenState();
 }
 
-class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScreen> {
-  late String msv;
+class _TrainingPointsCtsvHistoryScreenState extends State<TrainingPointsCtsvHistoryScreen> {
   late TrainingPointViewModel viewModel;
 
   @override
@@ -26,16 +24,10 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
     super.initState();
     viewModel = TrainingPointViewModel(repository: TrainingPointRepository());
 
-    int atIndex = widget.email.indexOf('@');
-    if (atIndex != -1) {
-      msv = widget.email.substring(0, atIndex);
-    }
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       viewModel.onInitView(context);
-      viewModel.getTrainingPoint(msv);
+      viewModel.getListTrainingPoint();
       viewModel.getOpenTrainingPoint();
-      viewModel.getUser(widget.email);
     });
   }
 
@@ -50,23 +42,26 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
             vertical: DimensManager.dimens.setHeight(14),
             horizontal: DimensManager.dimens.setWidth(14),
           ),
-          child: Selector<TrainingPointViewModel, TrainingPointModel?>(
-            selector: (_, viewModel) => viewModel.trainingPoint,
+          child: Selector<TrainingPointViewModel, List<TrainingPointModel?>?>(
+            selector: (_, viewModel) => viewModel.listTrainingPoint,
             builder: (context, value, child) {
-              if (viewModel.trainingPoint?.history == true) {
+              if (viewModel.listTrainingPoint?.isNotEmpty ?? false) {
                 return ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) => BloodResultCard(
-                    rule: viewModel.user?.rule ?? "",
-                    name: viewModel.user?.name ?? "",
-                    score: '',
-                    rank: viewModel.trainingPoint?.rank ?? "",
-                    selfScoringScore: viewModel.trainingPoint?.trainingPoint ?? 0,
-                    teacherGrade: '',
-                    scorer: viewModel.trainingPoint?.gvcn ?? "",
-                    semester: viewModel.openTrainingPoint?.semester ?? "",
-                  ),
-                );
+                    itemCount: viewModel.listTrainingPoint?.length,
+                    itemBuilder: (context, index) =>
+                        (viewModel.listTrainingPoint?[index]?.history == true)
+                            ? BloodResultCard(
+                                rule: viewModel.user?.rule ?? "",
+                                name: viewModel.user?.name ?? "",
+                                score: '',
+                                rank: viewModel.listTrainingPoint?[index]?.rank ?? "",
+                                selfScoringScore:
+                                    viewModel.listTrainingPoint?[index]?.trainingPoint ?? 0,
+                                teacherGrade: '',
+                                scorer: viewModel.listTrainingPoint?[index]?.gvcn ?? "",
+                                semester: viewModel.openTrainingPoint?.semester ?? "",
+                              )
+                            : const SizedBox.shrink());
               } else {
                 return Column(
                   children: const [

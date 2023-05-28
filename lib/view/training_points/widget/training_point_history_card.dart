@@ -8,23 +8,24 @@ const double kNormalHeight = 98.0;
 const double kExpandedHeight = 237.0;
 
 class BloodResultCard extends StatefulWidget {
-  final String schoolYear;
+  final String name;
   final String semester;
   final String score;
   final String rank;
-  final String selfScoringScore;
+  final int selfScoringScore;
   final String teacherGrade;
   final String scorer;
-  const BloodResultCard({
-    super.key,
-    required this.schoolYear,
-    required this.semester,
-    required this.score,
-    required this.rank,
-    required this.selfScoringScore,
-    required this.teacherGrade,
-    required this.scorer,
-  });
+  final String rule;
+  const BloodResultCard(
+      {super.key,
+      required this.name,
+      required this.semester,
+      required this.score,
+      required this.rank,
+      required this.selfScoringScore,
+      required this.teacherGrade,
+      required this.scorer,
+      required this.rule});
 
   @override
   State<BloodResultCard> createState() => _BloodResultCardState();
@@ -79,10 +80,9 @@ class _BloodResultCardState extends State<BloodResultCard> {
                     ),
                   ),
                   child: height != kNormalHeight
-                      ? _buildExpandedInfo(widget.schoolYear, widget.semester, widget.score,
-                          widget.rank, widget.selfScoringScore, widget.teacherGrade, widget.scorer)
-                      : _buildShortInfo(
-                          widget.schoolYear, widget.semester, widget.score, widget.rank),
+                      ? _buildExpandedInfo(widget.name, widget.semester, widget.score, widget.rank,
+                          widget.selfScoringScore, widget.teacherGrade, widget.scorer)
+                      : _buildShortInfo(widget.name, widget.semester, widget.score, widget.rank),
                 ),
                 Positioned(
                   left: 4,
@@ -108,7 +108,7 @@ class _BloodResultCardState extends State<BloodResultCard> {
     );
   }
 
-  Column _buildShortInfo(String schoolYear, String semester, String score, String rank) {
+  Column _buildShortInfo(String name, String semester, String score, String rank) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -121,10 +121,12 @@ class _BloodResultCardState extends State<BloodResultCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                UIText(
-                  "Năm học: $schoolYear",
-                  style: const TextStyle(fontSize: 15, color: Color(0xFF434343)),
-                ),
+                if (widget.rule != "student") ...[
+                  UIText(
+                    "Sinh viên: $name",
+                    style: const TextStyle(fontSize: 15, color: Color(0xFF434343)),
+                  ),
+                ],
                 Row(
                   children: [
                     UIText(
@@ -155,13 +157,13 @@ class _BloodResultCardState extends State<BloodResultCard> {
     );
   }
 
-  Widget _buildExpandedInfo(String schoolYear, String semester, String score, String rank,
-      String selfScoringScore, String teacherGrade, String scorer) {
+  Widget _buildExpandedInfo(String name, String semester, String score, String rank,
+      int selfScoringScore, String teacherGrade, String scorer) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildShortInfo(schoolYear, semester, score, rank),
+          _buildShortInfo(name, semester, score, rank),
           const SizedBox(
             height: 13,
           ),
@@ -172,7 +174,7 @@ class _BloodResultCardState extends State<BloodResultCard> {
                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
               ),
               UIText(
-                selfScoringScore,
+                "$selfScoringScore",
                 style: const TextStyle(
                     fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.primaryColor),
               ),
