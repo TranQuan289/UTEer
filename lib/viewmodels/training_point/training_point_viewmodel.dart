@@ -34,9 +34,9 @@ class TrainingPointViewModel extends BaseViewModel {
     updateUI();
   }
 
-  Future<void> getUser(String email) async {
+  Future<UsersModel?> getUser(String email) async {
     user = await repository.getUser(email);
-    updateUI();
+    return user;
   }
 
   Future<void> updateDocument({required String key, required var value, required String msv}) {

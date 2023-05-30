@@ -35,6 +35,7 @@ class TrainingPointModel {
   final String? gvcn;
   final bool? history;
   final String? rank;
+  final String? email;
   TrainingPointModel(
       {required this.documentId,
       this.activate1,
@@ -69,6 +70,7 @@ class TrainingPointModel {
       this.trainingPoint5,
       this.gvcn,
       this.rank,
+      this.email,
       this.history});
 
   factory TrainingPointModel.fromFirestore(
@@ -111,6 +113,7 @@ class TrainingPointModel {
       gvcn: data?["gvcn"],
       history: data?["history"],
       rank: data?["rank"],
+      email: data?["email"],
     );
   }
   Map<String, dynamic> toFirestore() {
@@ -149,6 +152,7 @@ class TrainingPointModel {
       if (gvcn != null) 'gvcn': gvcn,
       if (history != null) 'history': history,
       if (rank != null) 'rank': rank,
+      if (email != null) 'email': email,
     };
   }
 }

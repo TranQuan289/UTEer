@@ -600,7 +600,7 @@ class _DescriptionTrainingPoint extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
             child: Text(
-              '$description\nScore: $score',
+              '$description\nĐiểm: $score',
               style: TextStyle(
                 fontSize: DimensManager.dimens.setSp(16),
                 fontWeight: FontWeight.w500,

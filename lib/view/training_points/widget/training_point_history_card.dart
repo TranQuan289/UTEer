@@ -10,10 +10,10 @@ const double kExpandedHeight = 237.0;
 class BloodResultCard extends StatefulWidget {
   final String name;
   final String semester;
-  final String score;
+  final int score;
   final String rank;
   final int selfScoringScore;
-  final String teacherGrade;
+  final int teacherGrade;
   final String scorer;
   final String rule;
   const BloodResultCard(
@@ -108,7 +108,7 @@ class _BloodResultCardState extends State<BloodResultCard> {
     );
   }
 
-  Column _buildShortInfo(String name, String semester, String score, String rank) {
+  Column _buildShortInfo(String name, String semester, int score, String rank) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -157,8 +157,8 @@ class _BloodResultCardState extends State<BloodResultCard> {
     );
   }
 
-  Widget _buildExpandedInfo(String name, String semester, String score, String rank,
-      int selfScoringScore, String teacherGrade, String scorer) {
+  Widget _buildExpandedInfo(String name, String semester, int score, String rank,
+      int selfScoringScore, int teacherGrade, String scorer) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +190,7 @@ class _BloodResultCardState extends State<BloodResultCard> {
                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
               ),
               UIText(
-                teacherGrade,
+                "$teacherGrade",
                 style: const TextStyle(
                     fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.primaryColor),
                 textAlign: TextAlign.right,

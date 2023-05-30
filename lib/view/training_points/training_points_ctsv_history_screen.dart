@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uteer/models/training_point_model.dart';
+import 'package:uteer/models/user_model.dart';
 import 'package:uteer/repository/training_point_repository.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
@@ -44,24 +45,47 @@ class _TrainingPointsCtsvHistoryScreenState extends State<TrainingPointsCtsvHist
           ),
           child: Selector<TrainingPointViewModel, List<TrainingPointModel?>?>(
             selector: (_, viewModel) => viewModel.listTrainingPoint,
-            builder: (context, value, child) {
-              if (viewModel.listTrainingPoint?.isNotEmpty ?? false) {
+            builder: (context, listTrainingPoint, child) {
+              if (listTrainingPoint?.isNotEmpty ?? false) {
                 return ListView.builder(
-                    itemCount: viewModel.listTrainingPoint?.length,
-                    itemBuilder: (context, index) =>
-                        (viewModel.listTrainingPoint?[index]?.history == true)
-                            ? BloodResultCard(
-                                rule: viewModel.user?.rule ?? "",
-                                name: viewModel.user?.name ?? "",
-                                score: '',
-                                rank: viewModel.listTrainingPoint?[index]?.rank ?? "",
-                                selfScoringScore:
-                                    viewModel.listTrainingPoint?[index]?.trainingPoint ?? 0,
-                                teacherGrade: '',
-                                scorer: viewModel.listTrainingPoint?[index]?.gvcn ?? "",
-                                semester: viewModel.openTrainingPoint?.semester ?? "",
-                              )
-                            : const SizedBox.shrink());
+                  itemCount: listTrainingPoint?.length,
+                  itemBuilder: (context, index) {
+                    final trainingPoint = listTrainingPoint?[index];
+                    final email = trainingPoint?.email ?? "";
+
+                    return FutureBuilder<UsersModel?>(
+                      future: viewModel.getUser(email),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          // Hiển thị một widget loading hoặc tiến trình chờ tại đây
+                          return const CircularProgressIndicator();
+                        }
+
+                        if (snapshot.hasError) {
+                          // Xử lý lỗi khi không thể lấy được thông tin người dùng
+                          return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                        }
+
+                        final user = snapshot.data;
+
+                        if (trainingPoint?.history == true && user != null) {
+                          return BloodResultCard(
+                            rule: "ctsv",
+                            name: user.name ?? "",
+                            score: trainingPoint?.trainingPoint ?? 0,
+                            rank: trainingPoint?.rank ?? "",
+                            selfScoringScore: trainingPoint?.trainingPoint ?? 0,
+                            teacherGrade: viewModel.trainingPoint?.trainingPoint ?? 0,
+                            scorer: trainingPoint?.gvcn ?? "",
+                            semester: viewModel.openTrainingPoint?.semester ?? "",
+                          );
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
+                    );
+                  },
+                );
               } else {
                 return Column(
                   children: const [

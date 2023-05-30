@@ -59,10 +59,10 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
                   itemBuilder: (context, index) => BloodResultCard(
                     rule: viewModel.user?.rule ?? "",
                     name: viewModel.user?.name ?? "",
-                    score: '',
+                    score: viewModel.trainingPoint?.trainingPoint ?? 0,
                     rank: viewModel.trainingPoint?.rank ?? "",
                     selfScoringScore: viewModel.trainingPoint?.trainingPoint ?? 0,
-                    teacherGrade: '',
+                    teacherGrade: viewModel.trainingPoint?.trainingPoint ?? 0,
                     scorer: viewModel.trainingPoint?.gvcn ?? "",
                     semester: viewModel.openTrainingPoint?.semester ?? "",
                   ),
