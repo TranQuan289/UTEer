@@ -21,7 +21,9 @@ import 'package:uteer/view/training_points/training_points_history_screen.dart';
 import 'package:uteer/view/training_points/training_points_screen.dart';
 
 class Routes {
-  static Route<dynamic> routeBuilder(RouteSettings settings) {
+  static Route<dynamic> routeBuilder(
+    RouteSettings settings,
+  ) {
     switch (settings.name) {
       case RoutesName.splash:
         return MaterialPageRoute(builder: (BuildContext context) => const SplashScreen());
@@ -48,11 +50,19 @@ class Routes {
                   email: args,
                 ));
       case RoutesName.profileDetail:
-        return MaterialPageRoute(builder: (BuildContext context) => const ProfileDetailScreen());
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (BuildContext context) => ProfileDetailScreen(
+                  email: args,
+                ));
       case RoutesName.myQr:
         return MaterialPageRoute(builder: (BuildContext context) => const MyQrScreen());
       case RoutesName.changePassword:
-        return MaterialPageRoute(builder: (BuildContext context) => const ChangePasswordScreen());
+        final args = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (BuildContext context) => ChangePasswordScreen(
+                  email: args,
+                ));
       case RoutesName.contact:
         return MaterialPageRoute(builder: (BuildContext context) => const ContactScreen());
       case RoutesName.chatDetail:
@@ -60,11 +70,15 @@ class Routes {
       case RoutesName.chat:
         return MaterialPageRoute(builder: (BuildContext context) => const ChatScreen());
       case RoutesName.trainingPoint:
-        final args = settings.arguments as String;
+        final args = settings.arguments as Map<String, dynamic>;
+
         return MaterialPageRoute(
-            builder: (BuildContext context) => TrainingPointsScreen(
-                  email: args,
-                ));
+          builder: (BuildContext context) => TrainingPointsScreen(
+            email: args["email"],
+            absorbing: args["absorbing"] as bool, // Ép kiểu về bool
+          ),
+        );
+
       case RoutesName.trainingPointHistory:
         final args = settings.arguments as String;
         return MaterialPageRoute(
@@ -154,7 +168,7 @@ class Routes {
     Navigator.of(context).pushNamed(RoutesName.history);
   }
 
-  static void goToTrainingPointScreen(BuildContext context, {String? arguments}) {
+  static void goToTrainingPointScreen(BuildContext context, {Object? arguments}) {
     Navigator.of(context).pushNamed(RoutesName.trainingPoint, arguments: arguments);
   }
 

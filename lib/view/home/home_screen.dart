@@ -297,7 +297,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ]
           ] else ...[
             CardHome(
-              onTap: () => Routes.goToTrainingPointScreen(context, arguments: user?.email ?? ""),
+              onTap: () => Routes.goToTrainingPointScreen(context, arguments: {
+                "email": user?.email ?? "",
+                "absorbing": false,
+              }),
               color: AppColors.blue,
               icon: AppAssets.icTrainingPoint,
               text: 'Tự đánh giá\n điểm rèn luyện',

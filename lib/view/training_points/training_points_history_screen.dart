@@ -20,6 +20,7 @@ class TrainingPointsHistoryScreen extends StatefulWidget {
 class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScreen> {
   late String msv;
   late TrainingPointViewModel viewModel;
+  bool isLoading = true; // Thêm biến cờ isLoading để kiểm tra trạng thái tải dữ liệu
 
   @override
   void initState() {
@@ -31,11 +32,14 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
       msv = widget.email.substring(0, atIndex);
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       viewModel.onInitView(context);
-      viewModel.getTrainingPoint(msv);
-      viewModel.getOpenTrainingPoint();
-      viewModel.getUser(widget.email);
+      await viewModel.getTrainingPoint(msv);
+      await viewModel.getOpenTrainingPoint();
+      await viewModel.getUser(widget.email);
+      setState(() {
+        isLoading = false; // Cập nhật trạng thái isLoading khi dữ liệu đã tải xong
+      });
     });
   }
 
@@ -50,40 +54,49 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
             vertical: DimensManager.dimens.setHeight(14),
             horizontal: DimensManager.dimens.setWidth(14),
           ),
-          child: Selector<TrainingPointViewModel, TrainingPointModel?>(
-            selector: (_, viewModel) => viewModel.trainingPoint,
-            builder: (context, value, child) {
-              if (viewModel.trainingPoint?.history == true) {
-                return ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) => BloodResultCard(
-                    rule: viewModel.user?.rule ?? "",
-                    name: viewModel.user?.name ?? "",
-                    score: viewModel.trainingPoint?.trainingPoint ?? 0,
-                    rank: viewModel.trainingPoint?.rank ?? "",
-                    selfScoringScore: viewModel.trainingPoint?.trainingPoint ?? 0,
-                    teacherGrade: viewModel.trainingPoint?.trainingPoint ?? 0,
-                    scorer: viewModel.trainingPoint?.gvcn ?? "",
-                    semester: viewModel.openTrainingPoint?.semester ?? "",
-                  ),
-                );
-              } else {
-                return Column(
-                  children: const [
-                    SizedBox(
-                      height: 200,
-                    ),
-                    UIEmptyPngScreen(
-                      iconAsset: AppAssets.icHistoryMini,
-                      title: "Hiện chưa có lịch sử điểm rèn luyện nào",
-                    ),
-                  ],
-                );
-              }
-            },
-          ),
+          child: isLoading
+              ? _buildLoadingIndicator()
+              : Selector<TrainingPointViewModel, TrainingPointModel?>(
+                  selector: (_, viewModel) => viewModel.trainingPoint,
+                  builder: (context, value, child) {
+                    if (viewModel.trainingPoint?.history == true) {
+                      return ListView.builder(
+                        itemCount: 1,
+                        itemBuilder: (context, index) => BloodResultCard(
+                          email: viewModel.user?.email ?? "",
+                          rule: viewModel.user?.rule ?? "",
+                          name: viewModel.user?.name ?? "",
+                          score: viewModel.trainingPoint?.trainingPoint ?? 0,
+                          rank: viewModel.trainingPoint?.rank ?? "",
+                          selfScoringScore: viewModel.trainingPoint?.trainingPoint ?? 0,
+                          teacherGrade: viewModel.trainingPoint?.trainingPoint ?? 0,
+                          scorer: viewModel.trainingPoint?.gvcn ?? "",
+                          semester: viewModel.openTrainingPoint?.semester ?? "",
+                        ),
+                      );
+                    } else {
+                      return Column(
+                        children: const [
+                          SizedBox(
+                            height: 200,
+                          ),
+                          UIEmptyPngScreen(
+                            iconAsset: AppAssets.icHistoryMini,
+                            title: "Hiện chưa có lịch sử điểm rèn luyện nào",
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return const Center(
+      child: CircularProgressIndicator(), // Hiển thị màn hình tải dữ liệu
     );
   }
 }

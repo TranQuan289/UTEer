@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uteer/res/style/app_colors.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
+import 'package:uteer/utils/routes/routes.dart';
 import 'package:uteer/view/widgets/ui_outlined_button.dart';
 import 'package:uteer/view/widgets/ui_text.dart';
 
@@ -16,6 +17,7 @@ class BloodResultCard extends StatefulWidget {
   final int teacherGrade;
   final String scorer;
   final String rule;
+  final String email;
   const BloodResultCard(
       {super.key,
       required this.name,
@@ -25,7 +27,8 @@ class BloodResultCard extends StatefulWidget {
       required this.selfScoringScore,
       required this.teacherGrade,
       required this.scorer,
-      required this.rule});
+      required this.rule,
+      required this.email});
 
   @override
   State<BloodResultCard> createState() => _BloodResultCardState();
@@ -224,7 +227,10 @@ class _BloodResultCardState extends State<BloodResultCard> {
                 width: 90,
                 child: UIOutlineButton(
                   title: "Xem chi tiết",
-                  onPressed: () {},
+                  onPressed: () => Routes.goToTrainingPointScreen(context, arguments: {
+                    "email": widget.email,
+                    "absorbing": true,
+                  }),
                 )),
           )
         ],

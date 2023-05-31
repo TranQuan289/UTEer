@@ -139,28 +139,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
             children: [
               _profileItem(AppAssets.icUser, 'Thông tin tài khoản', onTap: () {
-                Navigator.pushNamed(context, RoutesName.profileDetail);
+                Navigator.pushNamed(context, RoutesName.profileDetail, arguments: widget.email);
               }),
               _profileItem(AppAssets.icQr, 'Mã QR cá nhân', onTap: () {
                 Navigator.pushNamed(context, RoutesName.myQr);
               }),
               _profileItem(AppAssets.icPassword, 'Đổi mật khẩu', onTap: () {
-                Navigator.pushNamed(context, RoutesName.changePassword);
+                Navigator.pushNamed(context, RoutesName.changePassword, arguments: widget.email);
               }),
               _profileItem(AppAssets.icSupport, 'Liên hệ', onTap: () {
                 Navigator.pushNamed(context, RoutesName.contact);
 
-                // CollectionReference users = FirebaseFirestore.instance.collection('users');
+                // CollectionReference users = FirebaseFirestore.instance.collection('trainingPoints');
                 // users
                 //     .add({
-                //       'name': 'Nguyễn Đông',
-                //       'email': '1911514110105@sv.ute.udn.vn',
-                //       'msv': '1911514110105',
-                //       'classRoom': '19SK1',
-                //       'major': 'Công nghệ Kỹ thuật Ô tô',
-                //       'department': 'Sư Phạm Công Nghiệp',
-                //       'phone': '0901929194',
-                //       'rule': 'student',
+                //       'activate1': 0,
+                //       'activate2': 0,
+                //       'activate3': 0,
+                //       'activate4': 0,
+                //       'monitor1': 0,
+                //       'monitor2': 0,
+                //       'monitor3': 0,
+                //       'monitor4': 0,
+                //       'msv': "1911505310152",
+                //       'relation1': 0,
+                //       'relation2': 0,
+                //       'relation3': 0,
+                //       'relation4': 0,
+                //       'relation5': 0,
+                //       'rules1': 0,
+                //       'rules2': 0,
+                //       'rules3': 0,
+                //       'rules4': 0,
+                //       'study1': 0,
+                //       'study2': 0,
+                //       'study3': 0,
+                //       'study4': 0,
+                //       'study5': 0,
+                //       'study6': 0,
+                //       'trainingPoint': 0,
+                //       'trainingPoint1': 0,
+                //       'trainingPoint2': 0,
+                //       'trainingPoint3': 0,
+                //       'trainingPoint4': 0,
+                //       'trainingPoint5': 0,
+                //       'gvcn': "Cô chủ nhiệm 19T1",
+                //       'rank': "Kém",
+                //       'email': "1911505310152@sv.ute.udn.vn",
+                //       'history': false,
+                //       'pointTeacher': 0
                 //     })
                 //     .then((value) => print('User added'))
                 //     .catchError((error) => print('Failed to add user: $error'));

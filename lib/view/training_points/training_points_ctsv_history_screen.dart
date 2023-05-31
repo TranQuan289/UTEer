@@ -70,6 +70,7 @@ class _TrainingPointsCtsvHistoryScreenState extends State<TrainingPointsCtsvHist
 
                         if (trainingPoint?.history == true && user != null) {
                           return BloodResultCard(
+                            email: user.email ?? "",
                             rule: "ctsv",
                             name: user.name ?? "",
                             score: trainingPoint?.trainingPoint ?? 0,

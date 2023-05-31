@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uteer/models/user_model.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/res/style/app_colors.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
@@ -13,26 +15,35 @@ const kPaddingHorizontal = 12.0;
 const kPaddingVertical = 24.0;
 
 class ProfileDetailScreen extends StatefulWidget {
-  const ProfileDetailScreen({super.key});
-  // final UserModel userModel;
+  const ProfileDetailScreen({required this.email, super.key});
+  final String email;
 
   @override
   State<ProfileDetailScreen> createState() => _ProfileDetailScreenState();
 }
 
 class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
-  // late final ProfileDetailViewModel _viewModel;
-  // @override
-  // void initState() {
-  //   _viewModel = ProfileDetailViewModel(
-  //     provinceRepository: locator<ProvinceRepository>(),
-  //     userRepository: locator<UserRepository>(),
-  //     userModel: widget.userModel,
-  //   )..onInitView(context);
+  UsersModel? user;
+  @override
+  void initState() {
+    super.initState();
+    getUser(widget.email);
+  }
 
-  //   _viewModel.fetchProvinces();
-  //   super.initState();
-  // }
+  Future<void> getUser(String email) async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await db.collection('users').where('email', isEqualTo: email).get();
+    final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
+    if (documents.isNotEmpty) {
+      final UsersModel user = UsersModel.fromFirestore(documents.first, null);
+      setState(() {
+        this.user = user;
+      });
+    } else {
+      print('No user found with email: $email');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +82,13 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                       padding: const EdgeInsets.symmetric(vertical: kPaddingVertical),
                       child: Column(children: [
                         UITextInput(
-                          controller: TextEditingController(text: "Trần Anh Quân"),
+                          controller: TextEditingController(text: user?.name),
                           title: "Họ và tên",
                           isRequired: true,
                           hint: "Nhập tên của bạn",
                           isObscure: false,
-                          // onChanged: (value) => _viewModel.userModel.fullName = value,
+                          enabled: false,
+                          onChanged: null,
                         ),
                         SizedBox(
                           height: DimensManager.dimens.setHeight(kPaddingVertical),
@@ -119,6 +131,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                             ),
                             const Flexible(
                               child: UITextInput(
+                                enabled: false,
                                 title: "Ngày sinh",
                                 isRequired: true,
                                 hint: "28/09/2001",
@@ -137,7 +150,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                         ),
 
                         UITextInput(
-                          controller: TextEditingController(text: '1911505310144'),
+                          controller: TextEditingController(text: user?.msv),
                           numberType: true,
                           title: "Mã sinh viên",
                           isRequired: true,
@@ -167,7 +180,7 @@ class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
                           height: DimensManager.dimens.setHeight(kPaddingVertical),
                         ),
                         UITextInput(
-                          controller: TextEditingController(text: '1911505310144@sv.ute.udn.vn'),
+                          controller: TextEditingController(text: user?.email),
                           enabled: false,
                           title: "Email",
                           isRequired: true,
