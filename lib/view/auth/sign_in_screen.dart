@@ -119,7 +119,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             icon: AppAssets.icCheck,
                             title: "Chấm điểm rèn luyện đã được mở",
                             message:
-                                "Thời gian chấm điểm rèn luyện cho học kì ${openTrainingPointModel?.semester} còn ${calculateRemainingTime()}",
+                                "Thời gian chấm điểm rèn luyện cho học kì ${openTrainingPointModel?.semester} ${calculateRemainingTime()}",
                           );
                         }
 
@@ -155,13 +155,13 @@ class _SignInScreenState extends State<SignInScreen> {
 
   String calculateRemainingTime() {
     if (openTrainingPointModel?.time != null) {
-      final now = DateTime.now();
+      final now = DateTime.now().subtract(const Duration(days: 10));
       final remainingDuration = openTrainingPointModel!.time!.difference(now);
       final remainingDays = remainingDuration.inDays;
       final remainingHours = remainingDuration.inHours % 24;
       final remainingMinutes = remainingDuration.inMinutes % 60;
 
-      return "Còn $remainingDays ngày, $remainingHours giờ và $remainingMinutes phút";
+      return "\n còn $remainingDays ngày, $remainingHours giờ và $remainingMinutes phút";
     }
 
     return "";

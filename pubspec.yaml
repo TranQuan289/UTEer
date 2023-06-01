@@ -36,6 +36,7 @@ dependencies:
   cloud_firestore: ^4.7.1
   get: ^4.6.5
   dropdown_button2: ^2.1.2
+  webview_flutter: ^3.0.0
   
 
 

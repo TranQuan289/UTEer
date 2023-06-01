@@ -19,7 +19,7 @@ class OpenTrainingPointModel {
     return OpenTrainingPointModel(
       open: data?['open'] as bool?,
       semester: data?['semester'] as String?,
-      time: (data?['time'] as Timestamp?)?.toDate(),
+      time: (data?['dateTime'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -27,7 +27,7 @@ class OpenTrainingPointModel {
     return {
       if (open != null) "open": open,
       if (semester != null) "semester": semester,
-      if (time != null) "time": Timestamp.fromDate(time!),
+      if (time != null) "dateTime": Timestamp.fromDate(time!),
     };
   }
 }

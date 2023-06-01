@@ -30,14 +30,12 @@ class _EncouragingStudyScreenState extends State<EncouragingStudyScreen> {
   late ScholarshipViewModel viewModel;
   String? rankDropdownValue = "Tất cả";
 
-  // Phương thức để lấy giá trị của dropdown xếp loại học bổng
   String? getRankDropdownValue() {
     return rankDropdownValue;
   }
 
   String? classDropdownValue = "Tất cả";
 
-  // Phương thức để lấy giá trị của dropdown xếp loại học bổng
   String? getClassDropdownValue() {
     return classDropdownValue;
   }

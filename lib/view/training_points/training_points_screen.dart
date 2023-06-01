@@ -6,6 +6,7 @@ import 'package:uteer/repository/training_point_repository.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/res/style/app_colors.dart';
 import 'package:uteer/utils/dimens/dimens_manager.dart';
+import 'package:uteer/utils/general_utils.dart';
 import 'package:uteer/view/widgets/appbar.dart';
 import 'package:uteer/view/widgets/ui_empty_png_screen.dart';
 import 'package:uteer/view/widgets/ui_outlined_button.dart';
@@ -499,6 +500,11 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                     child: UIOutlineButton(
                                       title: 'Nộp điểm',
                                       onPressed: () {
+                                        Utils.showPopup(context,
+                                            icon: AppAssets.icCheck,
+                                            title: "Nộp điểm thành công",
+                                            message:
+                                                "Bạn có thể cập nhật cho đến khi thời gian chấm kết thúc");
                                         viewModel.updateDocument(
                                             key: "history", value: true, msv: msv);
                                       },

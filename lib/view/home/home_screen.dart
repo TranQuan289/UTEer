@@ -3,8 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uteer/models/open_training_point_model.dart';
 import 'package:uteer/models/user_model.dart';
+import 'package:uteer/utils/general_utils.dart';
 import 'package:uteer/utils/routes/routes.dart';
 import 'package:uteer/utils/routes/routes_name.dart';
+import 'package:uteer/view/article/article_screen.dart';
+import 'package:uteer/view/widgets/ui_outlined_button.dart';
 
 import '../../res/constant/app_assets.dart';
 import '../../res/constant/app_fonts.dart';
@@ -186,14 +189,26 @@ class _HomeScreenState extends State<HomeScreen> {
           return Wrap(
             spacing: DimensManager.dimens.setWidth(16),
             runSpacing: DimensManager.dimens.setHeight(16),
-            children: const [
-              ActiveCard(
-                image: AppAssets.donateBlood,
-                text: 'Ngày hội hiến máu diễn ra trên địa bàn Thành phố Đà Nẵng',
+            children: [
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ArticleScreen()),
+                ),
+                child: const ActiveCard(
+                  image: AppAssets.donateBlood,
+                  text: 'Ngày hội hiến máu diễn ra trên địa bàn Thành phố Đà Nẵng',
+                ),
               ),
-              ActiveCard(
-                image: AppAssets.healthCare,
-                text: 'Ngày hội hiến máu diễn ra tại sảnh A Đại học Sư Phạm Kỹ Thuật',
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ArticleScreen()),
+                ),
+                child: const ActiveCard(
+                  image: AppAssets.healthCare,
+                  text: 'Ngày hội hiến máu diễn ra tại sảnh A Đại học Sư Phạm Kỹ Thuật',
+                ),
               )
             ]
                 .map((item) => SizedBox(
@@ -280,21 +295,81 @@ class _HomeScreenState extends State<HomeScreen> {
                 DateTime.now().difference(openTrainingPointModel?.time ?? DateTime.now()).inDays >=
                     10) ...[
               CardHome(
-                onTap: () => {updateOpenTrainingPoint(open: false, dateTime: DateTime.now())},
+                onTap: () => {
+                  Utils.showPopup(
+                    context,
+                    icon: AppAssets.icClose,
+                    title: 'Đóng ngày chấm ',
+                    message: 'Bạn có chắc chắn đóng ngày chấm điểm rèn luyện không?',
+                    action: Row(children: [
+                      Flexible(
+                          child: UIOutlineButton(
+                        title: 'Huỷ',
+                        onPressed: () => Navigator.of(context).pop(),
+                      )),
+                      SizedBox(
+                        width: DimensManager.dimens.setWidth(16),
+                      ),
+                      Flexible(
+                          child: UIOutlineButton(
+                              title: 'Đóng',
+                              backgroundColor: AppColors.primaryColor,
+                              titleStyle: const TextStyle(color: Colors.white),
+                              onPressed: () {
+                                updateOpenTrainingPoint(open: false, dateTime: DateTime.now());
+                                Navigator.of(context).pop();
+                              }))
+                    ]),
+                  )
+                },
                 color: AppColors.errorMsg,
                 icon: AppAssets.icTrainingPoint,
-                text: 'Đóng đánh giá\n điểm rèn luyện',
+                text: 'Đóng ngày chấm\n điểm rèn luyện',
                 height: 200,
               ),
             ] else ...[
               CardHome(
-                onTap: () => {updateOpenTrainingPoint(open: true, dateTime: DateTime.now())},
+                onTap: () => {
+                  Utils.showPopup(
+                    context,
+                    icon: AppAssets.icCheck,
+                    title: 'Mở ngày chấm',
+                    message: 'Bạn có chắc chắn mở ngày chấm điểm rèn luyện không?',
+                    action: Row(children: [
+                      Flexible(
+                          child: UIOutlineButton(
+                        title: 'Huỷ',
+                        onPressed: () => Navigator.of(context).pop(),
+                      )),
+                      SizedBox(
+                        width: DimensManager.dimens.setWidth(16),
+                      ),
+                      Flexible(
+                          child: UIOutlineButton(
+                              title: 'Mở',
+                              backgroundColor: AppColors.primaryColor,
+                              titleStyle: const TextStyle(color: Colors.white),
+                              onPressed: () {
+                                updateOpenTrainingPoint(open: true, dateTime: DateTime.now());
+                                Navigator.of(context).pop();
+                              }))
+                    ]),
+                  )
+                },
                 color: AppColors.blue,
                 icon: AppAssets.icTrainingPoint,
-                text: 'Mở đánh giá\n điểm rèn luyện',
+                text: 'Mở ngày chấm\n điểm rèn luyện',
                 height: 200,
               ),
             ]
+          ] else if (user?.rule == "gv") ...[
+            CardHome(
+              onTap: () => {},
+              color: AppColors.blue,
+              icon: AppAssets.icTrainingPoint,
+              text: 'Duyệt danh sách\n điểm rèn luyện',
+              height: 200,
+            ),
           ] else ...[
             CardHome(
               onTap: () => Routes.goToTrainingPointScreen(context, arguments: {
