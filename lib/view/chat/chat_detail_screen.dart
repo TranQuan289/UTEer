@@ -247,7 +247,17 @@ class _MessageBubbleState extends State<MessageBubble> with SingleTickerProvider
                 ),
               ),
             Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.7,
+              ),
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.withOpacity(0.05),
+                    blurRadius: 2,
+                  ),
+                ],
+                color: widget.isMe ? AppColors.requiredColor : AppColors.backgroundColor,
                 borderRadius: widget.isMe
                     ? const BorderRadius.all(
                         Radius.circular(30.0),

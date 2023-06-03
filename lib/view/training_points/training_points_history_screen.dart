@@ -20,8 +20,7 @@ class TrainingPointsHistoryScreen extends StatefulWidget {
 class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScreen> {
   late String msv;
   late TrainingPointViewModel viewModel;
-  bool isLoading = true; // Thêm biến cờ isLoading để kiểm tra trạng thái tải dữ liệu
-
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -38,7 +37,7 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
       await viewModel.getOpenTrainingPoint();
       await viewModel.getUser(widget.email);
       setState(() {
-        isLoading = false; // Cập nhật trạng thái isLoading khi dữ liệu đã tải xong
+        isLoading = false;
       });
     });
   }
