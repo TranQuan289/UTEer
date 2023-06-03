@@ -362,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 200,
               ),
             ]
-          ] else if (user?.rule == "gv") ...[
+          ] else if (user?.rule == "gvcn") ...[
             CardHome(
               onTap: () => {},
               color: AppColors.blue,

@@ -194,7 +194,7 @@ class _MessageBubbleState extends State<MessageBubble> with SingleTickerProvider
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 100),
       vsync: this,
     )..repeat(reverse: true);
     _colorAnimation =
@@ -241,7 +241,7 @@ class _MessageBubbleState extends State<MessageBubble> with SingleTickerProvider
                 senderText,
                 style: TextStyle(
                   fontSize: 12.0,
-                  color: widget.sender.split('@')[0] == 'ctsv'
+                  color: widget.sender.split('@')[0] == 'ctsv' || widget.sender.contains('gvcn')
                       ? Colors.blue
                       : AppColors.black.withOpacity(0.7),
                 ),
@@ -273,13 +273,16 @@ class _MessageBubbleState extends State<MessageBubble> with SingleTickerProvider
                 ),
               ),
               foregroundDecoration: BoxDecoration(
-                borderRadius: (widget.sender.contains('ctsv') || widget.sender.contains('gvcn'))
+                borderRadius: (widget.sender.contains('ctsv') || widget.sender.contains('gvcn')) &&
+                        !widget.isMe
                     ? const BorderRadius.only(
                         bottomLeft: Radius.circular(30.0),
                         bottomRight: Radius.circular(30.0),
                         topRight: Radius.circular(30.0),
                       )
-                    : null,
+                    : const BorderRadius.all(
+                        Radius.circular(30.0),
+                      ),
                 border: Border.all(
                   width: 2.0,
                   color: widget.sender.contains('ctsv') || widget.sender.contains('gvcn')
