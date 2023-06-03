@@ -37,6 +37,7 @@ dependencies:
   get: ^4.6.5
   dropdown_button2: ^2.1.2
   webview_flutter: ^3.0.0
+  firebase_storage: ^11.2.2
   
 
 

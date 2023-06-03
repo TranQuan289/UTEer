@@ -26,7 +26,6 @@ class NavigatorScreenState extends State<NavigatorScreen> {
   Color kDisenableColorIcon = AppColors.disableItemColor;
   Color kEnableColorText = AppColors.requiredColor;
   Color kDisenableColorText = AppColors.disableItemColor;
-
   int currentTab = 0;
   late List<Widget> screens;
   final PageStorageBucket bucket = PageStorageBucket();

@@ -4,15 +4,17 @@ import '../../res/style/app_colors.dart';
 import '../../utils/dimens/dimens_manager.dart';
 
 class UiInputChat extends StatelessWidget {
-  const UiInputChat({
+  UiInputChat({
+    required this.onChanged,
+    required this.controller,
     super.key,
   });
-
+  void Function(String)? onChanged;
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: DimensManager.dimens.setHeight(38),
-        width: DimensManager.dimens.setWidth(250),
+        width: DimensManager.dimens.setWidth(322),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18.0),
           color: Colors.black.withOpacity(0.05),
@@ -20,9 +22,13 @@ class UiInputChat extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(
             left: 16,
-            top: 16,
+            right: 16,
           ),
           child: TextField(
+            onChanged: onChanged,
+            controller: controller,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintStyle: TextStyle(

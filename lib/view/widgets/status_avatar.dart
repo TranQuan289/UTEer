@@ -4,8 +4,6 @@ import '../../res/constant/app_assets.dart';
 import '../../res/style/app_colors.dart';
 import '../../utils/dimens/dimens_manager.dart';
 
-enum ActiveRead { received, sent, unRead, none }
-
 class StatusAvatar extends StatelessWidget {
   const StatusAvatar({
     super.key,
@@ -27,7 +25,7 @@ class StatusAvatar extends StatelessWidget {
       child: Stack(children: [
         CircleAvatar(
           radius: sizeMax ? 30.0 : 20.0,
-          backgroundImage: const AssetImage(AppAssets.avatar),
+          backgroundImage: const AssetImage(AppAssets.iconUniversity),
           child: Align(
             alignment: Alignment.bottomRight,
             child: CircleAvatar(
@@ -44,18 +42,4 @@ class StatusAvatar extends StatelessWidget {
       ]),
     );
   }
-}
-
-Icon dotStatus(status) {
-  switch (status) {
-    case ActiveRead.received:
-      return const Icon(Icons.brightness_1, color: AppColors.primaryColor, size: 12);
-
-    case ActiveRead.sent:
-      return const Icon(Icons.check_circle, color: AppColors.hintTextColor, size: 12);
-
-    case ActiveRead.unRead:
-      return const Icon(Icons.check_circle_outline, color: AppColors.hintTextColor, size: 12);
-  }
-  return const Icon(null);
 }

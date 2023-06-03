@@ -1,181 +1,310 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:uteer/view/widgets/status_avatar.dart';
-
-import '../../models/message_model.dart';
-import '../../res/constant/app_assets.dart';
-import '../../res/style/app_colors.dart';
-import '../../utils/dimens/dimens_manager.dart';
-import '../widgets/ui_back_button.dart';
-import '../widgets/ui_input_chat.dart';
-import '../widgets/ui_text.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+import 'package:uteer/res/constant/app_assets.dart';
+import 'package:uteer/res/style/app_colors.dart';
+import 'package:uteer/view/widgets/appbar.dart';
+import 'package:uteer/view/widgets/ui_input_chat.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
+  static const String id = 'chat_screen';
+
+  const ChatDetailScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+  _ChatDetailScreenState createState() => _ChatDetailScreenState();
 }
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
-  bool showWarning = true;
+  final messageTextController = TextEditingController();
+  late User loggedInUser;
+
+  late String messageText;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        setState(() {
+          loggedInUser = user;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(AppAssets.banner),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        leading: UIBackButton(
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        backgroundColor: AppColors.primaryColor,
-        elevation: 0,
-        titleSpacing: DimensManager.dimens.setWidth(-17),
-        title: Row(
-          children: [
-            const StatusAvatar(
-              sizeMax: false,
-              activeStatus: true,
-            ),
-            SizedBox(width: DimensManager.dimens.setWidth(12)),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                UIText(
-                  'Trần Quân',
-                  style: TextStyle(
-                      fontSize: DimensManager.dimens.setSp(16),
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700),
+      appBar: appBar(context, 'Nhóm thảo luận'),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            MessagesStream(firestore: FirebaseFirestore.instance, loggedInUser: loggedInUser),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30.0),
+              child: Container(
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    UiInputChat(
+                      onChanged: (value) {
+                        messageText = value;
+                      },
+                      controller: messageTextController,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          messageTextController.clear();
+                          FirebaseFirestore.instance.collection('messages').add({
+                            'text': messageText,
+                            'sender': loggedInUser.email,
+                            'createAt': DateTime.now(),
+                          });
+                        },
+                        icon: SvgPicture.asset(
+                          AppAssets.icSend,
+                          color: AppColors.primaryColor,
+                        )),
+                  ],
                 ),
-                UIText(
-                  'Đang hoạt động',
-                  style: TextStyle(
-                      fontSize: DimensManager.dimens.setSp(13),
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400),
-                ),
-              ],
+              ),
             ),
           ],
         ),
       ),
-      body: _headerWarning(),
-      bottomSheet: const _BottomChatDetail(),
     );
-  }
-
-  _headerWarning() {
-    return const ListChatDetail();
   }
 }
 
-class ListChatDetail extends StatelessWidget {
-  const ListChatDetail({
-    super.key,
-  });
+class MessagesStream extends StatelessWidget {
+  const MessagesStream({Key? key, required this.firestore, required this.loggedInUser})
+      : super(key: key);
+
+  final FirebaseFirestore firestore;
+  final User loggedInUser;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: DimensManager.dimens.setHeight(16)),
-        UIText(
-          "16:44",
-          style: TextStyle(
-              fontSize: DimensManager.dimens.setSp(12),
-              color: Colors.black.withOpacity(0.3),
-              fontWeight: FontWeight.w500),
-        ),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: messages.length,
-          itemBuilder: (context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  margin: messages[index].me
-                      ? const EdgeInsets.only(top: 12, bottom: 5)
-                      : const EdgeInsets.only(top: 8),
-                  child: Row(
-                    mainAxisAlignment:
-                        messages[index].me ? MainAxisAlignment.end : MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: DimensManager.dimens.setWidth(24)),
-                      messages[index].me
-                          ? const SizedBox()
-                          : const CircleAvatar(
-                              radius: 14,
-                              backgroundImage: AssetImage(AppAssets.avatar),
-                            ),
-                      SizedBox(width: DimensManager.dimens.setWidth(12)),
-                      Container(
-                          constraints: BoxConstraints(maxWidth: DimensManager.dimens.setWidth(267)),
-                          padding: EdgeInsets.only(
-                              left: DimensManager.dimens.setWidth(12),
-                              right: DimensManager.dimens.setWidth(12),
-                              top: DimensManager.dimens.setHeight(6),
-                              bottom: DimensManager.dimens.setHeight(7)),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(DimensManager.dimens.setSp(18.0))),
-                              color: messages[index].me
-                                  ? AppColors.requiredColor
-                                  : Colors.black.withOpacity(0.06)),
-                          child: Text(
-                            messages[index].text,
-                            style: TextStyle(
-                                fontSize: DimensManager.dimens.setSp(17),
-                                color:
-                                    messages[index].me ? Colors.white : AppColors.headerTextColor,
-                                fontWeight: FontWeight.w400),
-                          )),
-                      SizedBox(width: DimensManager.dimens.setWidth(16))
-                    ],
-                  ),
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestore.collection('messages').orderBy('createAt', descending: false).snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.lightBlueAccent,
+            ),
+          );
+        }
+
+        final messages = snapshot.data!.docs;
+        List<MessageBubble> messageBubbles = [];
+        String? lastSender;
+
+        for (var message in messages) {
+          final messageText = message['text'];
+          final messageSender = message['sender'];
+          final createAt = message['createAt'];
+
+          final currentUser = loggedInUser.email;
+
+          final messageBubble = MessageBubble(
+            sender: messageSender,
+            text: messageText,
+            isMe: currentUser == messageSender,
+            createAt: createAt,
+          );
+
+          if (messageSender != lastSender) {
+            lastSender = messageSender;
+            messageBubbles.add(messageBubble);
+          } else {
+            messageBubbles.add(messageBubble.copyWith(showSender: false));
+          }
+        }
+
+        return Expanded(
+          child: ListView(
+            reverse: true,
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+            children: messageBubbles.reversed.toList(),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class MessageBubble extends StatefulWidget {
+  const MessageBubble({
+    Key? key,
+    required this.sender,
+    required this.text,
+    required this.isMe,
+    required this.createAt,
+    this.showSender = true,
+  }) : super(key: key);
+
+  final String sender;
+  final String text;
+  final bool isMe;
+  final Timestamp createAt;
+  final bool showSender;
+
+  @override
+  _MessageBubbleState createState() => _MessageBubbleState();
+
+  MessageBubble copyWith({
+    String? sender,
+    String? text,
+    bool? isMe,
+    Timestamp? createAt,
+    bool? showSender,
+  }) {
+    return MessageBubble(
+      sender: sender ?? this.sender,
+      text: text ?? this.text,
+      isMe: isMe ?? this.isMe,
+      createAt: createAt ?? this.createAt,
+      showSender: showSender ?? this.showSender,
+    );
+  }
+}
+
+class _MessageBubbleState extends State<MessageBubble> with SingleTickerProviderStateMixin {
+  bool showTimestamp = false;
+  late AnimationController _animationController;
+  late Animation<Color?> _colorAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..repeat(reverse: true);
+    _colorAnimation =
+        ColorTween(begin: Colors.blue, end: Colors.lightBlue).animate(_animationController);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dateTime = widget.createAt.toDate();
+    final now = DateTime.now();
+    final isToday =
+        dateTime.day == now.day && dateTime.month == now.month && dateTime.year == now.year;
+    final formattedDate =
+        isToday ? DateFormat('HH:mm').format(dateTime) : DateFormat('dd/MM/yyyy').format(dateTime);
+
+    String senderText;
+    if (widget.sender.split('@')[0] == 'ctsv') {
+      senderText = 'Phòng công tác sinh viên';
+    } else if (widget.sender.split('@')[0] == 'gvcn') {
+      senderText = 'Giáo viên chủ nhiệm';
+    } else {
+      senderText = widget.sender.split('@')[0];
+    }
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          showTimestamp = !showTimestamp;
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Column(
+          crossAxisAlignment: widget.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          children: <Widget>[
+            if (widget.showSender && !widget.isMe)
+              Text(
+                senderText,
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: widget.sender.split('@')[0] == 'ctsv'
+                      ? Colors.blue
+                      : AppColors.black.withOpacity(0.7),
                 ),
-                index == (messages.length - 1)
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                          right: DimensManager.dimens.setWidth(15),
-                        ),
+              ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: widget.isMe
+                    ? const BorderRadius.all(
+                        Radius.circular(30.0),
                       )
-                    : const SizedBox()
-              ],
-            );
-          },
+                    : const BorderRadius.only(
+                        bottomLeft: Radius.circular(30.0),
+                        bottomRight: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0),
+                      ),
+                border: Border.all(
+                  width: 2.0,
+                  color: widget.isMe ? AppColors.blue : Colors.black.withOpacity(0.06),
+                ),
+              ),
+              foregroundDecoration: BoxDecoration(
+                borderRadius: (widget.sender.contains('ctsv') || widget.sender.contains('gvcn'))
+                    ? const BorderRadius.only(
+                        bottomLeft: Radius.circular(30.0),
+                        bottomRight: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0),
+                      )
+                    : null,
+                border: Border.all(
+                  width: 2.0,
+                  color: widget.sender.contains('ctsv') || widget.sender.contains('gvcn')
+                      ? _colorAnimation.value ?? Colors.transparent
+                      : Colors.transparent,
+                ),
+              ),
+              // transform: Matrix4.rotationZ(_animationController.value * 2 * 3.14),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.text,
+                      style: TextStyle(
+                        color: widget.isMe ? Colors.white : AppColors.headerTextColor,
+                        fontSize: 15.0,
+                      ),
+                    ),
+                    const SizedBox(height: 5.0),
+                    if (showTimestamp)
+                      Text(
+                        formattedDate,
+                        style: const TextStyle(
+                          fontSize: 10.0,
+                          color: Colors.black87,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
-    );
-  }
-}
-
-class _BottomChatDetail extends StatelessWidget {
-  const _BottomChatDetail();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      height: DimensManager.dimens.setHeight(90),
-      width: DimensManager.dimens.setWidth(390),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SvgPicture.asset(AppAssets.icSendImage),
-          SvgPicture.asset(AppAssets.icSendFile),
-          const UiInputChat(),
-          SvgPicture.asset(AppAssets.icSend),
-        ],
       ),
     );
   }

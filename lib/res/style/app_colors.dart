@@ -28,7 +28,6 @@ class AppColors {
   static const Color noActiveChatColor = Color(0xffD8D8D8);
   static const Color activeChatColor = Color(0xff5AD439);
   static const Color inFieldTextColor = Color(0xFF5A5A5A);
-  //static const Color background = Color(0xffE6ecef);
   static const Color eye = Color(0xff3083f2);
   static const Color border = Color(0xff9caccc);
 
