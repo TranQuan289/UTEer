@@ -364,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ]
           ] else if (user?.rule == "gvcn") ...[
             CardHome(
-              onTap: () => {},
+              onTap: () => Routes.goToTrainingPointGvcnScreen(context),
               color: AppColors.blue,
               icon: AppAssets.icTrainingPoint,
               text: 'Duyệt danh sách\n điểm rèn luyện',

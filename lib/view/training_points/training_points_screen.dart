@@ -566,28 +566,28 @@ class _DescriptionTrainingPoint extends StatelessWidget {
           (trainingPoint?.study3 ?? 0) +
           (trainingPoint?.study4 ?? 0) +
           (trainingPoint?.study5 ?? 0) +
-          (trainingPoint?.study6 ?? 0); // Include study6 score
+          (trainingPoint?.study6 ?? 0);
 
       final sumStudyPoints2 = (trainingPoint?.rules1 ?? 0) +
           (trainingPoint?.rules2 ?? 0) +
           (trainingPoint?.rules3 ?? 0) +
-          (trainingPoint?.rules4 ?? 0); // Include study6 score
+          (trainingPoint?.rules4 ?? 0);
 
       final sumStudyPoints3 = (trainingPoint?.activate1 ?? 0) +
           (trainingPoint?.activate2 ?? 0) +
           (trainingPoint?.activate3 ?? 0) +
-          (trainingPoint?.activate4 ?? 0); // Include study6 score
+          (trainingPoint?.activate4 ?? 0);
 
       final sumStudyPoints4 = (trainingPoint?.relation1 ?? 0) +
           (trainingPoint?.relation2 ?? 0) +
           (trainingPoint?.relation3 ?? 0) +
           (trainingPoint?.relation4 ?? 0) +
-          (trainingPoint?.relation5 ?? 0); // Include study6 score
+          (trainingPoint?.relation5 ?? 0);
 
       final sumStudyPoints5 = (trainingPoint?.monitor1 ?? 0) +
           (trainingPoint?.monitor2 ?? 0) +
           (trainingPoint?.monitor3 ?? 0) +
-          (trainingPoint?.monitor4 ?? 0); // Include study6 score
+          (trainingPoint?.monitor4 ?? 0);
 
       final sumStudyPoints6 = (trainingPoint?.study1 ?? 0) +
           (trainingPoint?.study2 ?? 0) +
@@ -611,8 +611,7 @@ class _DescriptionTrainingPoint extends StatelessWidget {
           (trainingPoint?.monitor1 ?? 0) +
           (trainingPoint?.monitor2 ?? 0) +
           (trainingPoint?.monitor3 ?? 0) +
-          (trainingPoint?.monitor4 ?? 0); // Include study6 score
-      // Include study6 score
+          (trainingPoint?.monitor4 ?? 0);
       return Future.wait([
         viewModel.updateDocument(key: "trainingPoint1", value: sumStudyPoints1, msv: msv),
         viewModel.updateDocument(key: "trainingPoint2", value: sumStudyPoints2, msv: msv),

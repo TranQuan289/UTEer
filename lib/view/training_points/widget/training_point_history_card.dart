@@ -8,7 +8,7 @@ import 'package:uteer/view/widgets/ui_text.dart';
 const double kNormalHeight = 98.0;
 const double kExpandedHeight = 237.0;
 
-class BloodResultCard extends StatefulWidget {
+class TrainingPointHistoryCard extends StatefulWidget {
   final String name;
   final String semester;
   final int score;
@@ -18,7 +18,8 @@ class BloodResultCard extends StatefulWidget {
   final String scorer;
   final String rule;
   final String email;
-  const BloodResultCard(
+  final bool status;
+  const TrainingPointHistoryCard(
       {super.key,
       required this.name,
       required this.semester,
@@ -28,13 +29,14 @@ class BloodResultCard extends StatefulWidget {
       required this.teacherGrade,
       required this.scorer,
       required this.rule,
+      required this.status,
       required this.email});
 
   @override
-  State<BloodResultCard> createState() => _BloodResultCardState();
+  State<TrainingPointHistoryCard> createState() => _TrainingPointHistoryCardState();
 }
 
-class _BloodResultCardState extends State<BloodResultCard> {
+class _TrainingPointHistoryCardState extends State<TrainingPointHistoryCard> {
   double height = kNormalHeight;
 
   @override
@@ -77,8 +79,10 @@ class _BloodResultCardState extends State<BloodResultCard> {
                     border: Border(
                       left: BorderSide(
                           color: height != kNormalHeight
-                              ? AppColors.primaryColor
-                              : AppColors.enableBlue,
+                              ? (widget.status ? AppColors.primaryColor : AppColors.errorMsg)
+                              : (widget.status
+                                  ? AppColors.enableBlue
+                                  : Colors.red[50] ?? Colors.red),
                           width: 8),
                     ),
                   ),
@@ -227,7 +231,7 @@ class _BloodResultCardState extends State<BloodResultCard> {
                 width: 90,
                 child: UIOutlineButton(
                   title: "Xem chi tiết",
-                  onPressed: () => Routes.goToTrainingPointScreen(context, arguments: {
+                  onPressed: () => Routes.goToTrainingPointGvcnDetailScreen(context, arguments: {
                     "email": widget.email,
                     "absorbing": true,
                   }),

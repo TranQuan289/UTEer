@@ -42,7 +42,7 @@ class TrainingPointViewModel extends BaseViewModel {
   Future<void> updateDocument({required String key, required var value, required String msv}) {
     return firestore
         .collection('trainingPoints')
-        .doc('48gGTkgc7VXhJ0xeTNov')
+        .doc('qpP2Tn7z1KfMMVGxJBop')
         .update(
           {key: value},
         )

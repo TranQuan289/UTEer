@@ -137,7 +137,7 @@ class _EncouragingStudyScreenState extends State<EncouragingStudyScreen> {
                       setState(() {
                         rankDropdownValue = rankValue;
                       });
-                      String? classValue = getClassDropdownValue(); // Lấy giá trị của dropdown lớp
+                      String? classValue = getClassDropdownValue();
                       if (classValue == "Tất cả" && rankValue == "Tất cả") {
                         viewModel.getScholarship();
                       } else {

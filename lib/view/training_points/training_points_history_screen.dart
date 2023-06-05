@@ -61,16 +61,17 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
                     if (viewModel.trainingPoint?.history == true) {
                       return ListView.builder(
                         itemCount: 1,
-                        itemBuilder: (context, index) => BloodResultCard(
+                        itemBuilder: (context, index) => TrainingPointHistoryCard(
                           email: viewModel.user?.email ?? "",
                           rule: viewModel.user?.rule ?? "",
                           name: viewModel.user?.name ?? "",
-                          score: viewModel.trainingPoint?.trainingPoint ?? 0,
-                          rank: viewModel.trainingPoint?.rank ?? "",
+                          score: viewModel.trainingPoint?.teacherTrainingPoint ?? 0,
+                          rank: viewModel.trainingPoint?.teacherRank ?? "",
                           selfScoringScore: viewModel.trainingPoint?.trainingPoint ?? 0,
-                          teacherGrade: viewModel.trainingPoint?.trainingPoint ?? 0,
+                          teacherGrade: viewModel.trainingPoint?.teacherTrainingPoint ?? 0,
                           scorer: viewModel.trainingPoint?.gvcn ?? "",
                           semester: viewModel.openTrainingPoint?.semester ?? "",
+                          status: viewModel.trainingPoint?.status ?? false,
                         ),
                       );
                     } else {

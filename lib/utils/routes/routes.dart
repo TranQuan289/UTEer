@@ -16,9 +16,11 @@ import 'package:uteer/view/scholarship/UTE_scholarship_screen.dart';
 import 'package:uteer/view/scholarship/encouraging_study_screen.dart';
 import 'package:uteer/view/scholarship/outside_scholarship_screen.dart';
 import 'package:uteer/view/splash_screen.dart';
+import 'package:uteer/view/training_points/training_point_gvcn_screen.dart';
 import 'package:uteer/view/training_points/training_points_ctsv_history_screen.dart';
 import 'package:uteer/view/training_points/training_points_history_screen.dart';
 import 'package:uteer/view/training_points/training_points_screen.dart';
+import 'package:uteer/view/training_points/traning_points_gvcn_detail_screen.dart';
 
 class Routes {
   static Route<dynamic> routeBuilder(
@@ -78,6 +80,15 @@ class Routes {
             absorbing: args["absorbing"] as bool, // Ép kiểu về bool
           ),
         );
+      case RoutesName.trainingPointGvcnDetail:
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return MaterialPageRoute(
+          builder: (BuildContext context) => TrainingPointsGvcnDetailScreen(
+            email: args["email"],
+            absorbing: args["absorbing"] as bool, // Ép kiểu về bool
+          ),
+        );
 
       case RoutesName.trainingPointHistory:
         final args = settings.arguments as String;
@@ -88,6 +99,9 @@ class Routes {
       case RoutesName.trainingPointCtsvHistory:
         return MaterialPageRoute(
             builder: (BuildContext context) => const TrainingPointsCtsvHistoryScreen());
+      case RoutesName.trainingPointGvcn:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const TrainingPointsGvcnScreen());
       case RoutesName.encouragingStudy:
         final args = settings.arguments as String;
         return MaterialPageRoute(
@@ -172,6 +186,10 @@ class Routes {
     Navigator.of(context).pushNamed(RoutesName.trainingPoint, arguments: arguments);
   }
 
+  static void goToTrainingPointGvcnDetailScreen(BuildContext context, {Object? arguments}) {
+    Navigator.of(context).pushNamed(RoutesName.trainingPointGvcnDetail, arguments: arguments);
+  }
+
   static void goToTrainingPointHistoryScreen(BuildContext context, {String? arguments}) {
     Navigator.of(context).pushNamed(RoutesName.trainingPointHistory, arguments: arguments);
   }
@@ -179,6 +197,12 @@ class Routes {
   static void goToTrainingPointCtsvHistoryScreen(BuildContext context) {
     Navigator.of(context).pushNamed(
       RoutesName.trainingPointCtsvHistory,
+    );
+  }
+
+  static void goToTrainingPointGvcnScreen(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      RoutesName.trainingPointGvcn,
     );
   }
 

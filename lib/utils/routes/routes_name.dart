@@ -31,6 +31,8 @@ class RoutesName {
   static const String trainingPoint = 'training_points_screen';
   static const String trainingPointHistory = 'training_points_history_screen';
   static const String trainingPointCtsvHistory = 'training_points_ctsv_history_screen';
+  static const String trainingPointGvcn = 'training_points_gvcn_screen';
+  static const String trainingPointGvcnDetail = 'training_points_gvcn_detail_screen';
   static const String encouragingStudy = 'encouraging_study_screen';
   static const String outsideScholarship = 'outside_scholarship_screen';
   static const String uteScholarship = 'ute_scholarship_screen';

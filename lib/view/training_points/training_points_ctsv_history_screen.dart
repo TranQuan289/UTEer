@@ -8,6 +8,7 @@ import 'package:uteer/utils/dimens/dimens_manager.dart';
 import 'package:uteer/view/training_points/widget/training_point_history_card.dart';
 import 'package:uteer/view/widgets/appbar.dart';
 import 'package:uteer/view/widgets/ui_empty_png_screen.dart';
+import 'package:uteer/view/widgets/ui_search_input.dart';
 import 'package:uteer/viewmodels/training_point/training_point_viewmodel.dart';
 
 class TrainingPointsCtsvHistoryScreen extends StatefulWidget {
@@ -37,71 +38,84 @@ class _TrainingPointsCtsvHistoryScreenState extends State<TrainingPointsCtsvHist
     return ChangeNotifierProvider.value(
       value: viewModel,
       child: Scaffold(
-        appBar: appBar(context, 'Lịch sử điểm rèn luyện'),
-        body: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: DimensManager.dimens.setHeight(14),
-            horizontal: DimensManager.dimens.setWidth(14),
-          ),
-          child: Selector<TrainingPointViewModel, List<TrainingPointModel?>?>(
-            selector: (_, viewModel) => viewModel.listTrainingPoint,
-            builder: (context, listTrainingPoint, child) {
-              if (listTrainingPoint?.isNotEmpty ?? false) {
-                return ListView.builder(
-                  itemCount: listTrainingPoint?.length,
-                  itemBuilder: (context, index) {
-                    final trainingPoint = listTrainingPoint?[index];
-                    final email = trainingPoint?.email ?? "";
+        appBar: appBar(context, 'Danh sách lịch sử điểm rèn luyện'),
+        body: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              width: DimensManager.dimens.setWidth(390),
+              height: DimensManager.dimens.setHeight(48),
+              child: UISearchInput(
+                onChangeValue: (String value) => null,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: DimensManager.dimens.setHeight(14),
+                  horizontal: DimensManager.dimens.setWidth(14),
+                ),
+                child: Selector<TrainingPointViewModel, List<TrainingPointModel?>?>(
+                  selector: (_, viewModel) => viewModel.listTrainingPoint,
+                  builder: (context, listTrainingPoint, child) {
+                    if (listTrainingPoint?.isNotEmpty ?? false) {
+                      return ListView.builder(
+                        itemCount: listTrainingPoint?.length,
+                        itemBuilder: (context, index) {
+                          final trainingPoint = listTrainingPoint?[index];
+                          final email = trainingPoint?.email ?? "";
 
-                    return FutureBuilder<UsersModel?>(
-                      future: viewModel.getUser(email),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          // Hiển thị một widget loading hoặc tiến trình chờ tại đây
-                          return const CircularProgressIndicator();
-                        }
+                          return FutureBuilder<UsersModel?>(
+                            future: viewModel.getUser(email),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              }
 
-                        if (snapshot.hasError) {
-                          // Xử lý lỗi khi không thể lấy được thông tin người dùng
-                          return Text('Đã xảy ra lỗi: ${snapshot.error}');
-                        }
+                              if (snapshot.hasError) {
+                                return Text('Đã xảy ra lỗi: ${snapshot.error}');
+                              }
 
-                        final user = snapshot.data;
+                              final user = snapshot.data;
 
-                        if (trainingPoint?.history == true && user != null) {
-                          return BloodResultCard(
-                            email: user.email ?? "",
-                            rule: "ctsv",
-                            name: user.name ?? "",
-                            score: trainingPoint?.trainingPoint ?? 0,
-                            rank: trainingPoint?.rank ?? "",
-                            selfScoringScore: trainingPoint?.trainingPoint ?? 0,
-                            teacherGrade: viewModel.trainingPoint?.trainingPoint ?? 0,
-                            scorer: trainingPoint?.gvcn ?? "",
-                            semester: viewModel.openTrainingPoint?.semester ?? "",
+                              if (trainingPoint?.history == true && user != null) {
+                                return TrainingPointHistoryCard(
+                                  email: user.email ?? "",
+                                  rule: "ctsv",
+                                  name: user.name ?? "",
+                                  score: trainingPoint?.teacherTrainingPoint ?? 0,
+                                  rank: trainingPoint?.teacherRank ?? "",
+                                  selfScoringScore: trainingPoint?.trainingPoint ?? 0,
+                                  teacherGrade: trainingPoint?.teacherTrainingPoint ?? 0,
+                                  scorer: trainingPoint?.gvcn ?? "",
+                                  semester: viewModel.openTrainingPoint?.semester ?? "",
+                                  status: trainingPoint?.status ?? false,
+                                );
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            },
                           );
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      },
-                    );
+                        },
+                      );
+                    } else {
+                      return Column(
+                        children: const [
+                          SizedBox(
+                            height: 200,
+                          ),
+                          UIEmptyPngScreen(
+                            iconAsset: AppAssets.icHistoryMini,
+                            title: "Hiện chưa có lịch sử điểm rèn luyện nào",
+                          ),
+                        ],
+                      );
+                    }
                   },
-                );
-              } else {
-                return Column(
-                  children: const [
-                    SizedBox(
-                      height: 200,
-                    ),
-                    UIEmptyPngScreen(
-                      iconAsset: AppAssets.icHistoryMini,
-                      title: "Hiện chưa có lịch sử điểm rèn luyện nào",
-                    ),
-                  ],
-                );
-              }
-            },
-          ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
