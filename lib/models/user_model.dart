@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UsersModel {
   final String? name;
   final String? email;
-  final String? rule;
+  final String? permission;
   final String? msv;
   final String? major;
   final String? department;
@@ -17,7 +17,7 @@ class UsersModel {
       this.department,
       this.name,
       this.email,
-      this.rule,
+      this.permission,
       this.msv});
 
   factory UsersModel.fromFirestore(
@@ -28,7 +28,7 @@ class UsersModel {
     return UsersModel(
       name: data?['name'],
       email: data?['email'],
-      rule: data?['rule'],
+      permission: data?['permission'],
       msv: data?['msv'],
       major: data?['major'],
       department: data?['department'],
@@ -41,7 +41,7 @@ class UsersModel {
     return {
       if (name != null) "name": name,
       if (email != null) "email": email,
-      if (rule != null) "rule": rule,
+      if (permission != null) "permission": permission,
       if (msv != null) "msv": msv,
       if (major != null) "major": major,
       if (department != null) "department": department,

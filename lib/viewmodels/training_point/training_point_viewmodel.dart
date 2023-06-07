@@ -19,8 +19,8 @@ class TrainingPointViewModel extends BaseViewModel {
   List<TrainingPointModel?>? get listTrainingPointModel => listTrainingPoint;
   UsersModel? get usersModel => user;
   OpenTrainingPointModel? get openTrainingPointModel => openTrainingPoint;
-  Future<void> getTrainingPoint(String msv) async {
-    trainingPoint = await repository.getTrainingPoint(msv);
+  Future<void> getTrainingPoint(String email) async {
+    trainingPoint = await repository.getTrainingPoint(email);
     updateUI();
   }
 
@@ -39,14 +39,14 @@ class TrainingPointViewModel extends BaseViewModel {
     return user;
   }
 
-  Future<void> updateDocument({required String key, required var value, required String msv}) {
+  Future<void> updateDocument({required String key, required var value, required String email}) {
     return firestore
         .collection('trainingPoints')
         .doc('qpP2Tn7z1KfMMVGxJBop')
         .update(
           {key: value},
         )
-        .then((value) => getTrainingPoint(msv))
+        .then((value) => getTrainingPoint(email))
         .catchError((error) => print("Failed to update document: $error"));
   }
 }

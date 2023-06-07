@@ -20,8 +20,8 @@ import 'package:uteer/view/widgets/ui_text.dart';
 import 'package:uteer/viewmodels/scholarship/scholarship_viewmodel.dart';
 
 class EncouragingStudyScreen extends StatefulWidget {
-  const EncouragingStudyScreen({Key? key, required this.rule}) : super(key: key);
-  final String rule;
+  const EncouragingStudyScreen({Key? key, required this.permission}) : super(key: key);
+  final String permission;
   @override
   _EncouragingStudyScreenState createState() => _EncouragingStudyScreenState();
 }
@@ -55,7 +55,7 @@ class _EncouragingStudyScreenState extends State<EncouragingStudyScreen> {
           context,
           'Học bổng học tập',
           actions: [
-            if (widget.rule == "ctsv") ...[
+            if (widget.permission == "ctsv") ...[
               IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () => Navigator.push(
@@ -165,7 +165,7 @@ class _EncouragingStudyScreenState extends State<EncouragingStudyScreen> {
                           itemBuilder: (context, index) {
                             final scholarship = viewModel.listScholarship[index];
                             return Slidable(
-                                endActionPane: widget.rule != "ctsv"
+                                endActionPane: widget.permission != "ctsv"
                                     ? null
                                     : ActionPane(
                                         extentRatio: 0.2,

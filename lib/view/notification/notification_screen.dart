@@ -26,11 +26,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   void initState() {
     viewModel = NotificationViewModel(repository: NotificationRepository())..onInitView(context);
-    int atIndex = widget.email.indexOf('@');
-    if (atIndex != -1) {
-      String msv = widget.email.substring(0, atIndex);
-      viewModel.getNotification(msv);
-    }
+    viewModel.getNotification(widget.email);
     super.initState();
   }
 
@@ -84,11 +80,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         itemCount: viewModel.listNotification.length,
                         itemBuilder: (context, index) {
                           final notification = viewModel.listNotification[index];
-                          return GestureDetector(
-                            onTap: () => Navigator.pushNamed(context, RoutesName.encouragingStudy,
-                                arguments: ""),
-                            child: NotificationItemWidget(notification: notification),
-                          );
+                          if (notification.type == "scholarship") {
+                            return GestureDetector(
+                              onTap: () => Navigator.pushNamed(context, RoutesName.encouragingStudy,
+                                  arguments: "student"),
+                              child: NotificationItemWidget(notification: notification),
+                            );
+                          } else if (notification.type == "trainingpoint") {
+                            return GestureDetector(
+                              onTap: () => Navigator.pushNamed(
+                                  context, RoutesName.trainingPointHistory,
+                                  arguments: widget.email),
+                              child: NotificationItemWidget(notification: notification),
+                            );
+                          }
+                          // Thêm xử lý cho các trường hợp khác nếu cần thiết
+
+                          return Container(); // Trả về widget mặc định nếu không có trường hợp nào phù hợp
                         },
                       ),
                     );

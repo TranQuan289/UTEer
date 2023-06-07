@@ -3,13 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ScholarshipModel {
   final String documentId;
   final String? name;
-  final String? msv;
+  final String? email;
   final String? classRoom;
   final String? rank;
   final String? bonus;
 
   ScholarshipModel(
-      {required this.documentId, this.classRoom, this.rank, this.bonus, this.name, this.msv});
+      {required this.documentId, this.classRoom, this.rank, this.bonus, this.name, this.email});
 
   factory ScholarshipModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -21,7 +21,7 @@ class ScholarshipModel {
       name: data?['name'] ?? '',
       classRoom: data?['classRoom'] ?? '',
       rank: data?['rank'] ?? '',
-      msv: data?['msv'] ?? '',
+      email: data?['email'] ?? '',
       bonus: data?['bonus'] ?? '',
     );
   }
@@ -31,7 +31,7 @@ class ScholarshipModel {
       if (name != null) "name": name,
       if (classRoom != null) "email": classRoom,
       if (rank != null) "role": rank,
-      if (msv != null) "msv": msv,
+      if (email != null) "email": email,
       if (bonus != null) "major": bonus,
     };
   }

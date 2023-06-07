@@ -25,7 +25,7 @@ class ScheduleItemWidget extends StatelessWidget {
         ),
         InforRowWidget(
           title: 'Mã sinh viên:',
-          value: schedule.msv!,
+          value: schedule.email!,
         ),
         SizedBox(
           height: DimensManager.dimens.setHeight(8),

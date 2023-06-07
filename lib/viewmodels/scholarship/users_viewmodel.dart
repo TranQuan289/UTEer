@@ -6,13 +6,13 @@ import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/utils/general_utils.dart';
 import 'package:uteer/viewmodels/base_view_model.dart';
 
-CollectionReference scholarship = FirebaseFirestore.instance.collection('scholarship');
-CollectionReference notification = FirebaseFirestore.instance.collection('notification');
+CollectionReference scholarship = FirebaseFirestore.instance.collection('scholarships');
+CollectionReference notification = FirebaseFirestore.instance.collection('notifications');
 
 class UsersViewModel extends BaseViewModel {
   final UsersRepository repository;
   UsersViewModel({required this.repository});
-  List<UsersModel> listMsv = [];
+  List<UsersModel> listemail = [];
   UsersModel? nameOnly;
   List<UsersModel> listUsers = [];
   late UsersModel user;
@@ -32,22 +32,26 @@ class UsersViewModel extends BaseViewModel {
   Future<List<String>> getSearchClass(String classValue) async {
     try {
       listUsers = await repository.getUsers();
-      listMsv =
+      listemail =
           listUsers.where((element) => element.classRoom!.contains(classValue.trim())).toList();
       updateUI();
 
-      return listMsv.map((element) => element.msv!).toList();
+      List<String> emailList = listemail.map((element) => element.email!).toList();
+      List<String> trimmedEmailList =
+          emailList.map((email) => email.substring(0, email.indexOf('@'))).toList();
+
+      return trimmedEmailList;
     } catch (e) {
       Utils.showToast(message: e.toString());
-      return []; // Return an empty list or handle the error accordingly
+      return [];
     }
   }
 
-  Future<String?> getSearchName(String msv) async {
+  Future<String?> getSearchName(String email) async {
     try {
       listUsers = await repository.getUsers();
       List<String> names = listUsers
-          .where((element) => element.msv!.contains(msv.trim()))
+          .where((element) => element.email!.contains(email.trim()))
           .map((user) => user.name ?? "")
           .toList();
       updateUI();
@@ -55,36 +59,36 @@ class UsersViewModel extends BaseViewModel {
       return names.isNotEmpty ? names.join(", ") : null;
     } catch (e) {
       Utils.showToast(message: e.toString());
-      return null; // or handle the error accordingly
+      return null;
     }
   }
 
   Future<void> addScholarship({
     required String name,
-    required String msv,
+    required String email,
     required String classRoom,
     required String rank,
     required String bonus,
   }) async {
     try {
-      // Kiểm tra nếu đã tồn tại tài liệu với msv tương tự
-      final querySnapshot = await scholarship.where('msv', isEqualTo: msv).get();
+      final querySnapshot = await scholarship.where('email', isEqualTo: email).get();
 
       if (querySnapshot.docs.isEmpty) {
-        // Không có tài liệu trùng msv, tiến hành thêm dữ liệu mới
         await scholarship.add({
           'name': name,
-          'msv': msv,
+          'email': email,
           'classRoom': classRoom,
           'rank': rank,
           'bonus': bonus,
         });
+
         await notification.add({
           'name': name,
-          'msv': msv,
+          'email': "$email@sv.ute.udn.vn",
           'title': "Thông báo về học bổng",
           'describe': "Chúc mừng bạn đã nhận được học bổng $rank kì vừa rồi",
-          'time': Timestamp.fromDate(DateTime.now()),
+          'type': "scholarship",
+          'createAt': Timestamp.fromDate(DateTime.now()),
         });
 
         Utils.showPopup(context,
@@ -104,10 +108,10 @@ class UsersViewModel extends BaseViewModel {
 
   Future<void> addNotification({
     required String name,
-    required String msv,
+    required String email,
     required String title,
     required String describe,
-    required DateTime time,
+    required DateTime createAt,
   }) async {
     try {} catch (e) {}
   }

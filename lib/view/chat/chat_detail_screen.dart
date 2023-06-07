@@ -72,7 +72,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                           messageTextController.clear();
                           FirebaseFirestore.instance.collection('messages').add({
                             'text': messageText,
-                            'sender': loggedInUser.email,
+                            'email': loggedInUser.email,
                             'createAt': DateTime.now(),
                           });
                         },
@@ -113,27 +113,27 @@ class MessagesStream extends StatelessWidget {
 
         final messages = snapshot.data!.docs;
         List<MessageBubble> messageBubbles = [];
-        String? lastSender;
+        String? lastemail;
 
         for (var message in messages) {
           final messageText = message['text'];
-          final messageSender = message['sender'];
+          final messageemail = message['email'];
           final createAt = message['createAt'];
 
           final currentUser = loggedInUser.email;
 
           final messageBubble = MessageBubble(
-            sender: messageSender,
+            email: messageemail,
             text: messageText,
-            isMe: currentUser == messageSender,
+            isMe: currentUser == messageemail,
             createAt: createAt,
           );
 
-          if (messageSender != lastSender) {
-            lastSender = messageSender;
+          if (messageemail != lastemail) {
+            lastemail = messageemail;
             messageBubbles.add(messageBubble);
           } else {
-            messageBubbles.add(messageBubble.copyWith(showSender: false));
+            messageBubbles.add(messageBubble.copyWith(showemail: false));
           }
         }
 
@@ -152,35 +152,35 @@ class MessagesStream extends StatelessWidget {
 class MessageBubble extends StatefulWidget {
   const MessageBubble({
     Key? key,
-    required this.sender,
+    required this.email,
     required this.text,
     required this.isMe,
     required this.createAt,
-    this.showSender = true,
+    this.showemail = true,
   }) : super(key: key);
 
-  final String sender;
+  final String email;
   final String text;
   final bool isMe;
   final Timestamp createAt;
-  final bool showSender;
+  final bool showemail;
 
   @override
   _MessageBubbleState createState() => _MessageBubbleState();
 
   MessageBubble copyWith({
-    String? sender,
+    String? email,
     String? text,
     bool? isMe,
     Timestamp? createAt,
-    bool? showSender,
+    bool? showemail,
   }) {
     return MessageBubble(
-      sender: sender ?? this.sender,
+      email: email ?? this.email,
       text: text ?? this.text,
       isMe: isMe ?? this.isMe,
       createAt: createAt ?? this.createAt,
-      showSender: showSender ?? this.showSender,
+      showemail: showemail ?? this.showemail,
     );
   }
 }
@@ -216,13 +216,13 @@ class _MessageBubbleState extends State<MessageBubble> with SingleTickerProvider
     final formattedDate =
         isToday ? DateFormat('HH:mm').format(dateTime) : DateFormat('dd/MM/yyyy').format(dateTime);
 
-    String senderText;
-    if (widget.sender.split('@')[0] == 'ctsv') {
-      senderText = 'Phòng công tác sinh viên';
-    } else if (widget.sender.split('@')[0] == 'gvcn') {
-      senderText = 'Giáo viên chủ nhiệm';
+    String emailText;
+    if (widget.email.split('@')[0] == 'ctsv') {
+      emailText = 'Phòng công tác sinh viên';
+    } else if (widget.email.split('@')[0] == 'gvcn') {
+      emailText = 'Giáo viên chủ nhiệm';
     } else {
-      senderText = widget.sender.split('@')[0];
+      emailText = widget.email.split('@')[0];
     }
 
     return GestureDetector(
@@ -236,12 +236,12 @@ class _MessageBubbleState extends State<MessageBubble> with SingleTickerProvider
         child: Column(
           crossAxisAlignment: widget.isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: <Widget>[
-            if (widget.showSender && !widget.isMe)
+            if (widget.showemail && !widget.isMe)
               Text(
-                senderText,
+                emailText,
                 style: TextStyle(
                   fontSize: 12.0,
-                  color: widget.sender.split('@')[0] == 'ctsv' || widget.sender.contains('gvcn')
+                  color: widget.email.split('@')[0] == 'ctsv' || widget.email.contains('gvcn')
                       ? Colors.blue
                       : AppColors.black.withOpacity(0.7),
                 ),
@@ -273,19 +273,19 @@ class _MessageBubbleState extends State<MessageBubble> with SingleTickerProvider
                 ),
               ),
               foregroundDecoration: BoxDecoration(
-                borderRadius: (widget.sender.contains('ctsv') || widget.sender.contains('gvcn')) &&
-                        !widget.isMe
-                    ? const BorderRadius.only(
-                        bottomLeft: Radius.circular(30.0),
-                        bottomRight: Radius.circular(30.0),
-                        topRight: Radius.circular(30.0),
-                      )
-                    : const BorderRadius.all(
-                        Radius.circular(30.0),
-                      ),
+                borderRadius:
+                    (widget.email.contains('ctsv') || widget.email.contains('gvcn')) && !widget.isMe
+                        ? const BorderRadius.only(
+                            bottomLeft: Radius.circular(30.0),
+                            bottomRight: Radius.circular(30.0),
+                            topRight: Radius.circular(30.0),
+                          )
+                        : const BorderRadius.all(
+                            Radius.circular(30.0),
+                          ),
                 border: Border.all(
                   width: 2.0,
-                  color: widget.sender.contains('ctsv') || widget.sender.contains('gvcn')
+                  color: widget.email.contains('ctsv') || widget.email.contains('gvcn')
                       ? _colorAnimation.value ?? Colors.transparent
                       : Colors.transparent,
                 ),

@@ -63,7 +63,6 @@ class _TrainingPointsGvcnScreenState extends State<TrainingPointsGvcnScreen> {
                   selector: (_, viewModel) => viewModel.listTrainingPoint,
                   builder: (context, listTrainingPoint, child) {
                     if (listTrainingPoint?.isNotEmpty ?? false) {
-                      // Tạo danh sách riêng cho các phần tử có status là false và true
                       List<TrainingPointModel?> falseStatusList = [];
                       List<TrainingPointModel?> trueStatusList = [];
 

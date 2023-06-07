@@ -81,7 +81,7 @@ class _TrainingPointsCtsvHistoryScreenState extends State<TrainingPointsCtsvHist
                               if (trainingPoint?.history == true && user != null) {
                                 return TrainingPointHistoryCard(
                                   email: user.email ?? "",
-                                  rule: "ctsv",
+                                  permission: "ctsv",
                                   name: user.name ?? "",
                                   score: trainingPoint?.teacherTrainingPoint ?? 0,
                                   rank: trainingPoint?.teacherRank ?? "",

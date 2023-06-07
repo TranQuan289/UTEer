@@ -16,7 +16,7 @@ class TrainingPointHistoryCard extends StatefulWidget {
   final int selfScoringScore;
   final int teacherGrade;
   final String scorer;
-  final String rule;
+  final String permission;
   final String email;
   final bool status;
   const TrainingPointHistoryCard(
@@ -28,7 +28,7 @@ class TrainingPointHistoryCard extends StatefulWidget {
       required this.selfScoringScore,
       required this.teacherGrade,
       required this.scorer,
-      required this.rule,
+      required this.permission,
       required this.status,
       required this.email});
 
@@ -128,7 +128,7 @@ class _TrainingPointHistoryCardState extends State<TrainingPointHistoryCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (widget.rule != "student") ...[
+                if (widget.permission != "student") ...[
                   UIText(
                     "Sinh viên: $name",
                     style: const TextStyle(fontSize: 15, color: Color(0xFF434343)),

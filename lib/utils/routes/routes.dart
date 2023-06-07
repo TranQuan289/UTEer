@@ -106,7 +106,7 @@ class Routes {
         final args = settings.arguments as String;
         return MaterialPageRoute(
             builder: (BuildContext context) => EncouragingStudyScreen(
-                  rule: args,
+                  permission: args,
                 ));
       case RoutesName.uteScholarship:
         return MaterialPageRoute(builder: (BuildContext context) => const UteScholarshipScreen());

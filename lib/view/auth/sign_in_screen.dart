@@ -111,7 +111,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         if (openTrainingPointModel?.open ??
                             false ||
                                 (DateTime.now()
-                                        .difference(openTrainingPointModel?.time ?? DateTime.now())
+                                        .difference(
+                                            openTrainingPointModel?.createAt ?? DateTime.now())
                                         .inDays <=
                                     10)) {
                           Utils.showPopup(
@@ -154,9 +155,9 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   String calculateRemainingTime() {
-    if (openTrainingPointModel?.time != null) {
+    if (openTrainingPointModel?.createAt != null) {
       final now = DateTime.now().subtract(const Duration(days: 10));
-      final remainingDuration = openTrainingPointModel!.time!.difference(now);
+      final remainingDuration = openTrainingPointModel!.createAt!.difference(now);
       final remainingDays = remainingDuration.inDays;
       final remainingHours = remainingDuration.inHours % 24;
       final remainingMinutes = remainingDuration.inMinutes % 60;

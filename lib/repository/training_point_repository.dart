@@ -4,10 +4,10 @@ import 'package:uteer/models/training_point_model.dart';
 import 'package:uteer/models/user_model.dart';
 
 class TrainingPointRepository {
-  Future<TrainingPointModel?> getTrainingPoint(String msv) async {
+  Future<TrainingPointModel?> getTrainingPoint(String email) async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await db.collection('trainingPoints').where('msv', isEqualTo: msv).limit(1).get();
+        await db.collection('trainingPoints').where('email', isEqualTo: email).limit(1).get();
 
     final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
     if (documents.isNotEmpty) {

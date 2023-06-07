@@ -18,7 +18,6 @@ class TrainingPointsHistoryScreen extends StatefulWidget {
 }
 
 class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScreen> {
-  late String msv;
   late TrainingPointViewModel viewModel;
   bool isLoading = true;
   @override
@@ -26,14 +25,9 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
     super.initState();
     viewModel = TrainingPointViewModel(repository: TrainingPointRepository());
 
-    int atIndex = widget.email.indexOf('@');
-    if (atIndex != -1) {
-      msv = widget.email.substring(0, atIndex);
-    }
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       viewModel.onInitView(context);
-      await viewModel.getTrainingPoint(msv);
+      await viewModel.getTrainingPoint(widget.email);
       await viewModel.getOpenTrainingPoint();
       await viewModel.getUser(widget.email);
       setState(() {
@@ -63,7 +57,7 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
                         itemCount: 1,
                         itemBuilder: (context, index) => TrainingPointHistoryCard(
                           email: viewModel.user?.email ?? "",
-                          rule: viewModel.user?.rule ?? "",
+                          permission: viewModel.user?.permission ?? "",
                           name: viewModel.user?.name ?? "",
                           score: viewModel.trainingPoint?.teacherTrainingPoint ?? 0,
                           rank: viewModel.trainingPoint?.teacherRank ?? "",

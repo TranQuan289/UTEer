@@ -68,12 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> updateOpenTrainingPoint({required bool open, required DateTime dateTime}) {
+  Future<void> updateOpenTrainingPoint({required bool open, required DateTime createAt}) {
     return firestore
         .collection('openTrainingPoints')
         .doc('Abw0VWORrldCQFifKqut')
         .update(
-          {'open': open, 'dateTime': dateTime},
+          {'open': open, 'createAt': createAt},
         )
         .then((value) => getOpenTrainingPoint())
         .catchError((error) => print("Failed to update document: $error"));
@@ -255,13 +255,13 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ItemScholarshipUI(
-                onTap: () => Routes.goToScholarshipScreen(context, arguments: user?.rule),
+                onTap: () => Routes.goToScholarshipScreen(context, arguments: user?.permission),
                 icon: AppAssets.icScholarShip1,
                 text: 'Học tập',
               ),
               ItemScholarshipUI(
                 onTap: () => Navigator.pushNamed(context, RoutesName.uteScholarship,
-                    arguments: user?.rule ?? ""),
+                    arguments: user?.permission ?? ""),
                 icon: AppAssets.icScholarShip2,
                 text: 'UTE',
               ),
@@ -290,9 +290,11 @@ class _HomeScreenState extends State<HomeScreen> {
       const SizedBox(height: 12),
       Row(
         children: [
-          if (user?.rule == "ctsv") ...[
+          if (user?.permission == "ctsv") ...[
             if ((openTrainingPointModel?.open ?? true) ||
-                DateTime.now().difference(openTrainingPointModel?.time ?? DateTime.now()).inDays >=
+                DateTime.now()
+                        .difference(openTrainingPointModel?.createAt ?? DateTime.now())
+                        .inDays >=
                     10) ...[
               CardHome(
                 onTap: () => {
@@ -316,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               backgroundColor: AppColors.primaryColor,
                               titleStyle: const TextStyle(color: Colors.white),
                               onPressed: () {
-                                updateOpenTrainingPoint(open: false, dateTime: DateTime.now());
+                                updateOpenTrainingPoint(open: false, createAt: DateTime.now());
                                 Navigator.of(context).pop();
                               }))
                     ]),
@@ -350,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               backgroundColor: AppColors.primaryColor,
                               titleStyle: const TextStyle(color: Colors.white),
                               onPressed: () {
-                                updateOpenTrainingPoint(open: true, dateTime: DateTime.now());
+                                updateOpenTrainingPoint(open: true, createAt: DateTime.now());
                                 Navigator.of(context).pop();
                               }))
                     ]),
@@ -362,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 200,
               ),
             ]
-          ] else if (user?.rule == "gvcn") ...[
+          ] else if (user?.permission == "gvcn") ...[
             CardHome(
               onTap: () => Routes.goToTrainingPointGvcnScreen(context),
               color: AppColors.blue,
@@ -383,7 +385,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
           SizedBox(width: DimensManager.dimens.setSp(18)),
-          if (user?.rule != "student") ...[
+          if (user?.permission != "student") ...[
             CardHome(
               onTap: () => Routes.goToTrainingPointCtsvHistoryScreen(
                 context,

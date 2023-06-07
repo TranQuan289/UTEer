@@ -4,17 +4,17 @@ class NotificationModel {
   final String? name;
   final String? email;
   final String? title;
-  final String? msv;
   final String? describe;
-  final DateTime? time;
+  final String? type;
+  final DateTime? createAt;
 
   NotificationModel({
     this.title,
     this.describe,
     this.name,
     this.email,
-    this.time,
-    this.msv,
+    this.type,
+    this.createAt,
   });
 
   factory NotificationModel.fromFirestore(
@@ -26,9 +26,9 @@ class NotificationModel {
       name: data?['name'],
       email: data?['email'],
       title: data?['title'],
-      msv: data?['msv'],
       describe: data?['describe'],
-      time: (data?['time'] as Timestamp?)?.toDate(),
+      type: data?['type'],
+      createAt: (data?['createAt'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -37,9 +37,9 @@ class NotificationModel {
       if (name != null) "name": name,
       if (email != null) "email": email,
       if (title != null) "title": title,
-      if (msv != null) "msv": msv,
       if (describe != null) "describe": describe,
-      if (time != null) "time": Timestamp.fromDate(time!),
+      if (type != null) "type": type,
+      if (createAt != null) "time": Timestamp.fromDate(createAt!),
     };
   }
 }

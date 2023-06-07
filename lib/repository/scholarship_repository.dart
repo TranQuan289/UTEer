@@ -5,7 +5,7 @@ class ScholarshipRepository {
   Future<List<ScholarshipModel>> getScholarship() async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await db.collection('scholarship').get();
+        await db.collection('scholarships').get();
     final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
     if (documents.isNotEmpty) {
       final List<ScholarshipModel> scholarships = documents.map((doc) {

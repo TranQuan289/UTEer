@@ -189,7 +189,7 @@ class _AddScholarshipScreenState extends State<AddScholarshipScreen> {
                       viewModel.addScholarship(
                         bonus: bonus1 ?? "",
                         classRoom: classRoom1 ?? "",
-                        msv: msv1 ?? "",
+                        email: msv1 ?? "",
                         name: name1 ?? "",
                         rank: rank1 ?? "",
                       );

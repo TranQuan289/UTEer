@@ -3,12 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OpenTrainingPointModel {
   final bool? open;
   final String? semester;
-  final DateTime? time;
+  final DateTime? createAt;
 
   OpenTrainingPointModel({
     this.semester,
     this.open,
-    this.time,
+    this.createAt,
   });
 
   factory OpenTrainingPointModel.fromFirestore(
@@ -19,7 +19,7 @@ class OpenTrainingPointModel {
     return OpenTrainingPointModel(
       open: data?['open'] as bool?,
       semester: data?['semester'] as String?,
-      time: (data?['dateTime'] as Timestamp?)?.toDate(),
+      createAt: (data?['createAt'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -27,7 +27,7 @@ class OpenTrainingPointModel {
     return {
       if (open != null) "open": open,
       if (semester != null) "semester": semester,
-      if (time != null) "dateTime": Timestamp.fromDate(time!),
+      if (createAt != null) "dateTime": Timestamp.fromDate(createAt!),
     };
   }
 }

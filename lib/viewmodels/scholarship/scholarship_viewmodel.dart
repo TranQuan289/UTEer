@@ -32,7 +32,7 @@ class ScholarshipViewModel extends BaseViewModel {
     try {
       listScholarship = await repository.getScholarship();
       listScholarship =
-          listScholarship.where((element) => element.msv!.contains(value.toLowerCase())).toList();
+          listScholarship.where((element) => element.email!.contains(value.toLowerCase())).toList();
       updateUI();
     } catch (e) {
       Utils.showToast(message: e.toString());
@@ -81,7 +81,7 @@ class ScholarshipViewModel extends BaseViewModel {
 
   Future<void> deleteDocument(String documentId) async {
     try {
-      final documentRef = FirebaseFirestore.instance.collection("scholarship").doc(documentId);
+      final documentRef = FirebaseFirestore.instance.collection("scholarships").doc(documentId);
       await documentRef.delete();
       listScholarship = await repository.getScholarship();
       updateUI();

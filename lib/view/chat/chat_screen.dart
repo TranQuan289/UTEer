@@ -68,7 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
               final textChat = latestChat['text'];
               final createAt = latestChat['createAt'] as Timestamp;
               final timeChat = DateFormat('HH:mm').format(createAt.toDate());
-              final messageSender = latestChat['sender'];
+              final messageSender = latestChat['email'];
               final currentUser = FirebaseAuth.instance.currentUser?.email;
 
               return UiItemChat(

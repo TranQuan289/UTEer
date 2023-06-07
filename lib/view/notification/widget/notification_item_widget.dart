@@ -48,7 +48,7 @@ class NotificationItemWidget extends StatelessWidget {
                     height: DimensManager.dimens.setHeight(8),
                   ),
                   Text(
-                    calculateTimeAgo(notification.time),
+                    calculateTimeAgo(notification.createAt),
                     style: const TextStyle(
                         fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.blue),
                   )

@@ -10,8 +10,8 @@ class NotificationViewModel extends BaseViewModel {
   List<NotificationModel> listNotification = [];
   UsersModel? usersModel;
   List<NotificationModel> get notificationModel => listNotification;
-  Future<void> getNotification(String msv) async {
-    listNotification = await repository.getNotification(msv);
+  Future<void> getNotification(String email) async {
+    listNotification = await repository.getNotification(email);
     updateUI();
   }
 }
