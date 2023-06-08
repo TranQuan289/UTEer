@@ -39,14 +39,37 @@ class TrainingPointViewModel extends BaseViewModel {
     return user;
   }
 
-  Future<void> updateDocument({required String key, required var value, required String email}) {
+  Future<void> updateDocument(
+      {required String key,
+      required var value,
+      required String email,
+      required String documentID}) {
     return firestore
         .collection('trainingPoints')
-        .doc('qpP2Tn7z1KfMMVGxJBop')
+        .doc(documentID)
         .update(
           {key: value},
         )
         .then((value) => getTrainingPoint(email))
         .catchError((error) => print("Failed to update document: $error"));
+  }
+}
+
+Future<void> addNotification({
+  required String email,
+}) async {
+  final notificationRef = firestore.collection('notifications').doc();
+
+  try {
+    await notificationRef.set({
+      'name': "name",
+      'email': email,
+      'title': "Thông báo về học bổng",
+      'describe': "Điểm rèn luyện của bạn vừa được duyệt, vào lịch sử xem nhé",
+      'type': "trainingPoint",
+      'createAt': Timestamp.fromDate(DateTime.now()),
+    });
+  } catch (error) {
+    print('Failed to add notification: $error');
   }
 }

@@ -73,7 +73,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có đi học chuyên cần, đúng giờ, nghiêm túc trong giờ học; đủ điều kiện dự thi tất cả các học phần. (4 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "study1", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "study1",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 4,
                                         score: viewModel.trainingPoint?.study1 ?? 0,
                                         viewModel: viewModel,
@@ -86,7 +89,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức tham gia các câu lạc bộ học thuật, các hoạt động học thuật, hoạt động ngoại khóa.	(2 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "study2", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "study2",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 2,
                                         score: viewModel.trainingPoint?.study2 ?? 0,
                                         viewModel: viewModel,
@@ -99,7 +105,11 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có đăng ký, thực hiện, báo cáo đề tài NCKH đúng tiến độ hoặc đăng ký, tham dự kỳ thi sinh viên giỏi các cấp. (2 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "study3", value: score, email: widget.email),
+                                          documentID: viewModel.trainingPoint?.documentId ?? "",
+                                          key: "study3",
+                                          value: score,
+                                          email: widget.email,
+                                        ),
                                         scoreT: 2,
                                         score: viewModel.trainingPoint?.study3 ?? 0,
                                         viewModel: viewModel,
@@ -112,7 +122,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Không vi phạm quy chế thi và kiểm tra. (6 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "study4", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "study4",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 6,
                                         score: viewModel.trainingPoint?.study4 ?? 0,
                                         viewModel: viewModel,
@@ -125,7 +138,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Được tập thể lớp công nhận có tinh thần vượt khó, phấn đấu vươn lên trong học tập.(2 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "study5", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "study5",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 2,
                                         score: viewModel.trainingPoint?.study5 ?? 0,
                                         viewModel: viewModel,
@@ -139,6 +155,7 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         groupValue: viewModel.trainingPoint?.study6,
                                         onChanged: (score) {
                                           viewModel.updateDocument(
+                                              documentID: viewModel.trainingPoint?.documentId ?? "",
                                               key: "study6",
                                               value: score ?? 0,
                                               email: widget.email);
@@ -153,6 +170,7 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         groupValue: viewModel.trainingPoint?.study6,
                                         onChanged: (score) {
                                           viewModel.updateDocument(
+                                              documentID: viewModel.trainingPoint?.documentId ?? "",
                                               key: "study6",
                                               value: score ?? 0,
                                               email: widget.email);
@@ -167,6 +185,7 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         groupValue: viewModel.trainingPoint?.study6,
                                         onChanged: (score) {
                                           viewModel.updateDocument(
+                                              documentID: viewModel.trainingPoint?.documentId ?? "",
                                               key: "study6",
                                               value: score ?? 0,
                                               email: widget.email);
@@ -199,7 +218,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức chấp hành các văn bản chỉ đạo của ngành, cấp trên và ĐHĐN được thực hiện trong nhà trường. (6 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "rules1", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "rules1",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 6,
                                         score: viewModel.trainingPoint?.rules1 ?? 0,
                                         viewModel: viewModel,
@@ -212,7 +234,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức tham gia đầy đủ, đạt yêu cầu các cuộc vận động, sinh hoạt chính trị theo chủ trương, của cấp trên, ĐHĐN và nhà trường. \n(4 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "rules2", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "rules2",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 4,
                                         score: viewModel.trainingPoint?.rules2 ?? 0,
                                         viewModel: viewModel,
@@ -225,7 +250,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức chấp hành nội quy, quy chế và các quy định của nhà trường. (10 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "rules3", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "rules3",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 10,
                                         score: viewModel.trainingPoint?.rules3 ?? 0,
                                         viewModel: viewModel,
@@ -238,7 +266,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Đóng học phí và các khoản thu khác đầy đủ, đúng hạn. (5 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "rules4", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "rules4",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 5,
                                         score: viewModel.trainingPoint?.rules4 ?? 0,
                                         viewModel: viewModel,
@@ -268,7 +299,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Tham gia đầy đủ, đạt yêu cầu “ Tuần sinh hoạt công dân sinh viên” đầu khóa năm học và cuối khóa.(10 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "activate1", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "activate1",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 10,
                                         score: viewModel.trainingPoint?.activate1 ?? 0,
                                         viewModel: viewModel,
@@ -281,7 +315,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức tham gia đầy đủ, nghiêm túc hoạt động rèn luyện về chính trị, xã hội, văn hóa, văn nghệ, thể thao do nhà trường và ĐHĐN tổ chức, điều động.(6 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "activate2", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "activate2",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 6,
                                         score: viewModel.trainingPoint?.activate2 ?? 0,
                                         viewModel: viewModel,
@@ -294,7 +331,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức tham gia các hoạt động công ích, tình nguyện, công tác xã hội trong nhà trường.	(2 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "activate3", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "activate3",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 2,
                                         score: viewModel.trainingPoint?.activate3 ?? 0,
                                         viewModel: viewModel,
@@ -307,7 +347,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức tuyên truyền, phòng chống tội phạm và các tệ nạn xã hội.(2 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "activate4", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "activate4",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 2,
                                         score: viewModel.trainingPoint?.activate4 ?? 0,
                                         viewModel: viewModel,
@@ -337,7 +380,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức chấp hành, tham gia tuyên truyền các chủ trương của Đảng, chính sách, pháp luật của Nhà nước:(4 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "relation1", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "relation1",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 4,
                                         score: viewModel.trainingPoint?.relation1 ?? 0,
                                         viewModel: viewModel,
@@ -350,7 +396,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có tham gia bảo hiểm y tế ( bắt buộc) theo Luật bảo hiểm y tế.(10 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "relation2", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "relation2",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 10,
                                         score: viewModel.trainingPoint?.relation2 ?? 0,
                                         viewModel: viewModel,
@@ -363,7 +412,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức chấp hành, tham gia tuyên truyền các quy định về đảm bảo an toàn giao thông và “văn hóa giao thông”.(5 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "relation3", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "relation3",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 5,
                                         score: viewModel.trainingPoint?.relation3 ?? 0,
                                         viewModel: viewModel,
@@ -376,7 +428,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức tham gia các hoạt động xã hội có thành tích được ghi nhận, biểu dương khen thưởng.(4 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "relation4", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "relation4",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 4,
                                         score: viewModel.trainingPoint?.relation4 ?? 0,
                                         viewModel: viewModel,
@@ -389,7 +444,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có tinh thần chia sẻ, giúp đỡ người gặp khó khăn, hoạn nạn.(2 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "relation5", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "relation5",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 2,
                                         score: viewModel.trainingPoint?.relation5 ?? 0,
                                         viewModel: viewModel,
@@ -420,7 +478,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có ý thức, uy tín và hoàn thành tốt nhiệm vụ quản lý lớp, các tổ chức Đảng, Đoàn Thanh niên, Hội Sinh viên, tổ chức khác trong nhà trường.(3 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "monitor1", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "monitor1",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 3,
                                         score: viewModel.trainingPoint?.monitor1 ?? 0,
                                         viewModel: viewModel,
@@ -433,7 +494,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Có kỹ năng tổ chức, quản lý lớp, các tổ chức Đảng, Đoàn Thanh niên, Hội Sinh viên và các tổ chức khác trong nhà trường.(2 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "monitor2", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "monitor2",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 2,
                                         score: viewModel.trainingPoint?.monitor2 ?? 0,
                                         viewModel: viewModel,
@@ -446,7 +510,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Hỗ trợ tham gia tích cực vào các hoạt động chung của lớp, tập thể khoa, trường và Đại học Đà Nẵng.(3 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "monitor3", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "monitor3",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 3,
                                         score: viewModel.trainingPoint?.monitor3 ?? 0,
                                         viewModel: viewModel,
@@ -459,7 +526,10 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                         description:
                                             'Đạt thành tích trong học tập, rèn luyện (được tặng bằng khen, giấy khen, chứng nhận, thư khen của các cấp).(2 điểm)',
                                         onScoreChanged: (score) => viewModel.updateDocument(
-                                            key: "monitor4", value: score, email: widget.email),
+                                            documentID: viewModel.trainingPoint?.documentId ?? "",
+                                            key: "monitor4",
+                                            value: score,
+                                            email: widget.email),
                                         scoreT: 2,
                                         score: viewModel.trainingPoint?.monitor4 ?? 0,
                                         viewModel: viewModel,
@@ -522,6 +592,8 @@ class _TrainingPointsScreenState extends State<TrainingPointsScreen> {
                                                     message:
                                                         "Bạn có thể cập nhật cho đến khi thời gian chấm kết thúc");
                                                 viewModel.updateDocument(
+                                                    documentID:
+                                                        viewModel.trainingPoint?.documentId ?? "",
                                                     key: "history",
                                                     value: true,
                                                     email: widget.email);
@@ -618,13 +690,38 @@ class _DescriptionTrainingPoint extends StatelessWidget {
           (trainingPoint?.monitor3 ?? 0) +
           (trainingPoint?.monitor4 ?? 0);
       return Future.wait([
-        viewModel.updateDocument(key: "trainingPoint1", value: sumStudyPoints1, email: email),
-        viewModel.updateDocument(key: "trainingPoint2", value: sumStudyPoints2, email: email),
-        viewModel.updateDocument(key: "trainingPoint3", value: sumStudyPoints3, email: email),
-        viewModel.updateDocument(key: "trainingPoint4", value: sumStudyPoints4, email: email),
-        viewModel.updateDocument(key: "trainingPoint5", value: sumStudyPoints5, email: email),
-        viewModel.updateDocument(key: "trainingPoint", value: sumStudyPoints6, email: email),
         viewModel.updateDocument(
+            documentID: viewModel.trainingPoint?.documentId ?? "",
+            key: "trainingPoint1",
+            value: sumStudyPoints1,
+            email: email),
+        viewModel.updateDocument(
+            documentID: viewModel.trainingPoint?.documentId ?? "",
+            key: "trainingPoint2",
+            value: sumStudyPoints2,
+            email: email),
+        viewModel.updateDocument(
+            documentID: viewModel.trainingPoint?.documentId ?? "",
+            key: "trainingPoint3",
+            value: sumStudyPoints3,
+            email: email),
+        viewModel.updateDocument(
+            documentID: viewModel.trainingPoint?.documentId ?? "",
+            key: "trainingPoint4",
+            value: sumStudyPoints4,
+            email: email),
+        viewModel.updateDocument(
+            documentID: viewModel.trainingPoint?.documentId ?? "",
+            key: "trainingPoint5",
+            value: sumStudyPoints5,
+            email: email),
+        viewModel.updateDocument(
+            documentID: viewModel.trainingPoint?.documentId ?? "",
+            key: "trainingPoint",
+            value: sumStudyPoints6,
+            email: email),
+        viewModel.updateDocument(
+            documentID: viewModel.trainingPoint?.documentId ?? "",
             key: "rank",
             value: sumStudyPoints6 > 90
                 ? "Xuất sắc"

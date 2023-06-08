@@ -86,7 +86,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   arguments: "student"),
                               child: NotificationItemWidget(notification: notification),
                             );
-                          } else if (notification.type == "trainingpoint") {
+                          } else if (notification.type == "trainingPoint") {
                             return GestureDetector(
                               onTap: () => Navigator.pushNamed(
                                   context, RoutesName.trainingPointHistory,

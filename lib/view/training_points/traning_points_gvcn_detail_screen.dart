@@ -76,7 +76,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có đi học chuyên cần, đúng giờ, nghiêm túc trong giờ học; đủ điều kiện dự thi tất cả các học phần. \n(4 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherStudy1", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherStudy1",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 4,
                                     viewModel: viewModel,
                                   ),
@@ -88,7 +91,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức tham gia các câu lạc bộ học thuật, các hoạt động học thuật, hoạt động ngoại khóa.\n	(2 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherStudy2", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherStudy2",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 2,
                                     studentScore: viewModel.trainingPoint?.study2 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherStudy2 ?? 0,
@@ -102,7 +108,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có đăng ký, thực hiện, báo cáo đề tài NCKH đúng tiến độ hoặc đăng ký, tham dự kỳ thi sinh viên giỏi các cấp. (2 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherStudy3", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherStudy3",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 2,
                                     studentScore: viewModel.trainingPoint?.study3 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherStudy3 ?? 0,
@@ -116,7 +125,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Không vi phạm quy chế thi và kiểm tra                              \n(6 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherStudy4", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherStudy4",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 6,
                                     studentScore: viewModel.trainingPoint?.study4 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherStudy4 ?? 0,
@@ -130,7 +142,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Được tập thể lớp công nhận có tinh thần vượt khó, phấn đấu vươn lên trong học tập.(2 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherStudy5", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherStudy5",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 2,
                                     studentScore: viewModel.trainingPoint?.study5 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherStudy5 ?? 0,
@@ -157,6 +172,8 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                             groupValue: viewModel.trainingPoint?.teacherStudy6,
                                             onChanged: (score) {
                                               viewModel.updateDocument(
+                                                  documentID:
+                                                      viewModel.trainingPoint?.documentId ?? "",
                                                   key: "teacherStudy6",
                                                   value: score ?? 0,
                                                   email: widget.email);
@@ -179,6 +196,8 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                             groupValue: viewModel.trainingPoint?.teacherStudy6,
                                             onChanged: (score) {
                                               viewModel.updateDocument(
+                                                  documentID:
+                                                      viewModel.trainingPoint?.documentId ?? "",
                                                   key: "teacherStudy6",
                                                   value: score ?? 0,
                                                   email: widget.email);
@@ -201,6 +220,8 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                             groupValue: viewModel.trainingPoint?.teacherStudy6,
                                             onChanged: (score) {
                                               viewModel.updateDocument(
+                                                  documentID:
+                                                      viewModel.trainingPoint?.documentId ?? "",
                                                   key: "teacherStudy6",
                                                   value: score ?? 0,
                                                   email: widget.email);
@@ -238,7 +259,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức chấp hành các văn bản chỉ đạo của ngành, cấp trên và ĐHĐN được thực hiện trong nhà trường. (6 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherRules1", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherRules1",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 6,
                                     studentScore: viewModel.trainingPoint?.rules1 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherRules1 ?? 0,
@@ -252,7 +276,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức tham gia đầy đủ, đạt yêu cầu các cuộc vận động, sinh hoạt chính trị theo chủ trương, của cấp trên, ĐHĐN và nhà trường. \n(4 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherRules2", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherRules2",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 4,
                                     studentScore: viewModel.trainingPoint?.rules2 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherRules2 ?? 0,
@@ -266,7 +293,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức chấp hành nội quy, quy chế và các quy định của nhà trường. (10 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherRules3", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherRules3",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 10,
                                     studentScore: viewModel.trainingPoint?.rules3 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherRules3 ?? 0,
@@ -280,7 +310,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Đóng học phí và các khoản thu khác đầy đủ, đúng hạn. (5 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherRules4", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherRules4",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 5,
                                     studentScore: viewModel.trainingPoint?.rules4 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherRules4 ?? 0,
@@ -312,7 +345,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Tham gia đầy đủ, đạt yêu cầu “ Tuần sinh hoạt công dân sinh viên” đầu khóa năm học và cuối khóa.(10 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherActivate1", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherActivate1",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 10,
                                     studentScore: viewModel.trainingPoint?.activate1 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherActivate1 ?? 0,
@@ -326,7 +362,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức tham gia đầy đủ, nghiêm túc hoạt động rèn luyện về chính trị, xã hội, văn hóa, văn nghệ, thể thao do nhà trường và ĐHĐN tổ chức, điều động.(6 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherActivate2", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherActivate2",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 6,
                                     studentScore: viewModel.trainingPoint?.activate2 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherActivate2 ?? 0,
@@ -340,7 +379,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức tham gia các hoạt động công ích, tình nguyện, công tác xã hội trong nhà trường.	\n(2 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherActivate3", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherActivate3",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 2,
                                     studentScore: viewModel.trainingPoint?.activate3 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherActivate3 ?? 0,
@@ -354,7 +396,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức tuyên truyền, phòng chống tội phạm và các tệ nạn xã hội.(2 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherActivate4", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherActivate4",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 2,
                                     studentScore: viewModel.trainingPoint?.activate4 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherActivate4 ?? 0,
@@ -387,7 +432,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức chấp hành, tham gia tuyên truyền các chủ trương của Đảng, chính sách, pháp luật của Nhà nước:(4 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherRelation1", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherRelation1",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 4,
                                     studentScore: viewModel.trainingPoint?.relation1 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherRelation1 ?? 0,
@@ -401,7 +449,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có tham gia bảo hiểm y tế ( bắt buộc) theo Luật bảo hiểm y tế.(10 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherRelation2", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherRelation2",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 10,
                                     studentScore: viewModel.trainingPoint?.relation2 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherRelation2 ?? 0,
@@ -415,7 +466,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức chấp hành, tham gia tuyên truyền các quy định về đảm bảo an toàn giao thông và “văn hóa giao thông”.(5 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherRelation3", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherRelation3",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 5,
                                     studentScore: viewModel.trainingPoint?.relation3 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherRelation3 ?? 0,
@@ -429,7 +483,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức tham gia các hoạt động xã hội có thành tích được ghi nhận, biểu dương khen thưởng.(4 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherRelation4", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherRelation4",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 4,
                                     studentScore: viewModel.trainingPoint?.relation4 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherRelation4 ?? 0,
@@ -443,7 +500,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có tinh thần chia sẻ, giúp đỡ người gặp khó khăn, hoạn nạn.(2 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherRelation5", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherRelation5",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 2,
                                     studentScore: viewModel.trainingPoint?.relation5 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherRelation5 ?? 0,
@@ -476,7 +536,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có ý thức, uy tín và hoàn thành tốt nhiệm vụ quản lý lớp, các tổ chức Đảng, Đoàn Thanh niên, Hội Sinh viên, tổ chức khác trong nhà trường.(3 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherMonitor1", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherMonitor1",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 3,
                                     studentScore: viewModel.trainingPoint?.monitor1 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherMonitor1 ?? 0,
@@ -490,7 +553,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Có kỹ năng tổ chức, quản lý lớp, các tổ chức Đảng, Đoàn Thanh niên, Hội Sinh viên và các tổ chức khác trong nhà trường.(2 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherMonitor2", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherMonitor2",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 2,
                                     studentScore: viewModel.trainingPoint?.monitor2 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherMonitor2 ?? 0,
@@ -504,7 +570,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Hỗ trợ tham gia tích cực vào các hoạt động chung của lớp, tập thể khoa, trường và Đại học Đà Nẵng.\n(3 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherMonitor3", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherMonitor3",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 3,
                                     studentScore: viewModel.trainingPoint?.monitor3 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherMonitor3 ?? 0,
@@ -518,7 +587,10 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                     description:
                                         'Đạt thành tích trong học tập, rèn luyện (được tặng bằng khen, giấy khen, chứng nhận, thư khen của các cấp).(2 điểm)',
                                     onScoreChanged: (score) => viewModel.updateDocument(
-                                        key: "teacherMonitor4", value: score, email: widget.email),
+                                        documentID: viewModel.trainingPoint?.documentId ?? "",
+                                        key: "teacherMonitor4",
+                                        value: score,
+                                        email: widget.email),
                                     scoreT: 2,
                                     studentScore: viewModel.trainingPoint?.monitor4 ?? 0,
                                     teacherScore: viewModel.trainingPoint?.teacherMonitor4 ?? 0,
@@ -582,7 +654,12 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
                                                 message:
                                                     "Bạn có thể cập nhật cho đến khi thời gian chấm kết thúc");
                                             viewModel.updateDocument(
-                                                key: "status", value: true, email: widget.email);
+                                                documentID:
+                                                    viewModel.trainingPoint?.documentId ?? "",
+                                                key: "status",
+                                                value: true,
+                                                email: widget.email);
+                                            addNotification(email: widget.email);
                                           },
                                         ),
                                       )
@@ -698,18 +775,37 @@ class _DescriptionTrainingPointState extends State<_DescriptionTrainingPoint> {
             (trainingPoint?.teacherMonitor4 ?? 0);
         return Future.wait([
           widget.viewModel.updateDocument(
-              key: "teacherTrainingPoint1", value: sumStudyPoints1, email: widget.email),
+              documentID: widget.viewModel.trainingPoint?.documentId ?? "",
+              key: "teacherTrainingPoint1",
+              value: sumStudyPoints1,
+              email: widget.email),
           widget.viewModel.updateDocument(
-              key: "teacherTrainingPoint2", value: sumStudyPoints2, email: widget.email),
+              documentID: widget.viewModel.trainingPoint?.documentId ?? "",
+              key: "teacherTrainingPoint2",
+              value: sumStudyPoints2,
+              email: widget.email),
           widget.viewModel.updateDocument(
-              key: "teacherTrainingPoint3", value: sumStudyPoints3, email: widget.email),
+              documentID: widget.viewModel.trainingPoint?.documentId ?? "",
+              key: "teacherTrainingPoint3",
+              value: sumStudyPoints3,
+              email: widget.email),
           widget.viewModel.updateDocument(
-              key: "teacherTrainingPoint4", value: sumStudyPoints4, email: widget.email),
+              documentID: widget.viewModel.trainingPoint?.documentId ?? "",
+              key: "teacherTrainingPoint4",
+              value: sumStudyPoints4,
+              email: widget.email),
           widget.viewModel.updateDocument(
-              key: "teacherTrainingPoint5", value: sumStudyPoints5, email: widget.email),
+              documentID: widget.viewModel.trainingPoint?.documentId ?? "",
+              key: "teacherTrainingPoint5",
+              value: sumStudyPoints5,
+              email: widget.email),
           widget.viewModel.updateDocument(
-              key: "teacherTrainingPoint", value: sumStudyPoints6, email: widget.email),
+              documentID: widget.viewModel.trainingPoint?.documentId ?? "",
+              key: "teacherTrainingPoint",
+              value: sumStudyPoints6,
+              email: widget.email),
           widget.viewModel.updateDocument(
+              documentID: widget.viewModel.trainingPoint?.documentId ?? "",
               key: "teacherRank",
               value: sumStudyPoints6 > 90
                   ? "Xuất sắc"

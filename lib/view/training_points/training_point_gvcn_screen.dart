@@ -124,20 +124,20 @@ class _TrainingPointsGvcnScreenState extends State<TrainingPointsGvcnScreen> {
                                             width: DimensManager.dimens.setWidth(16),
                                           ),
                                           Flexible(
-                                              child: UIOutlineButton(
-                                                  title: 'Chỉnh lại',
-                                                  backgroundColor: AppColors.primaryColor,
-                                                  titleStyle: const TextStyle(color: Colors.white),
-                                                  onPressed: () {
-                                                    Routes.goToTrainingPointGvcnDetailScreen(
-                                                        context,
-                                                        arguments: {
-                                                          "email": email,
-                                                          "absorbing": false,
-                                                        });
-
-                                                    Navigator.of(context).pop();
-                                                  }))
+                                            child: UIOutlineButton(
+                                              title: 'Chỉnh lại',
+                                              backgroundColor: AppColors.primaryColor,
+                                              titleStyle: const TextStyle(color: Colors.white),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                Routes.goToTrainingPointGvcnDetailScreen(context,
+                                                    arguments: {
+                                                      "email": email,
+                                                      "absorbing": false,
+                                                    });
+                                              },
+                                            ),
+                                          )
                                         ]),
                                       );
                                     }
