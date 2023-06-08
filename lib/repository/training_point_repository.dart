@@ -72,3 +72,24 @@ class TrainingPointRepository {
     }
   }
 }
+
+Future<List<TrainingPointModel>> searchTrainingPointByName(String name) async {
+  final FirebaseFirestore db = FirebaseFirestore.instance;
+  final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection('trainingPoints').where('name', isEqualTo: name).get();
+
+  final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
+  final List<TrainingPointModel> trainingPoints = [];
+
+  for (var document in documents) {
+    final TrainingPointModel trainingPoint = TrainingPointModel.fromFirestore(document, null);
+    trainingPoints.add(trainingPoint);
+  }
+
+  if (trainingPoints.isNotEmpty) {
+    return trainingPoints;
+  } else {
+    print('No training points found with name: $name');
+    return [];
+  }
+}

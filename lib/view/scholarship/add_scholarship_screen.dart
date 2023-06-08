@@ -82,6 +82,7 @@ class _AddScholarshipScreenState extends State<AddScholarshipScreen> {
                       ],
                       onChanged: (String? classValue) async {
                         listMsv = await viewModel.getSearchClass(classValue ?? "");
+                        listMsv.sort();
                         setState(() {
                           classRoom1 = classValue;
                           msv1 = null;

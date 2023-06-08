@@ -46,7 +46,9 @@ class _TrainingPointsCtsvHistoryScreenState extends State<TrainingPointsCtsvHist
               width: DimensManager.dimens.setWidth(390),
               height: DimensManager.dimens.setHeight(48),
               child: UISearchInput(
-                onChangeValue: (String value) => null,
+                onChangeValue: (String value) {
+                  null;
+                },
               ),
             ),
             Expanded(

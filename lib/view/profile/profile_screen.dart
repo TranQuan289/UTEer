@@ -162,7 +162,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //         'monitor2': 0,
                 //         'monitor3': 0,
                 //         'monitor4': 0,
-                //         'msv': "1911505310105",
                 //         'relation1': 0,
                 //         'relation2': 0,
                 //         'relation3': 0,
@@ -229,6 +228,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     context,
                     MaterialPageRoute(builder: (context) => const PieChartScholarship()),
                   );
+                  //   CollectionReference users = FirebaseFirestore.instance.collection('users');
+                  //   users
+                  //       .add({
+                  //         "msv": "1911505310169",
+                  //         "name": "Nguyễn Hoàng Việt",
+                  //         "classRoom": "19T1",
+                  //         "email": "1911505310169@sv.ute.udn.vn",
+                  //         'major': 'Công nghệ thông tin',
+                  //         'department': 'Công nghệ số',
+                  //         'phone': '0901929194',
+                  //         'permission': 'student',
+                  //       })
+                  //       .then((value) => print('User added'))
+                  //       .catchError((error) => print('Failed to add user: $error'));
                 }),
               _profileItem(AppAssets.icSignOut, 'Đăng xuất', onTap: () {
                 _confirmSignout(context);
