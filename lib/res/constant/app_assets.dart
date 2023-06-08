@@ -35,6 +35,7 @@ class AppAssets {
   static const String icContact = "assets/icons/ic-contact.svg";
   static const String icMessage = "assets/icons/ic-message.svg";
   static const String icProfile = "assets/icons/ic-profile.svg";
+  static const String icChart = "assets/icons/ic-chart.svg";
 
   static const String icBack = "assets/icons/ic-back.svg";
   static const String icUser = "assets/icons/ic-user.svg";

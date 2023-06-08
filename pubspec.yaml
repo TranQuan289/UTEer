@@ -38,6 +38,8 @@ dependencies:
   dropdown_button2: ^2.1.2
   webview_flutter: ^3.0.0
   firebase_storage: ^11.2.2
+  fl_chart: ^0.62.0
+  percent_indicator: ^4.2.3
   
 
 
