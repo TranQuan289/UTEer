@@ -188,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //         'trainingPoint5': 0,
                 //         'gvcn': "Cô chủ nhiệm 19T1",
                 //         'rank': "Kém",
-                //         'email': "1911505310105@sv.ute.udn.vn",
+                //         'email': "1911505310144@sv.ute.udn.vn",
                 //         'history': false,
                 //         'teacherActivate1': 0,
                 //         'teacherActivate2': 0,
@@ -221,6 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //         'teacherTrainingPoint5': 0,
                 //         'teacherRank': "Kém",
                 //         'status': false,
+                //         'semester': "122",
                 //       })
                 //       .then((value) => print('User added'))
                 //       .catchError((error) => print('Failed to add user: $error'));

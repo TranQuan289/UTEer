@@ -67,6 +67,7 @@ class TrainingPointModel {
   final int? teacherTrainingPoint4;
   final int? teacherTrainingPoint5;
   final String? teacherRank;
+  final String? semester;
   TrainingPointModel({
     required this.documentId,
     this.activate1,
@@ -134,6 +135,7 @@ class TrainingPointModel {
     this.teacherTrainingPoint3,
     this.teacherTrainingPoint4,
     this.teacherTrainingPoint5,
+    this.semester,
   });
 
   factory TrainingPointModel.fromFirestore(
@@ -208,6 +210,7 @@ class TrainingPointModel {
       teacherTrainingPoint3: data?["teacherTrainingPoint3"],
       teacherTrainingPoint4: data?["teacherTrainingPoint4"],
       teacherTrainingPoint5: data?["teacherTrainingPoint5"],
+      semester: data?["semester"],
     );
   }
   Map<String, dynamic> toFirestore() {

@@ -20,6 +20,7 @@ class TrainingPointsHistoryScreen extends StatefulWidget {
 class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScreen> {
   late TrainingPointViewModel viewModel;
   bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -27,7 +28,7 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       viewModel.onInitView(context);
-      await viewModel.getTrainingPoint(widget.email);
+      await viewModel.getTrainingPointAll(widget.email);
       await viewModel.getOpenTrainingPoint();
       await viewModel.getUser(widget.email);
       setState(() {
@@ -49,26 +50,10 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
           ),
           child: isLoading
               ? _buildLoadingIndicator()
-              : Selector<TrainingPointViewModel, TrainingPointModel?>(
-                  selector: (_, viewModel) => viewModel.trainingPoint,
+              : Selector<TrainingPointViewModel, List<TrainingPointModel?>?>(
+                  selector: (_, viewModel) => viewModel.trainingPointAll,
                   builder: (context, value, child) {
-                    if (viewModel.trainingPoint?.history == true) {
-                      return ListView.builder(
-                        itemCount: 1,
-                        itemBuilder: (context, index) => TrainingPointHistoryCard(
-                          email: viewModel.user?.email ?? "",
-                          permission: viewModel.user?.permission ?? "",
-                          name: viewModel.user?.name ?? "",
-                          score: viewModel.trainingPoint?.teacherTrainingPoint ?? 0,
-                          rank: viewModel.trainingPoint?.teacherRank ?? "",
-                          selfScoringScore: viewModel.trainingPoint?.trainingPoint ?? 0,
-                          teacherGrade: viewModel.trainingPoint?.teacherTrainingPoint ?? 0,
-                          scorer: viewModel.trainingPoint?.gvcn ?? "",
-                          semester: viewModel.openTrainingPoint?.semester ?? "",
-                          status: viewModel.trainingPoint?.status ?? false,
-                        ),
-                      );
-                    } else {
+                    if (viewModel.trainingPointAll?.isEmpty ?? true) {
                       return Column(
                         children: const [
                           SizedBox(
@@ -79,6 +64,30 @@ class _TrainingPointsHistoryScreenState extends State<TrainingPointsHistoryScree
                             title: "Hiện chưa có lịch sử điểm rèn luyện nào",
                           ),
                         ],
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: viewModel.trainingPointAll?.length,
+                        itemBuilder: (context, index) {
+                          if (viewModel.trainingPointAll?[index]?.history == true) {
+                            return TrainingPointHistoryCard(
+                              email: viewModel.user?.email ?? "",
+                              permission: viewModel.user?.permission ?? "",
+                              name: viewModel.user?.name ?? "",
+                              score: viewModel.trainingPointAll?[index]?.teacherTrainingPoint ?? 0,
+                              rank: viewModel.trainingPointAll?[index]?.teacherRank ?? "",
+                              selfScoringScore:
+                                  viewModel.trainingPointAll?[index]?.trainingPoint ?? 0,
+                              teacherGrade:
+                                  viewModel.trainingPointAll?[index]?.teacherTrainingPoint ?? 0,
+                              scorer: viewModel.trainingPointAll?[index]?.gvcn ?? "",
+                              semester: viewModel.trainingPointAll?[index]?.semester ?? "",
+                              status: viewModel.trainingPointAll?[index]?.status ?? false,
+                            );
+                          } else {
+                            return Container(); // Return an empty container when history is false
+                          }
+                        },
                       );
                     }
                   },

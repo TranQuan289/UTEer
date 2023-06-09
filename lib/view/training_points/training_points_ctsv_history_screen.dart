@@ -90,7 +90,7 @@ class _TrainingPointsCtsvHistoryScreenState extends State<TrainingPointsCtsvHist
                                   selfScoringScore: trainingPoint?.trainingPoint ?? 0,
                                   teacherGrade: trainingPoint?.teacherTrainingPoint ?? 0,
                                   scorer: trainingPoint?.gvcn ?? "",
-                                  semester: viewModel.openTrainingPoint?.semester ?? "",
+                                  semester: trainingPoint?.semester ?? "",
                                   status: trainingPoint?.status ?? false,
                                 );
                               } else {
