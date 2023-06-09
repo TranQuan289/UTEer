@@ -4,10 +4,13 @@ import 'package:uteer/models/training_point_model.dart';
 import 'package:uteer/models/user_model.dart';
 
 class TrainingPointRepository {
-  Future<TrainingPointModel?> getTrainingPoint(String email) async {
+  Future<TrainingPointModel?> getTrainingPoint(String email, String semester) async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
-    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await db.collection('trainingPoints').where('email', isEqualTo: email).limit(1).get();
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot = await db
+        .collection('trainingPoints')
+        .where('email', isEqualTo: email)
+        .where('semester', isEqualTo: semester) // Thêm điều kiện lọc theo semester
+        .get();
 
     final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
     if (documents.isNotEmpty) {
@@ -18,6 +21,22 @@ class TrainingPointRepository {
       print('No training point');
       return null;
     }
+  }
+
+  Future<List<TrainingPointModel>> getTrainingPointAll(String email) async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await db.collection('trainingPoints').where('email', isEqualTo: email).get();
+
+    final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
+    final List<TrainingPointModel> trainingPoints = [];
+
+    for (var document in documents) {
+      final TrainingPointModel trainingPoint = TrainingPointModel.fromFirestore(document, null);
+      trainingPoints.add(trainingPoint);
+    }
+
+    return trainingPoints;
   }
 
   Future<OpenTrainingPointModel?> getOpenTrainingPoint() async {
@@ -47,14 +66,14 @@ class TrainingPointRepository {
       return user;
     } else {
       print('No user found with email: $email');
-      return null; // Trả về giá trị null nếu không tìm thấy người dùng
+      return null;
     }
   }
 
   Future<List<TrainingPointModel>> getListTrainingPoints() async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await db.collection('trainingPoints').get();
+        await db.collection('trainingPoints').where('semester', isEqualTo: "222").get();
 
     final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
     final List<TrainingPointModel> trainingPoints = [];
