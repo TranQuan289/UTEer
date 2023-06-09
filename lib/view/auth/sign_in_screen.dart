@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uteer/models/open_training_point_model.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/utils/general_utils.dart';
@@ -102,12 +103,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed: () async {
                       try {
                         await FirebaseAuth.instance.signInWithEmailAndPassword(
-                            email: emailController.text.toString().trim(),
-                            password: passwordController.text.toString().trim());
+                          email: emailController.text.toString().trim(),
+                          password: passwordController.text.toString().trim(),
+                        );
                         if (!mounted) return;
                         Routes.goToNavigatorScreen(context,
                             arguments: emailController.text.toString().trim());
-
                         if (openTrainingPointModel?.open ??
                             false ||
                                 (DateTime.now()
@@ -123,14 +124,18 @@ class _SignInScreenState extends State<SignInScreen> {
                                 "Thời gian chấm điểm rèn luyện cho học kì ${openTrainingPointModel?.semester} ${calculateRemainingTime()}",
                           );
                         }
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        await prefs.setBool('isLoggedIn', true);
 
                         emailController.text = "";
                         passwordController.text = "";
                       } catch (e) {
-                        Utils.showPopup(context,
-                            icon: AppAssets.icClose,
-                            title: "Đăng nhập không thành công",
-                            message: "Tài khoản hoặc mật khẩu không chính xác");
+                        Utils.showPopup(
+                          context,
+                          icon: AppAssets.icClose,
+                          title: "Đăng nhập không thành công",
+                          message: "Tài khoản hoặc mật khẩu không chính xác",
+                        );
                       }
                     },
                   ),

@@ -7,12 +7,12 @@ import 'package:uteer/utils/routes/routes_name.dart';
 import 'package:uteer/view/chat/chat_screen.dart';
 import 'package:uteer/view/home/home_screen.dart';
 import 'package:uteer/view/notification/notification_screen.dart';
+import 'package:uteer/view/profile/profile_screen.dart';
 import 'package:uteer/view/widgets/ui_text.dart';
-
-import '../profile/profile_screen.dart';
 
 class NavigatorScreen extends StatefulWidget {
   final String email;
+
   const NavigatorScreen({Key? key, required this.email}) : super(key: key);
 
   @override
@@ -28,16 +28,18 @@ class NavigatorScreenState extends State<NavigatorScreen> {
   Color kDisenableColorText = AppColors.disableItemColor;
   int currentTab = 0;
   late List<Widget> screens;
+
   final PageStorageBucket bucket = PageStorageBucket();
+
   @override
   void initState() {
+    super.initState();
     screens = [
       HomeScreen(email: widget.email),
       const ChatScreen(),
       NotificationScreen(email: widget.email),
       ProfileScreen(email: widget.email),
     ];
-    super.initState();
   }
 
   void changeCurrentTab(int value) {
@@ -175,7 +177,7 @@ class NavigatorScreenState extends State<NavigatorScreen> {
 
 class ButtonItemNavigator extends StatelessWidget {
   const ButtonItemNavigator({
-    super.key,
+    Key? key,
     required this.currentTab,
     required this.tab,
     required this.icon,
@@ -186,7 +188,7 @@ class ButtonItemNavigator extends StatelessWidget {
     required this.disenableColorIcon,
     required this.enableColorText,
     required this.disenableColorText,
-  });
+  }) : super(key: key);
 
   final int currentTab;
   final int tab;

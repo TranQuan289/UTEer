@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uteer/models/user_model.dart';
 import 'package:uteer/res/constant/app_assets.dart';
 import 'package:uteer/res/style/app_colors.dart';
@@ -72,6 +73,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   await FirebaseAuth.instance.signOut();
                   if (!mounted) return;
                   Routes.goToLoginScreen(context);
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.setBool('isLoggedIn', false);
                 }))
       ]),
     );
