@@ -234,6 +234,7 @@ class _TrainingPointHistoryCardState extends State<TrainingPointHistoryCard> {
                   onPressed: () => Routes.goToTrainingPointGvcnDetailScreen(context, arguments: {
                     "email": widget.email,
                     "absorbing": true,
+                    "semester": widget.semester
                   }),
                 )),
           )

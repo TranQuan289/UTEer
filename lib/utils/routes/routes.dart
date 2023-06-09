@@ -86,7 +86,8 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => TrainingPointsGvcnDetailScreen(
             email: args["email"],
-            absorbing: args["absorbing"] as bool, // Ép kiểu về bool
+            absorbing: args["absorbing"] as bool,
+            semester: args["semester"],
           ),
         );
 

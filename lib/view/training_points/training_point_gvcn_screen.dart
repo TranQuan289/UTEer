@@ -74,7 +74,6 @@ class _TrainingPointsGvcnScreenState extends State<TrainingPointsGvcnScreen> {
                         }
                       }
 
-                      // Kết hợp hai danh sách thành một danh sách mới
                       List<TrainingPointModel?> combinedList = [
                         ...falseStatusList,
                         ...trueStatusList
@@ -106,6 +105,7 @@ class _TrainingPointsGvcnScreenState extends State<TrainingPointsGvcnScreen> {
                                       Routes.goToTrainingPointGvcnDetailScreen(context, arguments: {
                                         "email": email,
                                         "absorbing": false,
+                                        "semester": "222",
                                       });
                                     } else {
                                       Utils.showPopup(
@@ -134,6 +134,7 @@ class _TrainingPointsGvcnScreenState extends State<TrainingPointsGvcnScreen> {
                                                     arguments: {
                                                       "email": email,
                                                       "absorbing": false,
+                                                      "semester": "222"
                                                     });
                                               },
                                             ),

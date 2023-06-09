@@ -16,8 +16,10 @@ import 'package:uteer/viewmodels/training_point/training_point_viewmodel.dart';
 class TrainingPointsGvcnDetailScreen extends StatefulWidget {
   final String email;
   final bool absorbing;
+  final String semester;
 
-  const TrainingPointsGvcnDetailScreen({Key? key, required this.email, required this.absorbing})
+  const TrainingPointsGvcnDetailScreen(
+      {Key? key, required this.email, required this.absorbing, required this.semester})
       : super(key: key);
 
   @override
@@ -33,7 +35,7 @@ class _TrainingPointsGvcnDetailScreenState extends State<TrainingPointsGvcnDetai
     viewModel = TrainingPointViewModel(repository: TrainingPointRepository())..onInitView(context);
     super.initState();
 
-    viewModel.getTrainingPoint(widget.email, "222");
+    viewModel.getTrainingPoint(widget.email, widget.semester);
     viewModel.getOpenTrainingPoint();
     setState(() {
       isLoading = false;

@@ -9,7 +9,7 @@ class TrainingPointRepository {
     final QuerySnapshot<Map<String, dynamic>> querySnapshot = await db
         .collection('trainingPoints')
         .where('email', isEqualTo: email)
-        .where('semester', isEqualTo: semester) // Thêm điều kiện lọc theo semester
+        .where('semester', isEqualTo: semester)
         .get();
 
     final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
