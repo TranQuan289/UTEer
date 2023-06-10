@@ -72,7 +72,7 @@ Future<void> addNotification({
     await notificationRef.set({
       'name': "name",
       'email': email,
-      'title': "Thông báo về học bổng",
+      'title': "Thông báo về điểm rèn luyện",
       'describe': "Điểm rèn luyện của bạn vừa được duyệt, vào lịch sử xem nhé",
       'type': "trainingPoint",
       'createAt': Timestamp.fromDate(DateTime.now()),

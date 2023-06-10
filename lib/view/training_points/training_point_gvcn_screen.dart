@@ -38,6 +38,14 @@ class _TrainingPointsGvcnScreenState extends State<TrainingPointsGvcnScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    viewModel.onInitView(context);
+    viewModel.getListTrainingPoint();
+    viewModel.getOpenTrainingPoint();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: viewModel,

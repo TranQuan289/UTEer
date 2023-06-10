@@ -29,12 +29,35 @@ class TrainingPointRepository {
         await db.collection('trainingPoints').where('email', isEqualTo: email).get();
 
     final List<DocumentSnapshot<Map<String, dynamic>>> documents = querySnapshot.docs;
-    final List<TrainingPointModel> trainingPoints = [];
+
+    List<TrainingPointModel> array1 = [];
+    List<TrainingPointModel> array2 = [];
+    List<TrainingPointModel> array3 = [];
+    List<TrainingPointModel> array4 = [];
 
     for (var document in documents) {
       final TrainingPointModel trainingPoint = TrainingPointModel.fromFirestore(document, null);
-      trainingPoints.add(trainingPoint);
+      final semester = int.parse(trainingPoint.semester!);
+
+      if (semester == 222 || semester == 122) {
+        array1.add(trainingPoint);
+      } else if (semester == 221 || semester == 121) {
+        array2.add(trainingPoint);
+      } else if (semester == 220 || semester == 120) {
+        array3.add(trainingPoint);
+      } else if (semester == 222 || semester == 222) {
+        array4.add(trainingPoint);
+      }
     }
+    array1.sort((a, b) => a.semester!.compareTo(b.semester!));
+    array2.sort((a, b) => a.semester!.compareTo(b.semester!));
+    array3.sort((a, b) => a.semester!.compareTo(b.semester!));
+    array4.sort((a, b) => a.semester!.compareTo(b.semester!));
+    array1 = array1.reversed.toList();
+    array2 = array2.reversed.toList();
+    array3 = array3.reversed.toList();
+    array4 = array4.reversed.toList();
+    List<TrainingPointModel> trainingPoints = [...array1, ...array2, ...array3, ...array4];
 
     return trainingPoints;
   }
