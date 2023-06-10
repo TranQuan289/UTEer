@@ -45,7 +45,7 @@ class TrainingPointRepository {
         array2.add(trainingPoint);
       } else if (semester == 220 || semester == 120) {
         array3.add(trainingPoint);
-      } else if (semester == 222 || semester == 222) {
+      } else if (semester == 119 || semester == 219) {
         array4.add(trainingPoint);
       }
     }
