@@ -55,8 +55,8 @@ class _TrainingPointHistoryCardState extends State<TrainingPointHistoryCard> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 16.0,
+              color: Colors.black.withOpacity(0.02),
+              blurRadius: 10.0,
             ),
           ],
         ),
